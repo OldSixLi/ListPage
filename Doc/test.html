@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" href="../Style/bootstrap.css">
+	<link rel="stylesheet" href="../Style/select2.min.css">
+	<style>
+		.breadcrumb {
+			background-color: white;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- 页面导航 -->
+				<ul class="breadcrumb">
+					<li>
+						<a href="#">客户管理</a>
+					</li>
+					<li class="active">用户列表</li>
+				</ul>
+				<!-- 检索项 -->
+				<form id="formSearch" class="form-inline">
+					<div class="col-lg-12 col-md-12 col-sm-12">
+						<!-- 时间检索 -->
+						<div role="form">
+							<label class="lbl_search">活动日期：</label>
+							<input id="txtStartTime" name="minExpiredAt" class="start_end_time" placeholder="开始时间">
+
+							<label class="">至</label>
+							<input id="txtEndTime" name="maxExpiredAt" class="start_end_time" placeholder="截止时间">
+
+							<hr class="hidden-lg" />
+
+							<label class="">&nbsp;&nbsp;&nbsp;&nbsp;名称： </label>
+							<input id="txtUserName" name="keyword" class=" " placeholder="用户名称" type="text">
+							<a class="btn btn-primary " id="btnSearch"><i class=" glyphicon glyphicon-search"></i>&nbsp;搜索</a>
+
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+
+	</div>
+</body>
+
+</html>

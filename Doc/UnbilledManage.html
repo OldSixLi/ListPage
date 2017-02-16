@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>未开发票订单管理</title>
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="../Style/bootstrap.css">
+	<link rel="stylesheet" href="../Style/select2.css">
+	<style>
+		td>a {
+			margin: 10px;
+		}
+
+		#databody>tr>td {
+			color: #7a7676;
+			line-height: 25px;
+			text-align: center;
+		}
+
+		tr>th {
+			text-align: center;
+		}
+
+		#databody>.tr-cancel>td {
+			color: #ddd;
+		}
+
+		#databody>.tr-cancel>td.state {
+			color: red;
+		}
+
+		.tr-cancel>td>a {
+			color: #ddd;
+			disabled: false;
+		}
+
+		.a-delete {
+			color: red;
+		}
+	</style>
+	<script>
+	</script>
+</head>
+
+<body style="background-color:#f5f5f5;padding:50px;">
+	<div class="section">
+		<!-- <div class="container">-->
+		<div class="row">
+			<div class="row ">
+				<ol class="breadcrumb col-xs-8">
+					<li><a href="javascript:;">发票管理</a></li>
+					<li class="active">未开发票订单管理</li>
+				</ol>
+				<div class="col-xs-4">
+					<label for="">点位</label>
+					<select class="" name="">
+						<option value="">全部</option>
+					</select>
+				</div>
+			</div>
+			<!-- 主体内容 -->
+			<!-- 未开票数据列表begin -->
+			<div class="tab-content" style="background-color:white;padding:20px;">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>订单号</th>
+							<th>客户名称</th>
+							<th>销售网点</th>
+							<th>销售人员</th>
+							<th>订单金额</th>
+							<th>状态 </th>
+							<th>订单日期</th>
+							<th class="text-center">操作</th>
+						</tr>
+					</thead>
+					<tbody id="databody">
+						<tr>
+							<td>1</td>
+							<td>2015566456481548486464545</td>
+							<td>神州浩天科技有限公司</td>
+							<td>在线支付</td>
+							<td>罗大佑</td>
+							<td>360.00</td>
+							<td>正常</td>
+							<td>2017-2-13 13:56:12</td>
+							<td><a href="">开票</a>|<a href="">详情</a>|<a href="" class="a-delete">作废</a></td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>2015566456481548486464545</td>
+							<td>神州浩天科技有限公司</td>
+							<td>在线支付</td>
+							<td>罗大佑</td>
+							<td>360.00</td>
+							<td>正常</td>
+							<td>2017-2-13 13:56:12</td>
+							<td class="text-center"><a href="">开票</a>|<a href="">详情</a>|<a href="" class="a-delete">作废</a></td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>2015566456481548486464545</td>
+							<td>神州浩天科技有限公司</td>
+							<td>在线支付</td>
+							<td>罗大佑</td>
+							<td>360.00</td>
+							<td>正常</td>
+							<td>2017-2-13 13:56:12</td>
+							<td class="text-center"><a href="">开票</a>|<a href="">详情</a>|<a href="" class="a-delete">作废</a></td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>2015566456481548486464545</td>
+							<td>神州浩天科技有限公司</td>
+							<td>在线支付</td>
+							<td>罗大佑</td>
+							<td>360.00</td>
+							<td>正常</td>
+							<td>2017-2-13 13:56:12</td>
+							<td class="text-center"><a href="">开票</a>|<a href="">详情</a>|<a href="" class="a-delete">作废</a></td>
+						</tr>
+						<tr class="tr-cancel">
+							<td>5</td>
+							<td>2015566456481548486464545</td>
+							<td>神州浩天科技有限公司</td>
+							<td>在线支付</td>
+							<td>罗大佑</td>
+							<td>360.00</td>
+							<td class="state">已作废</td>
+							<td>2017-2-13 13:56:12</td>
+							<td class="text-center">
+								<a href="#">开票</a>|
+								<a href="#">详情</a>|
+								<a href="#" class="a-delete">作废</a>
+							</td>
+						</tr>
+						<tr>
+							<td>6</td>
+							<td>2015566456481548486464545</td>
+							<td>神州浩天科技有限公司</td>
+							<td>在线支付</td>
+							<td>罗大佑</td>
+							<td>360.00</td>
+							<td>正常</td>
+							<td>2017-2-13 13:56:12</td>
+							<td class="text-center"><a href="">开票</a>|<a href="">详情</a>|<a href="" class="a-delete">作废</a></td>
+						</tr>
+						<tr>
+							<td>7</td>
+							<td>2015566456481548486464545</td>
+							<td>神州浩天科技有限公司</td>
+							<td>在线支付</td>
+							<td>罗大佑</td>
+							<td>360.00</td>
+							<td>正常</td>
+							<td>2017-2-13 13:56:12</td>
+							<td class="text-center"><a href="">开票</a>|<a href="">详情</a>|<a href="" class="a-delete">作废</a></td>
+						</tr>
+						<tr>
+							<td>8</td>
+							<td>2015566456481548486464545</td>
+							<td>神州浩天科技有限公司</td>
+							<td>在线支付</td>
+							<td>罗大佑</td>
+							<td>360.00</td>
+							<td>正常</td>
+							<td>2017-2-13 13:56:12</td>
+							<td class="text-center"><a href="">开票</a>|<a href="">详情</a>|<a href="" class="a-delete">作废</a></td>
+						</tr>
+						<tr>
+							<td>9</td>
+							<td>2015566456481548486464545</td>
+							<td>神州浩天科技有限公司</td>
+							<td>在线支付</td>
+							<td>罗大佑</td>
+							<td>360.00</td>
+							<td>正常</td>
+							<td>2017-2-13 13:56:12</td>
+							<td class="text-center"><a href="">开票</a>|<a href="">详情</a>|<a href="" class="a-delete">作废</a></td>
+						</tr>
+						<tr>
+							<td>10</td>
+							<td>2015566456481548486464545</td>
+							<td>神州浩天科技有限公司</td>
+							<td>在线支付</td>
+							<td>罗大佑</td>
+							<td>360.00</td>
+							<td>正常</td>
+							<td>2017-2-13 13:56:12</td>
+							<td class="text-center"><a href="">开票</a>|<a href="">详情</a>|<a href="" class="a-delete">作废</a></td>
+						</tr>
+						<!-- <tr><td colspan="100" class="text-center notFound">没有相关数据</td></tr>-->
+					</tbody>
+				</table>
+			</div>
+			<div class="pull-right">
+				<ul class="pagination" id="alreadyPage"></ul>
+			</div>
+			<!-- 未开票数据列表end -->
+		</div>
+		<!-- </div>-->
+	</div>
+	<!-- 脚本 -->
+	<script type="text/javascript" src="../Script/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="../Script/bootstrap.js"></script>
+	<script type="text/javascript" src="../Script/select2.js"></script>
+	<!-- 页面脚本部分 -->
+	<script type="text/javascript" src="../Script/page.js"></script>
+	<script type="text/javascript" src="../Script/bootstrap-paginator.js"></script>
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+      <script src="../Script/html5shiv.js"></script>
+      <script src="../Script/respond.min.js"></script>
+    <![endif]-->
+</body>
+
+</html>
