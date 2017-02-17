@@ -1,47 +1,11 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>已开票订单管理</title>
-	<!-- Bootstrap -->
-	<link rel="stylesheet" href="../Style/bootstrap.css">
-	<link rel="stylesheet" href="../Style/select2.min.css">
-
-	<style>
-		td>a {
-			margin: 10px;
-		}
-
-		#databody>tr>td {
-			color: #7a7676;
-			line-height: 25px;
-			text-align: center;
-		}
-
-		tr>th {
-			text-align: center;
-		}
-
-		#databody>.tr-cancel>td {
-			color: #ddd;
-		}
-
-		#databody>.tr-cancel>td.state {
-			color: red;
-		}
-
-		.tr-cancel>td>a {
-			color: #ddd;
-			disabled: false;
-		}
-
-		.a-delete {
-			color: red;
-		}
-	</style>
+	<link href="../Style/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="../Style/select2.min.css" rel="stylesheet" type="text/css">
+	<link href="../Style/style.css" rel="stylesheet" type="text/css">
 </head>
 <!--设置页面主体的颜色 -->
 
@@ -70,6 +34,7 @@
 			</form>
 		</div>
 		<div class="ng-scope tab-content container-fluid" style="background-color:white;padding:20px;">
+			<input type="number" min="8" />
 			<!-- 数据部分 -->
 			<table class="table table-hover">
 				<thead>
@@ -101,10 +66,21 @@
 
 			</table>
 		</div>
+
 		<!-- 翻页控件 -->
+
+		<div class="form-group pull-right" style="margin: 20px 0 20px 10px">
+			<label>{{totalRecord}}条/{{totalPage}}页</label>
+			<label>跳至</label>
+			<input type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" style="width:40px;display:inline" class="form-control" />
+			<label>页</label>
+			<button class="btn btn-primary btn-sm" ng-click="skip()">确定</button>
+		</div>
+
 		<div class="pull-right">
 			<ul class="pagination" id="alreadyPage"></ul>
 		</div>
+		<input id="currentPage" name="currentPage" value="1" type="hidden">
 	</div>
 	<!-- 脚本 -->
 	<script type="text/javascript" src="../Script/jquery-1.9.1.js"></script>
@@ -119,28 +95,29 @@
       <script src="../Script/respond.min.js"></script>
     <![endif]-->
 	<script>
-		var params = "&";
+		var params = " ";
 		var app = angular.module('myApp', []);
+
 		app.controller('customersCtrl', function($scope, $http) {
 			var pageing = function(pageindex, params) {
-				var url = "../JSON/data.json?" + "pageindex" + pageindex + " & params=" + params; //请求的参数和地址
+				var url = "../JSON/data.json?" + "pageindex=" + pageindex + "&params=" + params; //请求的参数和地址
 				$http.get(url).success(function(data) {
 					if (data != null && data != "" && data != "null") {
 						if (data.list != null && data.list.length > 0) {
+
 							$scope.names = data;
-							paginators($("#alreadyPage"), data.page.currentPage, data.page.totalPage);
-							$("#alreadyPage").show();
-						} else {
-							$("#databody").html('<tr><td colspan="100" class="text-center notFound">没有相关数据</td></tr> ');
-							$("#alreadyPage").hide(); //未获取到数据时删除操作
-						}
-					}
-				});
-				$.getJSON(url, function(data) {
-					if (data != null && data != "" && data != "null") {
-						if (data.list != null && data.list.length > 0) {
-							$scope.names = data;
-							paginators($("#alreadyPage"), data.page.currentPage, data.page.totalPage);
+							$scope.totalPage = data.page.totalPage;
+							$scope.totalRecord = data.page.totalResult;
+
+							initPageDiv($("#alreadyPage"), //在哪里生成页码
+								pageindex, //当前页
+								data.page.totalPage, //一共多少页
+								5, //每次显示多少页
+								$("#currentPage"), //将每次的分页的页码放到这个input里
+								function() {
+									pageing($("#currentPage").val(), params);
+								}
+							);
 							$("#alreadyPage").show();
 						} else {
 							$("#databody").html('<tr><td colspan="100" class="text-center notFound">没有相关数据</td></tr> ');
@@ -149,20 +126,65 @@
 					}
 				});
 			}
+			//请求
 			pageing(1, params);
+
 			//查询按钮
 			$scope.search = function() {
+				params = 100;
 				pageing(1, params);
 			}
+
 		});
 
-		var changeSelect = function($dom, hasSearch) {
+		$(function() {
+			$(".breadcrumb,#search_block").height("45px");
+			//修改下拉菜单样式
+			changeSelect($("#sltInvoiceType"), false);
+		});
+
+
+
+		//分页控件的初始化
+		function initPageDiv($dom, now, all, each, $dom2, change) {
+			if (parseInt(now) > parseInt(all)) {
+				return;
+			}
+			var options = {
+				bootstrapMajorVersion: 3,
+				currentPage: now, // 当前页
+				totalPages: all, // 共几页
+				numberOfPages: each, // 每次显示几页
+				itemTexts: function(type, page, current) { // 修改显示文字
+					switch (type) {
+						case "first":
+							return "第一页";
+						case "prev":
+							return "上一页";
+						case "next":
+							return "下一页";
+						case "last":
+							return "最后一页";
+						case "page":
+							return page;
+					}
+				},
+				onPageClicked: function(event, originalEvent, type, page) { // 异步换页
+					$dom2.val(page);
+					change();
+				}
+			}
+			$dom.bootstrapPaginator(options);
+		};
+		//下拉菜单的初始化
+		function changeSelect($dom, hasSearch) {
 			var selectNum = 0;
 			if (typeof(hasSearch) != 'undefined') {
 				if (hasSearch == false) {
 					selectNum = -1;
 				}
 			}
+
 			$dom.select2({
 				tags: true,
 				maximumSelectionLength: 3,
@@ -170,44 +192,11 @@
 				// 最多能够选择的个数
 			});
 		};
-
-		$(function() {
-
-			$(".breadcrumb,#search_block").height("45px");
-
-			//修改下拉菜单样式
-			changeSelect($("#sltInvoiceType"), false);
-		});
-
-
-
-		//翻页控件的设置
-		function paginators($dom, currentPage, totalPage) {
-			var options = {
-				bootstrapMajorVersion: 3,
-				currentPage: currentPage,
-				totalPages: totalPage,
-				numberOfPages: 3, //显示的页数
-				itemTexts: function(type, page, current) {
-					switch (type) {
-						case "first":
-							return "首页";
-						case "prev":
-							return "<";
-						case "next":
-							return ">";
-						case "last":
-							return "尾页";
-						case "page":
-							return page;
-					}
-				}
-			}
-			$dom.bootstrapPaginator(options);
-		}
-		var objstr =
-			'{"list":[{"INVOICE_STATE":"","ORDER_ID":"20170105173142341000000000000006","FP_HM":"24255556","NSRMC":"神州","ID":"31473","FP_DM":"1200162320","FPLXDM":"007","AMOUNT":"35000.00","FLAG_INVOICE":"3","KPRQ":"2017-01-17 10:01:34"},{"INVOICE_STATE":"10","ORDER_ID":"900000001","FP_HM":"00022688","NSRMC":"天津市亿方达建筑砌块有限公司","ID":"20992","FP_DM":"0000000000","FPLXDM":"007","AMOUNT":"360.00","FLAG_INVOICE":"3","KPRQ":null},{"INVOICE_STATE":null,"ORDER_ID":"900000264","FP_HM":"0000333","NSRMC":"天津卓和信仪器仪表有限公司","ID":"21248","FP_DM":"0000000000","FPLXDM":"007","AMOUNT":null,"FLAG_INVOICE":"3","KPRQ":null},{"INVOICE_STATE":null,"ORDER_ID":"900000521","FP_HM":"00002871","NSRMC":"天津凯兰环保科技有限公司","ID":"21504","FP_DM":"0000000000","FPLXDM":"007","AMOUNT":null,"FLAG_INVOICE":"3","KPRQ":null},{"INVOICE_STATE":null,"ORDER_ID":"900000782","FP_HM":"00010320","NSRMC":"天津福祥自行车有限公司","ID":"21760","FP_DM":"0000000000","FPLXDM":"007","AMOUNT":null,"FLAG_INVOICE":"3","KPRQ":null},{"INVOICE_STATE":null,"ORDER_ID":"900001038","FP_HM":"00016358","NSRMC":"天津华衡伟业生产力促进有限公司","ID":"22016","FP_DM":"0000000000","FPLXDM":"007","AMOUNT":null,"FLAG_INVOICE":"3","KPRQ":null},{"INVOICE_STATE":null,"ORDER_ID":"900001296","FP_HM":"00018775","NSRMC":"天津市屹泰锘采油设备有限公司","ID":"22272","FP_DM":"0000000000","FPLXDM":"007","AMOUNT":null,"FLAG_INVOICE":"3","KPRQ":null},{"INVOICE_STATE":null,"ORDER_ID":"900001552","FP_HM":"00026778","NSRMC":"贝思赫尔印刷设备（天津）有限公司","ID":"22528","FP_DM":"0000000000","FPLXDM":"007","AMOUNT":null,"FLAG_INVOICE":"3","KPRQ":null},{"INVOICE_STATE":null,"ORDER_ID":"900001808","FP_HM":"00029783","NSRMC":"天津市天兵畜牧养殖专业合作社","ID":"22784","FP_DM":"0000000000","FPLXDM":"007","AMOUNT":null,"FLAG_INVOICE":"3","KPRQ":null},{"INVOICE_STATE":null,"ORDER_ID":"900002064","FP_HM":"00035501","NSRMC":"天津捷丰晟金属制品有限公司","ID":"23040","FP_DM":"0000000000","FPLXDM":"007","AMOUNT":null,"FLAG_INVOICE":"3","KPRQ":null}],"page":{"showCount":10,"totalPage":1035,"totalResult":10343,"currentPage":1,"pd":{"fphm":null,"invoicestate":"2","fpdm":null,"pointid":null,"invoicetype":null}}}';
 	</script>
+</body>
+
+</html>
+</script>
 </body>
 
 </html>

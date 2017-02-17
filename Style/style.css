@@ -1,0 +1,31 @@
+
+	td>a {
+		margin: 10px;
+	}
+
+	#databody>tr>td {
+		color: #7a7676;
+		line-height: 25px;
+		text-align: center;
+	}
+
+	tr>th {
+		text-align: center;
+	}
+
+	#databody>.tr-cancel>td {
+		color: #ddd;
+	}
+
+	#databody>.tr-cancel>td.state {
+		color: red;
+	}
+
+	.tr-cancel>td>a {
+		color: #ddd;
+		disabled: false;
+	}
+
+	.a-delete {
+		color: red;
+	}

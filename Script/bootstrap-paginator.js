@@ -230,23 +230,23 @@
                 case "first":
                     currentTarget.bootstrapPaginator("showFirst");
 
-                    pageing(page);
+
                     break;
                 case "prev":
                     currentTarget.bootstrapPaginator("showPrevious");
-                    pageing(page);
+
                     break;
                 case "next":
                     currentTarget.bootstrapPaginator("showNext");
-                    pageing(page);
+
                     break;
                 case "last":
                     currentTarget.bootstrapPaginator("showLast");
-                    pageing(page);
+
                     break;
                 case "page":
                     currentTarget.bootstrapPaginator("show", page);
-                    pageing(page);
+
                     break;
             }
 

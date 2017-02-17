@@ -84,12 +84,21 @@
     <!-- 脚本 -->
     <script type="text/javascript" src="../Script/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="../Script/bootstrap.js"></script>
-    <script type="text/javascript" src="../Script/page.js"></script>
+    <!-- <script type="text/javascript" src="../Script/page.js"></script> -->
     <script type="text/javascript" src="../Script/bootstrap-paginator.js"></script>
+    <script>
+        $(function() {
+            $.getJSON('../JSON/data.json', function(json) {
+                alert(json.list[0].ORDER_ID);
+            });
+        });
+    </script>
 </body>
 
 </html>
 </div>
 </body>
+
+</html>
 
 </html>
