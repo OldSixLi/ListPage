@@ -21,7 +21,8 @@ var MIME_TYPE = {
     "wav": "audio/x-wav",
     "wma": "audio/x-ms-wma",
     "wmv": "video/x-ms-wmv",
-    "xml": "text/xml"
+    "xml": "text/xml",
+    "woff": "application/x-font-woff"
 };
 
 // 创建服务器
@@ -32,7 +33,7 @@ http.createServer(function(request, response) {
     ext = ext ? ext.slice(1) : 'unknown';
     // 输出请求的文件名
     console.log("Request for " + pathname + " received.");
-    var contentType = MIME_TYPE[ext] || "text/plain";
+    var contentType = MIME_TYPE[ext] || "text/html";
     // 从文件系统中读取请求的文件内容
     fs.readFile(pathname.substr(1), function(err, data) {
         if (err) {

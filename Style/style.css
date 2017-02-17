@@ -1,31 +1,49 @@
+body {
+    font-family: 'Telugu MN', 'Microsoft YaHei', '微软雅黑', 'Lantinghei SC', Helvetica, Tahoma, Arial, sans-serif, SimSun, 'Hiragino Sans GB', 'Hiragino Sans GB';
+    font-size: 14px;
+    line-height: 20px;
+    overflow-x: hidden;
+    color: #7a7676;
+}
 
-	td>a {
-		margin: 10px;
-	}
 
-	#databody>tr>td {
-		color: #7a7676;
-		line-height: 25px;
-		text-align: center;
-	}
+/*页面样式文件*/
 
-	tr>th {
-		text-align: center;
-	}
+td>a {
+    margin: 10px;
+}
 
-	#databody>.tr-cancel>td {
-		color: #ddd;
-	}
+#databody>tr>td {
+    line-height: 25px;
+    text-align: center;
+    color: #7a7676;
+}
 
-	#databody>.tr-cancel>td.state {
-		color: red;
-	}
+tr>th {
+    text-align: center;
+}
 
-	.tr-cancel>td>a {
-		color: #ddd;
-		disabled: false;
-	}
+#databody>.tr-cancel>td {
+    color: #ddd;
+}
 
-	.a-delete {
-		color: red;
-	}
+.tr-cancel>td>a {
+    color: #ddd;
+    disabled: false;
+}
+
+
+/*跳转输入框*/
+
+.topage {
+    display: inline;
+    width: 50px;
+    padding: 6px;
+}
+
+
+/*跳转模块*/
+
+.topage_block {
+    margin: 20px 0 20px 10px;
+}

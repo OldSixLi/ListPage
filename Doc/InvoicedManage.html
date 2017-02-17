@@ -1,4 +1,4 @@
-<html lang="en">
+<html>
 
 <head>
 	<meta charset="utf-8">
@@ -7,36 +7,36 @@
 	<link href="../Style/select2.min.css" rel="stylesheet" type="text/css">
 	<link href="../Style/style.css" rel="stylesheet" type="text/css">
 </head>
-<!--设置页面主体的颜色 -->
 
-<body style="background-color:#f5f5f5;padding:50px;" ng-app="myApp">
-	<div ng-controller="customersCtrl">
+<body ng-app="myApp">
+	<div ng-controller="customersCtrl" class="container-fluid">
 		<!-- 面包屑导航 -->
-		<ol class="breadcrumb col-xs-3" style="border-radius:0;padding:0 15px;">
+		<ol class="breadcrumb col-xs-3" style="border-radius:0;background-color:white;">
 			<li><a href="javascript:void(0)">发票管理</a></li>
 			<li class="active">已开票订单管理</li>
 		</ol>
-
 		<!-- 搜索模块 -->
-		<div class="text-right col-xs-9" id="search_block" style="background-color:#f5f5f5;">
+		<div class="text-right col-xs-9" id="search_block">
 			<form class="form-inline" action="" method="post" role="form">
 				<label for="">发票代码：</label>
 				<div class="form-group text-left">
-					<input type="text" class="form-control" value="" placeholder="请输入发票代码" style="width: 270px;font-size:0.9em">
-
-					<select class="" name="" id="sltInvoiceType" style="width:200px;text-align:left;">
-				<option value="">全部</option>
-				<option value="">全部2</option>
-				<option value="">全部4</option>
-			</select></div>
-
-				<a href="javascript:;" ng-click="search()" class="btn btn-primary">确定</a>
+					<!-- 输入框 -->
+					<input type="text" id="input1" class="form-control" value="" placeholder="请输入发票代码">
+					<!-- 下拉菜单 -->
+					<select class="" id="sltInvoiceType" style="width:200px;text-align:left;">
+              <option value="1">全部</option>
+              <option value="2">全部2</option>
+              <option value="3">全部4</option>
+          </select>
+				</div>
+				<!-- 搜索按钮 -->
+				<a ng-click="search()" class="btn btn-primary">确定</a>
 			</form>
 		</div>
-		<div class="ng-scope tab-content container-fluid" style="background-color:white;padding:20px;">
-			<input type="number" min="8" />
-			<!-- 数据部分 -->
+		<!-- 数据绑定部分 -->
+		<div class="ng-scope tab-content container-fluid">
 			<table class="table table-hover">
+				<!-- 表头 -->
 				<thead>
 					<tr>
 						<th>#</th>
@@ -49,9 +49,9 @@
 						<th class="text-center">操作</th>
 					</tr>
 				</thead>
-
+				<!-- 数据主体部分 -->
 				<tbody id="databody">
-					<tr ng-repeat="x in names.list">
+					<tr ng-show="dataLengths" ng-repeat="x in names.list">
 						<td>{{ $index+names.page.currentPage*10-9}}</td>
 						<td>{{ x.FP_HM }}</td>
 						<td>{{ x.NSRMC }}</td>
@@ -62,24 +62,27 @@
 						<td>
 							<a href="#?id={{x.FP_HM}}">操作</a></td>
 					</tr>
+					<tr ng-show="!dataLengths">
+						<td colspan="100" class="text-center notFound">没有相关数据</td>
+					</tr>
 				</tbody>
-
 			</table>
 		</div>
-
-		<!-- 翻页控件 -->
-
-		<div class="form-group pull-right" style="margin: 20px 0 20px 10px">
-			<label>{{totalRecord}}条/{{totalPage}}页</label>
-			<label>跳至</label>
-			<input type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" style="width:40px;display:inline" class="form-control" />
-			<label>页</label>
-			<button class="btn btn-primary btn-sm" ng-click="skip()">确定</button>
+		<div ng-show="dataLengths">
+			<div class="form-group pull-right topage_block">
+				<!-- 跳转至 -->
+				<label>{{totalRecord}}条/{{totalPage}}页</label>
+				<label>跳至</label>
+				<input type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" class="form-control topage" ng-model="toPageValue" />
+				<label>页</label>
+				<button class="btn btn-primary btn-sm" ng-click="skip()">确定</button>
+			</div>
+			<!-- 分页控件 -->
+			<div class="pull-right">
+				<ul class="pagination" id="alreadyPage"></ul>
+			</div>
 		</div>
-
-		<div class="pull-right">
-			<ul class="pagination" id="alreadyPage"></ul>
-		</div>
+		<!-- 当前页隐藏域 -->
 		<input id="currentPage" name="currentPage" value="1" type="hidden">
 	</div>
 	<!-- 脚本 -->
@@ -88,115 +91,15 @@
 	<script type="text/javascript" src="../Script/bootstrap.js"></script>
 	<script type="text/javascript" src="../Script/select2.js"></script>
 	<script type="text/javascript" src="../Script/bootstrap-paginator.js"></script>
+	<script type="text/javascript" src="../Script/datalist.js"></script>
+
 	<!--IE8支持HTML5元素和媒体查询 -->
 	<!-- WARNING: Respond.js doesn' t work if you view the page via file:// -->
 	<!--[if lt IE 9]>
-      <script src="../Script/html5shiv.js"></script>
-      <script src="../Script/respond.min.js"></script>
-    <![endif]-->
-	<script>
-		var params = " ";
-		var app = angular.module('myApp', []);
+        <script src="../Script/html5shiv.js"></script>
+        <script src="../Script/respond.min.js"></script>
+  <![endif]-->
 
-		app.controller('customersCtrl', function($scope, $http) {
-			var pageing = function(pageindex, params) {
-				var url = "../JSON/data.json?" + "pageindex=" + pageindex + "&params=" + params; //请求的参数和地址
-				$http.get(url).success(function(data) {
-					if (data != null && data != "" && data != "null") {
-						if (data.list != null && data.list.length > 0) {
-
-							$scope.names = data;
-							$scope.totalPage = data.page.totalPage;
-							$scope.totalRecord = data.page.totalResult;
-
-							initPageDiv($("#alreadyPage"), //在哪里生成页码
-								pageindex, //当前页
-								data.page.totalPage, //一共多少页
-								5, //每次显示多少页
-								$("#currentPage"), //将每次的分页的页码放到这个input里
-								function() {
-									pageing($("#currentPage").val(), params);
-								}
-							);
-							$("#alreadyPage").show();
-						} else {
-							$("#databody").html('<tr><td colspan="100" class="text-center notFound">没有相关数据</td></tr> ');
-							$("#alreadyPage").hide(); //未获取到数据时删除操作
-						}
-					}
-				});
-			}
-			//请求
-			pageing(1, params);
-
-			//查询按钮
-			$scope.search = function() {
-				params = 100;
-				pageing(1, params);
-			}
-
-		});
-
-		$(function() {
-			$(".breadcrumb,#search_block").height("45px");
-			//修改下拉菜单样式
-			changeSelect($("#sltInvoiceType"), false);
-		});
-
-
-
-		//分页控件的初始化
-		function initPageDiv($dom, now, all, each, $dom2, change) {
-			if (parseInt(now) > parseInt(all)) {
-				return;
-			}
-			var options = {
-				bootstrapMajorVersion: 3,
-				currentPage: now, // 当前页
-				totalPages: all, // 共几页
-				numberOfPages: each, // 每次显示几页
-				itemTexts: function(type, page, current) { // 修改显示文字
-					switch (type) {
-						case "first":
-							return "第一页";
-						case "prev":
-							return "上一页";
-						case "next":
-							return "下一页";
-						case "last":
-							return "最后一页";
-						case "page":
-							return page;
-					}
-				},
-				onPageClicked: function(event, originalEvent, type, page) { // 异步换页
-					$dom2.val(page);
-					change();
-				}
-			}
-			$dom.bootstrapPaginator(options);
-		};
-		//下拉菜单的初始化
-		function changeSelect($dom, hasSearch) {
-			var selectNum = 0;
-			if (typeof(hasSearch) != 'undefined') {
-				if (hasSearch == false) {
-					selectNum = -1;
-				}
-			}
-
-			$dom.select2({
-				tags: true,
-				maximumSelectionLength: 3,
-				minimumResultsForSearch: selectNum
-				// 最多能够选择的个数
-			});
-		};
-	</script>
-</body>
-
-</html>
-</script>
 </body>
 
 </html>
