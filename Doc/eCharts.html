@@ -1,0 +1,336 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<jsp:include page="/WEB-INF/jsp/common/header.jsp" />
+</head>
+
+<body class="sticky-header">
+	<c:set var="xLine" value="${data.xLine }"></c:set>
+	<c:set var="value" value="${data.value }"></c:set>
+	<div class="header container-fluid">
+		<div class="row">
+			<ol class="breadcrumb col-xs-3">
+				<li><a href="javascript:;">销售管理</a></li>
+				<li class="active">数据统计</a>
+				</li>
+			</ol>
+			<div class="text-right col-xs-9">
+				<form id="timeSearchForm" class="form-inline" action="" method="post" role="form">
+					<div class="form-group">
+						<select id="timeType" style="width:130px;" onclick="changeDate()">
+								<option value="days">--按日期查询--</option>
+								<option value="months">--按月份查询--</option>
+								<option value="years">--按年限查询--</option>
+							</select>
+					</div>
+					<div class="form-group" id="DaysTd">
+						<div class="input-group input-append date form_datetime" data-picker-position="bottom-left" style="width: 210px">
+							<input class="form-control" readonly id="startDays" type="text" name="startD" placeholder="请选择销售起始日期" value="${startD }">
+							<span class="add-on input-group-addon"><i class="icon-th glyphicon glyphicon-calendar"></i></span>
+						</div>
+						<div class="input-group input-append date form_datetime" data-picker-position="bottom-left" style="width: 210px">
+							<input class="form-control" readonly id="endDays" type="text" name="endD" placeholder="请选择销售截止日期" value="${endD }">
+							<span class="add-on input-group-addon"><i class="icon-th glyphicon glyphicon-calendar"></i></span>
+						</div>
+					</div>
+					<div class="form-group" id="MonthsTd">
+						<div class="input-group input-append date form_datetime" data-picker-position="bottom-left" style="width: 210px">
+							<input class="form-control" readonly id="startMonths" type="text" name="startM" placeholder="请选择销售起始月份">
+							<span class="add-on input-group-addon"><i class="icon-th glyphicon glyphicon-calendar"></i></span>
+						</div>
+						<div class="input-group input-append date form_datetime" data-picker-position="bottom-left" style="width: 210px">
+							<input class="form-control" readonly id="endMonths" type="text" name="endM" placeholder="请选择销售截止月份">
+							<span class="add-on input-group-addon"><i class="icon-th glyphicon glyphicon-calendar"></i></span>
+						</div>
+					</div>
+					<div class="form-group" id="YearsTd">
+						<div class="input-group input-append date form_datetime" data-picker-position="bottom-left" style="width: 210px">
+							<input class="form-control" readonly id="startYears" type="text" name="startY" placeholder="请选择销售起始年">
+							<span class="add-on input-group-addon"><i class="icon-th glyphicon glyphicon-calendar"></i></span>
+						</div>
+						<div class="input-group input-append date form_datetime" data-picker-position="bottom-left" style="width: 210px">
+							<input class="form-control" readonly id="endYears" type="text" name="endY" placeholder="请选择销售截止日年">
+							<span class="add-on input-group-addon"><i class="icon-th glyphicon glyphicon-calendar"></i></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<a class="btn btn-primary" href="javascript:getData();"><span class="glyphicon glyphicon-search"></span></a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="workframe">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="echartsFrame" style="height:600px;" id="sellFoldLine">
+					</div>
+					<div class="bottonArea">
+						<button class="btn btn-primary" onclick="changeTable(1)">销售统计图</button>
+						<a href="page/statistics/sellMan.html" class="btn btn-primary">销售人员统计图</a>
+						<a href="page/statistics/sellPoint.html" class="btn btn-primary">销售区域统计图</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+<script type="text/javascript">
+	$(function() {
+		var window_height = $(window).height();
+		//		$(".echartsFrame").height(window_height - $(".echartsFrame").offset().top-20);
+		$(window).resize(function() {
+			var window_height = $(window).height();
+			$(".echartsFrame").height(window_height - $(".echartsFrame").offset().top - 20);
+		})
+
+	})
+
+	$(function() {
+		//美化select
+		//默认显示搜索条件为日
+		tool.changeSelect($("#timeType"), false);
+		$("#MonthsTd").hide();
+		$("#YearsTd").hide();
+		//更改搜索条件时触发
+		$("#timeType").on("change", function() {
+			if ($("#timeType").val() == "days") {
+				$("#DaysTd").show();
+				$("#MonthsTd").hide();
+				$("#YearsTd").hide();
+			} else if ($("#timeType").val() == "months") {
+				$("#MonthsTd").show();
+				$("#DaysTd").hide();
+				$("#YearsTd").hide();
+			} else if ($("#timeType").val() == "years") {
+				$("#YearsTd").show();
+				$("#MonthsTd").hide();
+				$("#DaysTd").hide();
+			}
+		})
+	});
+
+	//使用datePicker插件
+	$(function() {
+		var date = new Date();
+		var sYear = date.getFullYear() - 9;
+		var eYear = date.getFullYear();
+		var sMonth = eYear + "-" + 1;
+		var eMonth = eYear + "-" + 12;
+		$("#startMonths").attr("value", sMonth);
+		$("#endMonths").attr("value", eMonth);
+		$("#startYears").attr("value", sYear);
+		$("#endYears").attr("value", eYear);
+
+		//日选择框
+		$("#startDays").datetimepicker({
+			format: "yyyy-mm-dd",
+			weekStart: 1,
+			autoclose: true,
+			startView: 2,
+			minView: 2,
+			language: 'zh-CN',
+			endDate: new Date()
+		}).on("changeDate", function(e) {
+			var startTime = e.date;
+			$("#endDays").datetimepicker("setStartDate", startTime);
+		});
+		$("#endDays").datetimepicker({
+			format: "yyyy-mm-dd",
+			weekStart: 1,
+			autoclose: true,
+			startView: 2,
+			minView: 2,
+			language: 'zh-CN',
+			endDate: new Date()
+		}).on("changeDate", function(e) {
+			var endTime = e.date;
+			$("#startDays").datetimepicker("setEndDate", endTime);
+		});
+		//月选择框
+		$("#startMonths").datetimepicker({
+			format: "yyyy-mm",
+			weekStart: 1,
+			autoclose: true,
+			startView: 3,
+			minView: 3,
+			language: 'zh-CN',
+			endDate: new Date()
+		}).on("changeDate", function(e) {
+			var startTime = e.date;
+			$("#endDays").datetimepicker("setStartDate", startTime);
+		});
+		$("#endMonths").datetimepicker({
+			format: "yyyy-mm",
+			weekStart: 1,
+			autoclose: true,
+			startView: 3,
+			minView: 3,
+			language: 'zh-CN',
+			endDate: new Date()
+		}).on("changeDate", function(e) {
+			var endTime = e.date;
+			$("#startDays").datetimepicker("setEndDate", endTime);
+		});
+		//年选择框
+		$("#startYears").datetimepicker({
+			format: "yyyy",
+			weekStart: 1,
+			autoclose: true,
+			startView: 4,
+			minView: 4,
+			language: 'zh-CN',
+			endDate: new Date()
+		}).on("changeDate", function(e) {
+			var startTime = e.date;
+			$("#endDays").datetimepicker("setStartDate", startTime);
+		});
+		$("#endYears").datetimepicker({
+			format: "yyyy",
+			weekStart: 1,
+			autoclose: true,
+			startView: 4,
+			minView: 4,
+			language: 'zh-CN',
+			endDate: new Date()
+		}).on("changeDate", function(e) {
+			var endTime = e.date;
+			$("#startDays").datetimepicker("setEndDate", endTime);
+		});
+	});
+
+	// 基于准备好的dom，初始化echarts实例
+	var sellFoldLine = echarts.init(document.getElementById('sellFoldLine'));
+	var v = "${value}".split(",");
+	var x = "${xLine}".split(",");
+	var max = 10;
+	if (Math.max.apply(null, v) > 10) {
+		max = Math.max.apply(null, v);
+		max = parseInt(max + max / 3);
+	}
+	var step = 0;
+	var tipe = $("#timeType").find("option:selected").text();
+	tipe = tipe.substr(3, 1);
+	if (x.length > 32) {
+		step = parseInt(x.length / 30);
+	}
+	// 指定图表的配置项和数据
+	sellOption = {
+
+		title: {
+			left: '50%',
+			right: '50%',
+			textAlign: 'center',
+			text: '销售统计图'
+		},
+		tooltip: {
+			trigger: 'axis'
+		},
+		legend: {
+			top: '5%',
+			data: ['销售订单量']
+		},
+		grid: { //边距
+			left: '5%',
+			right: '5%',
+			bottom: '9%',
+			containLabel: true
+		},
+		toolbox: {
+			feature: {
+				saveAsImage: {}
+			}
+		},
+		xAxis: { //x轴坐标
+			name: '时间(' + tipe + ')',
+			boundaryGap: false,
+			axisLabel: {
+				rotate: 60,
+				interval: step
+			},
+			type: 'category',
+			data: x
+		},
+		yAxis: {
+			name: '订单数量（笔）',
+			max: max,
+			type: 'value'
+		},
+		series: [{ //数据
+			name: '销售订单量',
+			type: 'line',
+			stack: '总量',
+			data: v
+		}]
+	};
+
+
+	// 使用刚指定的配置项和数据显示图表。
+	sellFoldLine.setOption(sellOption);
+	window.onresize = sellFoldLine.resize;
+
+	function getData(period) {
+		sellFoldLine.showLoading();
+		$.ajax({
+			type: "post",
+			url: "data/statistics/getdata",
+			dataType: 'json',
+			data: {
+				"period": $("#timeType").val(),
+				"startD": $("#startDays").val(),
+				"endD": $("#endDays").val(),
+				"startM": $("#startMonths").val(),
+				"endM": $("#endMonths").val(),
+				"startY": $("#startYears").val(),
+				"endY": $("#endYears").val()
+			},
+			success: function(data) {
+				var v = data.value.split(",");
+				var x = data.xLine.split(",");
+				var tipe = $("#timeType").find("option:selected").text();
+				tipe = tipe.substr(3, 1);
+				var max = 10;
+				if (Math.max.apply(null, v) > 10) {
+					max = Math.max.apply(null, v);
+					max = parseInt(max + max / 3);
+				}
+				var step = 0;
+				if (x.length > 32) {
+					step = parseInt(x.length / 30);
+				}
+				sellFoldLine.hideLoading();
+				sellFoldLine.setOption({
+					xAxis: {
+						name: '时间(' + tipe + ')',
+						axisLabel: {
+							rotate: 60,
+							interval: step
+						},
+						type: 'category',
+						data: x
+					},
+					yAxis: {
+						name: '订单数量（笔）',
+						max: max,
+						type: 'value'
+					},
+					series: [{
+						// 根据名字对应到相应的系列
+						name: '销售订单量',
+						type: 'line',
+						stack: '总量',
+						data: v
+					}]
+				});
+				window.onresize = sellFoldLine.resize;
+
+			}
+		});
+	}
+</script>
+
+</html>

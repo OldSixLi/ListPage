@@ -1,7 +1,6 @@
 var http = require('http');
 var fs = require('fs');
 var url = require('url');
-
 var path = require('path');
 var MIME_TYPE = {
     "css": "text/css",
