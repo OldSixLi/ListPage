@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>汇算清缴专题管理</title>
+	<link href="../../Style/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="../../Style/select2.min.css" rel="stylesheet" type="text/css">
+	<link href="../../Style/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+
+	<div class="header container-fluid">
+		<h2>汇算清缴专题管理</h2>
+		<!-- 顶部模块 -->
+		<div class="row">
+			<!-- 面包屑导航 -->
+			<ol class="breadcrumb col-xs-3" style="border-radius:0;padding:0 15px;">
+				<li><a href="javascript:void(0)">微信专题管理</a></li>
+				<li class="active">汇算清缴专题管理</li>
+			</ol>
+			<div id="search_block" class="text-right col-xs-9" style="background-color:#f5f5f5;">
+				<a href="addTeacher.html" class="btn btn-primary" id="btnSearch">新增文章</a>
+
+			</div>
+		</div>
+	</div>
+	<div class="workframe">
+		<div class=" container-fluid">
+			<div class="col-xs-3">
+				<div class="panel panel-default">
+					<div class="panel-heading">文章分类</div>
+					<div class="panel-body">
+						<ul class="ztree" id="deptTree"></ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-9">
+				<div class="tab-content">
+					<div class="panel panel-default">
+						<div class="panel-heading">文章列表
+						</div>
+						<!-- 数据部分 -->
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th class="text-center">#</th>
+									<th class="text-center">所属模块</th>
+									<th class="text-center">文章标题</th>
+									<th class="text-center">发布时间</th>
+									<th class="text-center">状态</th>
+									<th class="text-center">浏览量</th>
+									<th class="text-center">收藏量 </th>
+									<th class="text-center">操作</th>
+								</tr>
+							</thead>
+							<tbody id="databody">
+								<tr>
+									<td colspan="100" class="text-center notFound">没有相关数据</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- 翻页控件 -->
+					<div class="pull-right">
+						<ul class="pagination" id="alreadyPage"></ul>
+					</div>
+					<input type="hidden" id="currentPage" name="currentPage" value="1">
+					<!-- <form action="<c:url value=" /invoice/order/choiceType "/>" id="changeForm" method="post">
+					<input type="hidden" id="invoiceIdc" name="invoiceId" />
+					<input type="hidden" id="orderIdc" name="orderId" />
+					<input type="hidden" id="fplxdmc" name="fplxdm" />
+					<input type="hidden" id="kindc" name="kind" value="change" />
+
+					<input type="hidden" id="fphmc" name="fphm" />
+					<input type="hidden" id="fpdmc" name="fpdm" />
+					<input type="hidden" id="nsrmcc" name="nsrmc" />
+					<input type="hidden" id="amountc" name="amount" />
+				</form>
+				<form action="<c:url value=" /invoice/toCancel "/>" id="cancelForm" method="post">
+					<input type="hidden" id="kind" name="kind" />
+					<input type="hidden" id="invoiceId" name="invoiceId" />
+					<input type="hidden" id="orderId" name="orderId" />
+					<input type="hidden" id="fplxdm" name="fplxdm" />
+					<input type="hidden" id="hjje" name="hjje" />
+
+					<input type="hidden" id="fphm" name="fphm" />
+					<input type="hidden" id="fpdm" name="fpdm" />
+					<input type="hidden" id="nsrmc" name="nsrmc" />
+					<input type="hidden" id="amount" name="amount" />
+				</form>
+				<form action="<c:url value=" /invoice/toPreview "/>" id="previewForm1" method="post"></form> -->
+				</div>
+			</div>
+		</div>
+		<input id="currentPage" name="currentPage" value="1" type="hidden">
+	</div>
+	<!-- 脚本 -->
+	<script type="text/javascript" src="../../Script/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="../../Script/angular.min.js"></script>
+	<script type="text/javascript" src="../../Script/bootstrap.js"></script>
+	<script type="text/javascript" src="../../Script/select2.js"></script>
+	<script type="text/javascript" src="../../Script/bootstrap-paginator.js"></script>
+	<script>
+		"use strict";
+
+		var params = "&";
+		$(function() {
+			$(".breadcrumb,#search_block").height("45px");
+
+
+			//点击确定按钮时根据条件进行请求（拼接请求字符串）
+			$("#btnSearch").click(function() {
+				var type = $("#sltInvoiceType").val();
+				if (type == "") {
+					params = "";
+					pageing(1, params);
+				} else {
+					var fpdm = $("#inputInvoiceCode").val();
+					params = "&invoicetype=" + type + "&fpdm=" + fpdm + "&fphm=" + fphm;
+					pageing(1, params);
+				}
+			});
+		});
+
+		//请求数据
+		$(function() {
+			//请求第一页的内容
+			pageing(1, "");
+		});
+		//已开具发票数据部分 翻页的异步请求方法
+		function pageing(pageindex, params) {
+			//拼接的table字符串
+			var htmlstr = "";
+			//请求参数地址  TODO  后期修改IP
+			var url = "../../JSON/article.json";
+			$.getJSON(url, function(data) {
+				if (data != null && data != "" && data != "null") {
+					var content = data.list; //获取主体数据
+					if (content != null && content.length > 0) {
+						for (var i = 0; i < content.length; i++) {
+							//但行数据字符串
+							var singleDataStr = (content[i].state === "0") ? "<tr class='tr-cancel'>" : "<tr>";
+ 							//拼接整行字符串
+							singleDataStr += "<td>" + (10 * pageindex + i - 9) + "</td>" +
+								"<td>" + content[i].type_name + "</td>" +
+								"<td>" + content[i].title + "</td>" +
+								"<td>" + content[i].addtime + "</td>" +
+								"<td>" + content[i].state + "</td>" +
+								"<td>" + content[i].read_stats + "</td>" +
+								"<td>" + content[i].collection_stats + "</td>" +
+								"<td>" + "<button class='btn btn-link' onclick='seeDetail(\"" + content[i].id + "\")'>修改</button>|" +
+								"<button class='btn btn-link' >废除</button>"+ "</td>" +
+								"</tr>";
+							htmlstr += singleDataStr;
+						}
+
+						//添加数据至当前页面主体中
+						$("#databody").html(htmlstr);
+						$("#alreadyPage").show();
+
+					} else {
+						//TODO 未获取到数据时处理方式
+						$("#databody").html('<tr><td colspan="100" class="text-center notFound">没有相关数据</td></tr> ');
+						$("#alreadyPage").hide();
+					}
+				}
+				tool.initPageDiv($("#alreadyPage"), //在哪里生成页码
+					pageindex, //当前页
+					data.page.totalPage, //一共多少页
+					10, //每次显示多少页
+					$("#currentPage"), //将每次的分页的页码放到这个input里
+					function() {
+						pageing($("#currentPage").val(), params);
+					}
+				);
+			});
+
+		}
+
+		//发票详情
+		function invoiceDetail() {
+			$("#previewForm1").submit();
+		}
+
+		//订单详情
+		function editTeacher(id) {
+			//var goToDetail = "<c:url value='/sales/ordermaintenance/detail'/>";
+			var goToDetail = "http://" + tool.getUrlArea() + "/csfwpt_console/sales/ordermaintenance/detail";
+			window.location.href = goToDetail + "?locState=5&orderId=" + id;
+		}
+	</script>
+</body>
+
+</html>
