@@ -106,6 +106,35 @@
 	<script type="text/javascript" src="../../Script/select2.js"></script>
 	<script type="text/javascript" src="../../Script/bootstrap-paginator.js"></script>
 	<script>
+
+	$(function() {
+		// 构建分级树
+		var $tree = null;
+		var deptTree = $("#deptTree");
+		$.ajax({url: "system/user/get_simple_dept_tree", dataType: "JSON", type: "GET"}).done(function(data) {
+			$tree = $.fn.zTree.init(deptTree, {
+				data : {
+					simpleData : {
+						enable : true,
+						pIdKey : "parentId",
+						rootPId: 0
+					}
+				},
+				callback: {
+					onClick: function(eventjs, treeId, treeNode, clickFlag) {
+						queryParams.deptId = treeNode.id;
+						$("#pageNum").val(1);
+						queryParams.queryString = "";
+						showPage();
+					}
+				}
+			}, data.bean);
+			$tree.expandAll(true);
+		});
+		showPage();
+	});
+
+
 		"use strict";
 
 		var params = "&";

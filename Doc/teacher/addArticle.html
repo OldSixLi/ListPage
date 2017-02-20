@@ -110,8 +110,7 @@
 				source_url: $.trim($("#articleFromUrl").val()),
 				author: $.trim($("#articleAuthor").val()),
 				abstract: $.trim($("#articleAbstract").val()),
-				context: $.trim($("#articleContent").val()),
-				state: "Y"
+				context: $.trim($("#articleContent").val())
 			};
 			var __error = [];
 			if (saveInfo.title === "") {
@@ -144,7 +143,7 @@
 			}
 			$(":button").attr("disabled", true);
 			$.ajax({
-				url: "system/user/save",
+				url: "weixin/aritcle/saveOrEditAritcle",
 				data: saveInfo,
 				dataType: "JSON",
 				type: "POST"
