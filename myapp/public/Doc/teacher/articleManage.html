@@ -107,32 +107,32 @@
 	<script type="text/javascript" src="../../Script/bootstrap-paginator.js"></script>
 	<script>
 
-	$(function() {
-		// 构建分级树
-		var $tree = null;
-		var deptTree = $("#deptTree");
-		$.ajax({url: "system/user/get_simple_dept_tree", dataType: "JSON", type: "GET"}).done(function(data) {
-			$tree = $.fn.zTree.init(deptTree, {
-				data : {
-					simpleData : {
-						enable : true,
-						pIdKey : "parentId",
-						rootPId: 0
-					}
-				},
-				callback: {
-					onClick: function(eventjs, treeId, treeNode, clickFlag) {
-						queryParams.deptId = treeNode.id;
-						$("#pageNum").val(1);
-						queryParams.queryString = "";
-						showPage();
-					}
-				}
-			}, data.bean);
-			$tree.expandAll(true);
-		});
-		showPage();
-	});
+	// $(function() {
+	// 	// 构建分级树
+	// 	var $tree = null;
+	// 	var deptTree = $("#deptTree");
+	// 	$.ajax({url: "system/user/get_simple_dept_tree", dataType: "JSON", type: "GET"}).done(function(data) {
+	// 		$tree = $.fn.zTree.init(deptTree, {
+	// 			data : {
+	// 				simpleData : {
+	// 					enable : true,
+	// 					pIdKey : "parentId",
+	// 					rootPId: 0
+	// 				}
+	// 			},
+	// 			callback: {
+	// 				onClick: function(eventjs, treeId, treeNode, clickFlag) {
+	// 					queryParams.deptId = treeNode.id;
+	// 					$("#pageNum").val(1);
+	// 					queryParams.queryString = "";
+	// 					showPage();
+	// 				}
+	// 			}
+	// 		}, data.bean);
+	// 		$tree.expandAll(true);
+	// 	});
+	// 	showPage();
+	// });
 
 
 		"use strict";
@@ -182,7 +182,7 @@
 								"<td>" + content[i].state + "</td>" +
 								"<td>" + content[i].read_stats + "</td>" +
 								"<td>" + content[i].collection_stats + "</td>" +
-								"<td>" + "<button class='btn btn-link' onclick='seeDetail(\"" + content[i].id + "\")'>修改</button>|" +
+								"<td>" + "<button class='btn btn-link' onclick='editDetail(\"" + content[i].id + "\")'>修改</button>|" +
 								"<button class='btn btn-link' >废除</button>"+ "</td>" +
 								"</tr>";
 							htmlstr += singleDataStr;
@@ -198,15 +198,15 @@
 						$("#alreadyPage").hide();
 					}
 				}
-				tool.initPageDiv($("#alreadyPage"), //在哪里生成页码
-					pageindex, //当前页
-					data.page.totalPage, //一共多少页
-					10, //每次显示多少页
-					$("#currentPage"), //将每次的分页的页码放到这个input里
-					function() {
-						pageing($("#currentPage").val(), params);
-					}
-				);
+				// tool.initPageDiv($("#alreadyPage"), //在哪里生成页码
+				// 	pageindex, //当前页
+				// 	data.page.totalPage, //一共多少页
+				// 	10, //每次显示多少页
+				// 	$("#currentPage"), //将每次的分页的页码放到这个input里
+				// 	function() {
+				// 		pageing($("#currentPage").val(), params);
+				// 	}
+				// );
 			});
 
 		}
@@ -217,9 +217,9 @@
 		}
 
 		//订单详情
-		function editTeacher(id) {
+		function editDetail(id) {
 			//var goToDetail = "<c:url value='/sales/ordermaintenance/detail'/>";
-			var goToDetail = "http://" + tool.getUrlArea() + "/csfwpt_console/sales/ordermaintenance/detail";
+			var goToDetail = "addArticle.html";
 			window.location.href = goToDetail + "?locState=5&orderId=" + id;
 		}
 	</script>

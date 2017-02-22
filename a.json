@@ -1,0 +1,39 @@
+[{
+    id = ,
+    text = 请选择...,
+    elment = HTMLOptionElementx
+}, {
+    id = 101,
+    text = 一级菜单,
+    elment = HTMLOptGroupElement,
+    children = [{
+        id = 201,
+        text = 二级菜单1 - 1,
+        elment = HTMLOptionElementx
+    }, {
+        id = 202,
+        text = 二级菜单1 - 2,
+        elment = HTMLOptionElementx
+    }, {
+        id = 203,
+        text = 二级菜单1 - 3,
+        elment = HTMLOptionElementx
+    }]
+}, {
+    id = 102,
+    text = 一级菜单2,
+    elment = HTMLOptGroupElement,
+    children = [{
+        id = 204,
+        text = 二级菜单2 - 1,
+        elment = HTMLOptionElementx
+    }, {
+        id = 205,
+        text = 二级菜单2 - 2,
+        elment = HTMLOptionElementx
+    }, {
+        id = 206,
+        text = 二级菜单2 - 3,
+        elment = HTMLOptionElementx
+    }]
+}]
