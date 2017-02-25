@@ -1,0 +1,186 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="../Style/bootstrap.css">
+	<link rel="stylesheet" href="../Style/select2.min.css">
+	<link rel="stylesheet" href="../Style/pageindex.css">
+	<style>
+		.alert {
+			width: 180px;
+			height: 200px;
+			padding: 0;
+			margin-bottom: 20px;
+			border: none;
+			border-radius: 0;
+			display: inline-block;
+			margin-right: 10px;
+		}
+
+		#imgs-group {
+			font-size: 0;
+		}
+
+		.imgs {
+			width: 180px;
+			height: 180px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="section">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-2 text-right">
+					<!-- 点击上传教师头像 -->
+					<a href="" id="userIcon">
+						<img src="../images/2.jpg" class="img-responsive" style="width:180px;height:180px;">
+					</a>
+				</div>
+				<div class="col-sm-10">
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+							<div class="col-sm-2 text-right">
+								<label for="name" class="control-label">教师姓名</label>
+							</div>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="name" placeholder="请输入教师姓名">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-2 text-right">
+								<label for="born" class="control-label">出生日期</label>
+							</div>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="born" placeholder="请输入出生日期">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-2 text-right">
+								<label for="phone" class="control-label">联系电话</label>
+							</div>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="phone" placeholder="请输入联系电话">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-2 text-right">
+								<label for="email" class="control-label">联系邮箱</label>
+							</div>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="email" placeholder="请输入联系邮箱">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="control-label" for="introduce">
+              <h4>教师简介</h4>
+            </label>
+					<textarea class="form-control" id="introduce" placeholder="请输入教师简介" rows="5"></textarea>
+				</div>
+				<div class="form-group">
+					<label class="control-label" for="evaluation">
+              <h4>教师评价</h4>
+            </label>
+					<textarea class="form-control" id="evaluation" placeholder="请输入教师评价" rows="5"></textarea>
+				</div>
+				<h4>其他照片</h4>
+				<div class="row">
+					<div class="form-group col-xs-11" id="imgs-group">
+
+						<div class="alert">
+							<a title="删除此照片" href="#" class="close" data-dismiss="alert">×</a>
+							<img src="../images/2.jpg" class="imgs">
+						</div>
+					</div>
+					<div class="col-xs-1">
+						<a id="btnAddImg" title="添加照片"><span class="glyphicon glyphicon-plus" style="font-size:60px"></a></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12" style="margin:15px">
+				<div class="form-group text-right">
+					<button type="submit" class="btn btn-primary" id="saveBtn">保存教师信息</button>&nbsp;&nbsp;
+					<button type="button" class="btn btn-danger" id="cancelBtn" onclick="javascript:history.back(-1)">放弃本次操作</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 脚本 -->
+	<script type="text/javascript" src="../Script/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="../Script/bootstrap.js"></script>
+	<script type="text/javascript" src="../Script/select2.js"></script>
+	<script>
+		$("#btnAddImg").click(function() {
+			var appendStr = '<div class="alert"><a title="删除此照片" href="#" class="close" data-dismiss="alert">×</a><img src="../images/2.jpg" class="imgs"></div>';
+			if ($("#imgs-group").find(".alert").length <= 4) {
+				$("#imgs-group").append(appendStr);
+			} else {
+				alert("最多上传五张照片");
+			}
+		});
+
+
+		$("#saveBtn").click(function() {
+			// 校验
+			var error = [];
+			if (!$.trim($("#name").val())) {
+				error.push("教师名称不能为空！");
+				$("#name").parent().addClass('has-error');
+			}
+			if (!$.trim($("#born").val())) {
+				error.push("出生日期不能为空！");
+				$("#born").parent().addClass('has-error');
+			}
+			if (!$.trim($("#phone").val()) || !(/^1[34578]\d{9}$/.test(phone))) {
+				error.push("联系电话格式不正确！");
+				$("#phone").parent().addClass('has-error');
+			}
+			if (!$.trim($("#email").val())) {
+				error.push("联系邮箱不能为空！");
+				$("#email").parent().addClass('has-error');
+			}
+			if (!$.trim($("#introduce").val())) {
+				error.push("教师简介不能为空！");
+				$("#introduce").parent().addClass('has-error');
+			}
+			if (!$.trim($("#evaluation").val())) {
+				error.push("教师评价不能为空！");
+				$("#evaluation").parent().addClass('has-error');
+			}
+
+			//时间地点信息
+			var imgsArr = [];
+			$("#imgs-group").find('.alert').each(function(index) {
+				//对添加的上课时间地点信息进行遍历，输出JSON
+				var obj = {};
+				obj.images = $(this).find('img').attr("src"); //图片地址
+				imgsArr.push(obj); //上传图片地址
+			});
+
+			if (error.length > 0) {
+				error.push("请修改后再进行提交。")
+				tool.alert("提示", error.join("<br />"));
+				return false;
+			}
+
+		});
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,156 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" href="../Style/bootstrap.css">
+	<link rel="stylesheet" href="../Style/select2.min.css">
+	<link rel="stylesheet" href="../Style/pageindex.css">
+	<style>
+		.comment-pic img {
+			width: 100px;
+			height: 100px;
+			margin-right: 0 10px;
+			display: inline;
+		}
+
+		.singleComment-block {
+			padding: 10px 0;
+			border-bottom: 1px solid #ddd;
+		}
+
+		.reply:hover {
+			background-color: #E0DDDD;
+		}
+
+		.btn-reply {
+			margin-top: 10px;
+			text-align: right;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="section">
+		<div class="container">
+			<div class="row">
+				<div class="singleComment-block col-md-12" data-column="20">
+					<div class="row">
+						<p class="col-xs-6"><b>20#</b>&nbsp;&nbsp;<b>谢逊</b></p>
+						<p class="col-xs-6 text-right">2017-2-25 13:58:27</p>
+					</div>
+					<div class="row">
+						<p class="col-md-12">成昆之实力，竟恐怖如斯！</p>
+
+
+						<div class="col-xs-12 comment-pic">
+							<img class="img-responsive" src="../images/232.png" alt="">
+							<img class="img-responsive" src="../images/988.png" alt="">
+							<img class="img-responsive" src="../images/22323.png" alt="">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 text-right">
+							<a href="">回复</a>&nbsp;
+							<a href="">置顶</a>&nbsp;
+							<a href="">移除</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12"><b>回复区</b></div>
+					</div>
+					<div class="row reply">
+						<div class="col-xs-12">
+							<p>张无忌：义父莫慌，待我用乾坤大挪移降住他！</p>
+						</div>
+						<div class="col-xs-12 text-right">
+							2017-2-25 13:44:17
+							<a href="">修改</a>&nbsp;
+							<a href="">移除</a>
+						</div>
+					</div>
+					<div class="row reply">
+						<div class="col-xs-12">
+							<p>空见大师：打xi他！！！！</p>
+						</div>
+						<div class="col-xs-12 text-right">
+							2017-2-25 13:44:17
+							<a href="">修改</a>&nbsp;
+							<a href="">移除</a>
+						</div>
+					</div>
+				</div>
+				<div class="singleComment-block col-md-12" data-comment="1524">
+					<div class="row">
+						<p class="col-xs-6"><b>19#</b>&nbsp;&nbsp;<b class="comment-user">张无忌</b></p>
+						<p class="col-xs-6 text-right">2017-2-25 13:58:09</p>
+					</div>
+					<div class="row comment-detail">
+						<p class="col-md-12">找不到对手，好寂寞！</p>
+					</div>
+
+
+					<div class="row" id="op">
+						<div class="col-xs-12 text-right">
+							<a href="javascript:;" onclick="replyComment(this,1524)">回复</a>
+							<a href="">置顶</a>
+							<a href="">移除</a>
+						</div>
+					</div>
+					<div class="comment-reply-block row">
+
+						<div class="col-xs-12"><b>回复区</b></div>
+						<div class="col-xs-12 reply">
+							<p>崆峒派掌门：七伤小拳拳锤你胸口~~</p>
+							<div class="text-right">
+								2017-2-25 13:44:17　<a href="">修改</a>　<a href="">移除</a>
+							</div>
+						</div>
+						<div class="col-xs-12 reply">
+							<p>华山派掌门：小鬼又在装逼</p>
+							<div class="text-right">
+								2017-2-25 13:44:17　<a href="">修改</a>　<a href="">移除</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- 脚本 -->
+	<script type="text/javascript" src="../Script/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="../Script/bootstrap.js"></script>
+	<script type="text/javascript" src="../Script/select2.js"></script>
+	<script>
+		function replyComment(dom, commentId) {
+			var placeholder = $("[ data-comment='" + commentId + "']").find(".comment-user").text();
+			var replyHtmlStr = '<div class="row reply-block"><div class="col-md-12"><input type="text" class="form-control" data-replyto="' + commentId + '" placeholder="回复给' + placeholder + '">' +
+				'<div class="btn-reply"><button class="btn btn-primary btn-sm" onclick="commentReply(' + commentId + ')">发表回复</button>    <button class="btn btn-default btn-sm">取消</button></div></div></div>';　
+			$(dom).parent().parent().after(replyHtmlStr);　
+		}
+
+		function edit() {}
+
+		function deleteComment() {
+
+		}
+
+		function deleteReply() {
+
+		}
+		//发表评论
+		function commentReply(id) {
+			var reply = $("[data-replyto='" + id + "']").val(); //获取用户的评论
+			//拼接html
+			var htmlStr = '<div class="col-xs-12 reply"><p>华山派掌门：' + reply + '</p><div class="text-right">2017-2-25 13:44:17　<a href="">修改</a>　<a href="">移除</a></div></div>';
+			$("[ data-comment='" + id + "']").find(".comment-reply-block").append(htmlStr);
+			$(".reply-block").remove(); //如果成功
+		}
+	</script>
+</body>
+
+</html>

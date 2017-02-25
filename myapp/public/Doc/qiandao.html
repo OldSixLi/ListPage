@@ -1,0 +1,196 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" href="../Style/bootstrap.css">
+	<link rel="stylesheet" href="../Style/select2.min.css">
+	<link rel="stylesheet" href="../Style/pageindex.css">
+	<style>
+		.col-md-1 {
+			text-align: center;
+			vertical-align: middle;
+		}
+
+		.col-md-1>p {
+			text-align: center;
+		}
+
+		.col-md-1>span {
+			display: none;
+		}
+
+		.col-md-1.has-qiandao img {
+			opacity: 0.1;
+		}
+
+		.col-md-1.has-qiandao>span {
+			display: inline-block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			font-size: 50px;
+		}
+
+		.users {
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="section">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-12">
+									<h1 class="text-center">签到表<small><span id="qiandao-userNum">0</span>/<span>24</span></small></h1>
+									<p class="text-center lead">点击用户头像进行签到</p>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-1 users">
+									<a><img src="../images/1.jpg" class="img-responsive"></a>
+									<span class="glyphicon glyphicon-ok"></span>
+									<p>张三丰</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/1.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>张无忌</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/1.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>宋远桥</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/1.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>宋青书</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/1.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>张松溪</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/1.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>殷梨亭</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/1.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>张翠山</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/1.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>莫声谷</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/1.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>俞岱岩</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/1.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>张翠山</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/1.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>俞莲舟</p>
+								</div>
+								<div class="col-md-1 users">
+									<a id="a"><img src="../images/1.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>鹿杖客</p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-1 users">
+									<a><img src="../images/2.jpg" class="img-responsive"></a>
+									<span class="glyphicon glyphicon-ok"></span>
+									<p>张三丰</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/2.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>张无忌</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/2.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>宋远桥</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/2.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>宋青书</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/2.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>张松溪</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/2.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>殷梨亭</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/2.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>张翠山</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/2.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>莫声谷</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/2.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>俞岱岩</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/2.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>张翠山</p>
+								</div>
+								<div class="col-md-1 users">
+									<a><img src="../images/2.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>俞莲舟</p>
+								</div>
+								<div class="col-md-1 users">
+									<a id="a"><img src="../images/2.jpg" class="img-responsive"></a><span class="glyphicon glyphicon-ok"></span>
+									<p>鹿杖客</p>
+								</div>
+							</div>
+							<button class="btn btn-success" id="btnSave">输出</button>
+							<p class="yiqiandao"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 脚本 -->
+	<script type="text/javascript" src="../Script/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="../Script/bootstrap.js"></script>
+	<script type="text/javascript" src="../Script/select2.js"></script>
+	<script>
+		$(function() {
+			$(".col-md-1.users").each(function(index) {
+				$(this).on('click', function() {
+					$(this).toggleClass('has-qiandao');
+					$("#qiandao-userNum").text($(".has-qiandao").length);
+				});
+			});
+			$("#btnSave").click(function() {
+				var users = [];
+				$(".has-qiandao").each(function(index) {
+					users.push($(this).find('p').text());
+				});
+				$(".yiqiandao").html(users.join('<br/>'));
+			});
+		});
+	</script>
+
+
+
+</body>
+
+</html>
