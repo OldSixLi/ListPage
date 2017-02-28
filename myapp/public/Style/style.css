@@ -47,3 +47,19 @@ tr>th {
 .topage_block {
     margin: 20px 0 20px 10px;
 }
+
+.pagination-split li {
+    margin-left: 5px;
+    display: inline-block;
+    float: left;
+}
+
+.pagination-split li:first-child {
+    margin-left: 0;
+}
+
+.pagination-split li a {
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}

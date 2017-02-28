@@ -25,7 +25,8 @@
                              pageing($("#currentPage").val(), params);
                          }
                      );
-
+                     //  2017 年2月28日16: 06: 30 新增
+                     $("#alreadyPage").addClass('pagination-split')
                      //  $("#alreadyPage").show();
                  } else {
                      $("#databody").html('<tr><td colspan="100" class="text-center notFound">没有相关数据</td></tr> ');
