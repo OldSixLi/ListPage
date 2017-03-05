@@ -48,8 +48,7 @@
     <script type="text/javascript" src="../Script/bootstrap-paginator.js"></script>
     <script>
         /*global angular,alert,w5cValidator*/
-        (function() {
-            "use strict";
+        (function() { 
             var app = angular.module("myApp", ["w5c.validator"]);
             window.app = app;
             app.config(["w5cValidatorProvider", function(w5cValidatorProvider) {
@@ -87,7 +86,7 @@
                     $http({
                             method: 'POST',
                             url: 'process.php',
-                            data: $('[name="validateForm"]').serialize(), // pass in data as strings
+                            data: $('[name="validateForm"]').serialize(),
                             headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded'
                             } // set the headers so angular passing info as form data (not request payload)
@@ -110,39 +109,7 @@
                     alert("Save Successfully!!!");
 
 
-                };
-
-
-
-                // vm.customizer = function() {
-                //     return vm.entity.customizer > vm.entity.number;
-                // };
-
-                // vm.changeShowType = function() {
-                //     if (vm.showErrorType == 2) {
-                //         vm.validateOptions.showError = false;
-                //         vm.validateOptions.removeError = false;
-                //     } else {
-                //         vm.validateOptions.showError = true;
-                //         vm.validateOptions.removeError = true;
-                //     }
-                // };
-
-                //
-                // $http.get("index.js").success(function(result) {
-                //     vm.jsSource = result;
-                // });
-                // $http.get("validate.form.html").success(function(result) {
-                //     vm.htmlSource = result;
-                // });
-                // $http.get("validate.form.html").success(function(result) {
-                //     vm.htmlSource = result;
-                // });
-                //
-                // $http.get("css/style.less").success(function(result) {
-                //     vm.lessSource = result;
-                // });
-
+                }; 
             }]);
 
         })();
