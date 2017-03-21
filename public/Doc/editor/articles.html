@@ -1,0 +1,82 @@
+<!-- 马少博  创建于 Date -->
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/myapp/public/images/my.ico' />
+  <title> 富文本编辑器配置</title>
+  <!-- Bootstrap引用 -->
+  <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>
+  <link href="../../Style/wangEditor.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <!-- 消除外边距 -->
+      <div class="col-md-12">
+        <div class="form-group ">
+          <label for="id" class="control-label">正文</label>
+          <div id="articleContent" style="height:600px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 脚本 -->
+  <!-- <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script> -->
+  <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>
+  <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+  <!-- 脚本 -->
+  <script type="text/javascript" src="../../Script/wangEditor.js"></script>
+
+  <script>
+    //富文本编辑器事件
+    var editor = new wangEditor('articleContent');
+    var project_id = $("#project_id").val();
+    var articleId = $.trim($("#articleId").val());
+    editor.config.hideLinkImg = true;
+    editor.config.uploadImgFileName = 'myFileName';
+    editor.config.hideLinkImg.uploadFileName = "myFileName";
+    // editor.config.uploadImgUrl = "http://" + tool.getUrlArea() + "/csfwpt_console/weixin/aritcle/uploadPic";
+    editor.config.menus = $.map(wangEditor.config.menus, function(item, key) {
+      // 配置菜单
+      // 插入代码
+      if (item === 'insertcode') {
+        return null;
+      }
+      // 全屏按钮
+      if (item === 'fullscreen') {
+        return null;
+      }
+      // 移除源码按钮
+      if (item === 'source') {
+        return null;
+      }
+      //移除表情菜单按钮
+      if (item === 'emotion') {
+        return null;
+      }
+      if (item === 'video') {
+        return null;
+      }
+      if (item === 'location') {
+        return null;
+      }
+      if (item === 'fontfamily') {
+        return null;
+      }
+
+
+
+      return item;
+    });
+    //创建富文本编辑器
+    editor.create();
+  </script>
+</body>
+
+</html>
