@@ -14,13 +14,60 @@
 </head>
 
 <body>
+  <div class="header container-fluid">
+    <!-- 顶部模块 -->
+    <div class="row">
+      <!-- 隐藏域的值 -->
+      <input type="hidden" id="project_id" value="<c:out value='${project_id }'/>">
+      <input type="hidden" id="articleId" value="<c:out value='${article.id }'/>">
+      <input type="hidden" id="hidden_typeid" value="<c:out value='${type_id}'/>">
+      <input type="hidden" id="typeList" value="<c:out value='${typeList}'/>">
+      <!-- 面包屑导航 -->
+      <ol class="breadcrumb col-xs-6" style="border-radius:0;padding:0 15px;">
+        <li><a href="javascript:void(0)">文章管理</a></li>
+        <li class="active">文章编辑</li>
+      </ol>
+    </div>
+  </div>
   <div class="container">
     <div class="row">
+      <!-- 隐藏域的值 -->
+      <input type="hidden" id="articleId" value="<c:out value='${article.id }'/>">
       <!-- 消除外边距 -->
-      <div class="col-md-12">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="form-group">
+          <label for="id" class="control-label">文章标题</label>
+          <input class="form-control" id="articleHeading" name="articleHeading" placeholder="请输入文章标题" value="<c:out value='${article.title}'/>" type="text">
+        </div>
+        <div class="form-group">
+          <label for="id" class="control-label">副标题</label>
+          <input class="form-control" id="articleHeading" name="articleHeading" placeholder="请输入文章副标题" value="<c:out value='${article.subtitle}'/>" type="text">
+        </div>
         <div class="form-group ">
           <label for="id" class="control-label">正文</label>
-          <div id="articleContent" style="height:600px;"></div>
+          <div id="articleContent" style="height:600px;">${article.content}</div>
+        </div>
+        <div class="form-group">
+          <label for="id" class="control-label">文章来源</label>
+          <input class="form-control  " id="articleFrom" name="articleFrom" placeholder="请输入文章来源" type="text" value="<c:out value='${article.from}'/>">
+        </div>
+        <div class="form-group">
+          <label for="id" class="control-label">来源地址</label>
+          <input class="form-control  " id="articleFromUrl" name="articleFromUrl" placeholder="请输入文章来源地址" type="text" value="<c:out value='${article.sourceUrl}'/>">
+        </div>
+        <div class="form-group">
+          <label for="id" class="control-label">作者</label>
+          <input class="form-control  " id="articleAuthor" name="articleAuthor" placeholder="请输入文章作者" type="text" value="<c:out value='${article.author}'/>">
+        </div>
+        <div class="form-group">
+          <label for="id" class="control-label">文章摘要</label>
+          <textarea class="form-control" id="articleAbstract" name="articleAbstract" tabindex="6" 　maxlength=2000>
+						</textarea>
+          <input type="hidden" id="hidden_abstract" name="" value="<c:out value='${article.excerpt}'/>">
+        </div>
+        <div class="form-group text-right">
+          <button type="button" class="btn btn-primary" id="saveBtn">保存文章内容</button> &nbsp;&nbsp;
+          <button type="button" class="btn btn-danger" id="cancelBtn" onclick="javascript:history.back(-1)">取消</button>
         </div>
       </div>
     </div>
@@ -32,7 +79,6 @@
   <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
   <!-- 脚本 -->
   <script type="text/javascript" src="../../Script/wangEditor.js"></script>
-
   <script>
     //富文本编辑器事件
     var editor = new wangEditor('articleContent');
@@ -69,9 +115,6 @@
       if (item === 'fontfamily') {
         return null;
       }
-
-
-
       return item;
     });
     //创建富文本编辑器
