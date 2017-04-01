@@ -1,0 +1,225 @@
+<!-- 马少博  创建于 Date -->
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/myapp/public/images/my.ico' />
+  <title> </title>
+  <!-- Bootstrap引用 -->
+  <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>
+  <style>
+    body {
+      font-family: "MicroSoft YaHei"
+    }
+    
+    .content {
+      /*text-align: center;*/
+      width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .form-control {
+      border: 2px solid #6699ff;
+    }
+    
+    .content .img-block {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .content .h3 {
+      margin-top: 40px;
+      font-size: 20px;
+      color: #333;
+      margin-bottom: 22px;
+    }
+    
+    .recent {
+      margin-top: 35px;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+    
+    .input-group,
+    .search {
+      width: 760px;
+      margin: 0 auto;
+      margin-top: 15px;
+    }
+    
+    p.recent {
+      color: #7f7f7f;
+      font-weight: bold;
+      font-size: 12px;
+    }
+    
+    .recent>a {
+      margin-right: 15px;
+      text-decoration: underline;
+      color: #7f7f7f;
+      cursor: pointer;
+    }
+    
+    .recent>a:hover {
+      color: #4786c8;
+    }
+    
+    .recent>span {
+      margin-right: 25px;
+    }
+    
+    .search-btn {
+      width: 106px;
+      background-color: #6699ff;
+      border-color: #6699ff;
+    }
+    
+    .table td {
+      line-height: 50px;
+    }
+    
+    #searchTable {
+      width: 760px;
+      margin: 0 auto;
+    }
+    
+    #searchTable th {
+      font-size: 14px;
+      color: #333;
+    }
+    
+    #searchTable td {
+      font-size: 12px;
+      color: #444;
+    }
+    
+    .content .containers {
+      width: 760px;
+      margin: 0 auto;
+    }
+    
+    .no-left {
+      padding-left: 0;
+      margin-left: 0;
+    }
+    
+    .copy {
+      margin-top: 17px;
+    }
+    
+    .copy-btn {
+      font-size: 12px;
+      width: 130px;
+      height: 30px;
+      background-color: #6699ff;
+      border-color: #6699ff;
+    }
+    
+    .alert {
+      width: 230px;
+      height: 30px;
+      font-size: 12px;
+      line-height: 30px;
+      padding: 0 15px;
+    }
+    
+    .alert.alert-info {
+      background-color: #6699ff;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="content">
+    <div class="row">
+      <h3 class="text-center h3">授权号查询</h3>
+      <!--<hr>-->
+      <div class="img-block">
+        <img src='../../images/line.png' class='img' alt='自定义'>
+
+      </div>
+      <p class="text-center">纳税人识别号、统一社会信用代码</p>
+      <div class="col-md-12">
+        <!--<div class="input-group">
+          <input type="text" class="form-control" placeholder="请输入要查询的纳税人识别号、统一社会信用代码" aria-describedby="basic-addon2">
+          <span class="input-group-addon glyphicon glyphicon-search" id="basic-addon2"></span>
+        </div>-->
+        <div class="input-group search">
+          <input type="text" class="form-control" placeholder="请输入要查询的纳税人识别号、统一社会信用代码">
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-primary search-btn">　　
+                <span class="glyphicon glyphicon-search"></span>　　</button>
+          </div>
+        </div>
+        <p class="recent">
+          <span>近期查询:</span>
+          <a>12154878465485</a>
+          <a>12154878465485</a>
+          <a>12154878465485</a>
+          <a>12154878465485</a>
+          <a>12154878465485</a>
+        </p>
+        <table class="table" id="searchTable">
+          <thead>
+            <tr>
+              <th style="width: 130px;">纳税人识别号</th>
+              <th style="width:195px;">纳税人名称</th>
+              <th style="width:115px;">光盘号码</th>
+              <th style="width:250px;">授权号码</th>
+              <th style="width:100px;">授权号类别</th>
+            </tr>
+          </thead>
+          <tbody id="result">
+            <tr>
+              <td>120223572314195</td>
+              <td>天津市亿方达建筑砌块</td>
+              <td>2MA7CFF8O8W8</td>
+              <td>064E466DE346EFA6E8827D3428A8</td>
+              <td>介质申报</td>
+            </tr>
+            <tr>
+              <td>120223572314195</td>
+              <td>天津市亿方达建筑砌块</td>
+              <td>2MA7CFF8O8W8</td>
+              <td>EF119B4E27D14170A14239D9D7C1</td>
+              <td>网上申报</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+  </div>
+  <div>
+    <div class="content copy">
+      <div class="containers">
+        <div class="col-md-4 no-left">
+
+          <div class="alert alert-danger" role="alert">
+            <strong> 请输入要查询的纳税人识别号!</strong>
+          </div>
+          <div class="alert alert-danger" role="alert">
+            <strong> 没有对应的授权信息!</strong>
+          </div>
+          <div class="alert alert-info" role="alert">
+            <strong> 数据复制成功!</strong>
+          </div>
+        </div>
+
+        <input type="button" value="复制到剪贴板" class="btn btn-primary pull-right copy-btn" id="toCopy">
+      </div>
+    </div>
+  </div>
+  <!-- 脚本 -->
+  <!-- <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script> -->
+  <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>
+  <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+</body>
+
+</html>

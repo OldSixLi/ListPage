@@ -1,0 +1,167 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="https://raw.githubusercontent.com/OldSixLi/ListPage/master/myapp/public/images/my.ico">
+  <title>子产品页面</title>
+  <!-- Bootstrap引用 -->
+  <link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .padding0 {
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <form class="form-horizontal" role="form">
+            <div class="form-group">
+              <div class="col-sm-1 text-right padding0">
+                <label for="inputEmail3" class="control-label">子产品名称:</label>
+              </div>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputEmail3" placeholder="请输入子产品名称">
+              </div>
+              <div class="col-sm-1">
+                <a class="btn btn-block btn-primary">修改</a>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-1 text-right padding0">
+                <label for="inputPassword3" class="control-label">子产品描述:</label>
+              </div>
+              <div class="col-sm-11">
+                <textarea type="text" class="form-control" id="inputPassword3" placeholder="请输入子产品描述"></textarea>
+                <p>不允许换行，文字总数不能超过140字</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-1 text-right padding0">
+                <label for="inputPassword3" class="control-label">子产品配图:</label>
+              </div>
+              <div class="col-sm-10">
+                <img src="http://usr.im/200x200?text=文字说明" class="img-responsive img-thumbnail" alt="自定义">
+                <a class="btn btn-primary" style="vertical-align: top;">选择图片</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <hr>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <p class="col-md-6">
+          <b>资源列表</b>
+        </p>
+        <p class="col-md-6 text-right">
+          <a class="btn btn-primary">新增资源</a>
+        </p>
+        <div class="col-md-12">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">版本</th>
+                <th class="text-left">完整安装包</th>
+                <th class="text-center">安装及使用说明</th>
+                <th class="text-center">离线升级包</th>
+                <th class="text-left">升级说明</th>
+                <th class="text-center">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center">1</td>
+                <td class="text-center">Mark</td>
+                <td class="text-left">有</td>
+                <td class="text-center">有</td>
+                <td class="text-left">有</td>
+                <td class="text-center">有</td>
+                <td class="text-center">
+                  <a class="btn btn-link">设为当前版本</a>
+                  <a class="btn btn-link">修改</a>
+                  <a class="btn btn-link">删除</a>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">1</td>
+                <td class="text-center">Mark</td>
+                <td class="text-left">有</td>
+                <td class="text-center">有</td>
+                <td class="text-left">有</td>
+                <td class="text-center">有</td>
+                <td class="text-center">
+                  <a class="btn btn-link">设为当前版本</a>
+                  <a class="btn btn-link">修改</a>
+                  <a class="btn btn-link">删除</a>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">1</td>
+                <td class="text-center">Mark</td>
+                <td class="text-left">有</td>
+                <td class="text-center">有</td>
+                <td class="text-left">有</td>
+                <td class="text-center">有</td>
+                <td class="text-center">
+                  <a class="btn btn-link">设为当前版本</a>
+                  <a class="btn btn-link">修改</a>
+                  <a class="btn btn-link">删除</a>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">1</td>
+                <td class="text-center">Mark</td>
+                <td class="text-left">有</td>
+                <td class="text-center">有</td>
+                <td class="text-left">有</td>
+                <td class="text-center">有</td>
+                <td class="text-center">
+                  <a class="btn btn-link">设为当前版本</a>
+                  <a class="btn btn-link">修改</a>
+                  <a class="btn btn-link">删除</a>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">1</td>
+                <td class="text-center">Mark</td>
+                <td class="text-left">有</td>
+                <td class="text-center">有</td>
+                <td class="text-left">有</td>
+                <td class="text-center">有</td>
+                <td class="text-center">
+                  <a class="btn btn-link">设为当前版本</a>
+                  <a class="btn btn-link">修改</a>
+                  <a class="btn btn-link">删除</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 脚本 -->
+  <!-- <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script> -->
+  <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+  <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+
+
+
+
+
+</body>
+
+</html>

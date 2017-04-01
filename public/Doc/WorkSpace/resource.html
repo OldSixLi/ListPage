@@ -1,0 +1,279 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="https://raw.githubusercontent.com/OldSixLi/ListPage/master/myapp/public/images/my.ico">
+  <title></title>
+  <!-- Bootstrap引用 -->
+  <link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .well .row {
+      margin: 5px -15px;
+    }
+    
+    .well .form-group {
+      margin-bottom: 0;
+    }
+    
+    .w150 {
+      width: 150px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <input type="hidden" name="productId" value="">
+          <!--<form class="form-horizontal" role="form">
+            <div class="form-group">
+              <div class="col-sm-2  text-right">
+                <label for="version" class="control-label">资源版本:</label>
+              </div>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="version" name="version" placeholder="请输入资源版本号">
+              </div>
+            </div>
+          </form>-->
+
+
+          <!--完整安装包-->
+          <form class="form-horizontal" role="form" id="fullBagForm">
+            <div class="well">
+              <div class="row">
+                <div class="form-group">
+                  <div class="col-sm-2  text-right">
+                    <label for="version" class="control-label">资源版本:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="version" name="version" placeholder="请输入资源版本号">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-2 text-right">
+                    <label for="inputPassword3" class="control-label">完整安装包:</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="请上传安装包">
+                  </div>
+                  <div class="col-sm-1">
+                    <a class="btn btn-primary btn-block">上传</a>
+                  </div>
+                  <div class="col-sm-1">
+                    <a class="btn btn-default btn-block">清除</a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-2 text-right">
+                    <label for="inputPassword3" class="control-label">百度云地址:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="url" name="url" placeholder="请输入百度云地址">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+
+          <!--安装及使用说明-->
+          <form class="form-horizontal" role="form" id="noteForm">
+            <div class="well">
+              <div class="row">
+                <div class="form-group">
+                  <div class="col-sm-2  text-right">
+                    <label for="version" class="control-label">资源版本:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="version" name="version" placeholder="请输入资源版本号">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-2 text-right">
+                    <label for="inputPassword3" class="control-label">安装及使用说明:</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="请上传安装包">
+                  </div>
+                  <div class="col-sm-1">
+                    <a class="btn btn-primary btn-block">上传</a>
+                  </div>
+                  <div class="col-sm-1">
+                    <a class="btn btn-default btn-block">清除</a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-2 text-right">
+                    <label for="inputPassword3" class="control-label">百度云地址:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="url" name="url" placeholder="请输入百度云地址">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <!--离线升级包-->
+          <form class="form-horizontal" role="form" id="upForm">
+            <div class="well">
+              <div class="row">
+                <div class="form-group">
+                  <div class="col-sm-2  text-right">
+                    <label for="version" class="control-label">资源版本:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="version" name="version" placeholder="请输入资源版本号">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-2 text-right">
+                    <label for="inputPassword3" class="control-label">离线升级包:</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="请上传安装包">
+                  </div>
+                  <div class="col-sm-1">
+                    <a class="btn btn-primary btn-block">上传</a>
+                  </div>
+                  <div class="col-sm-1">
+                    <a class="btn btn-default btn-block">清除</a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-2 text-right">
+                    <label for="inputPassword3" class="control-label">百度云地址:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="url" name="url" placeholder="请输入百度云地址">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <!--升级说明-->
+          <form class="form-horizontal" role="form" id="upNoteForm">
+            <div class="well">
+              <div class="row">
+                <div class="form-group">
+                  <div class="col-sm-2  text-right">
+                    <label for="version" class="control-label">资源版本:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="version" name="version" placeholder="请输入资源版本号">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-sm-2 text-right">
+                    <label for="inputPassword3" class="control-label">升级说明:</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="请上传安装包">
+                  </div>
+                  <div class="col-sm-1">
+                    <a class="btn btn-primary btn-block">上传</a>
+                  </div>
+                  <div class="col-sm-1">
+                    <a class="btn btn-default btn-block">清除</a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-2 text-right">
+                    <label for="inputPassword3" class="control-label">百度云地址:</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="url" name="url" placeholder="请输入百度云地址">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-right">
+          <a class="btn btn-primary w150" id="saveBtn">保存</a>
+          <a class="btn btn-default w150">取消</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 脚本 -->
+  <!-- <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script> -->
+  <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+  <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script>
+    $(function() {
+      $("#saveBtn").click(function() {
+        var jsonArr = [];
+        var jsonStr = "";
+        $("#fullBagForm,#noteForm,#upForm,#upNoteForm").each(function() {
+          var obj = serializeObject($(this));
+          if (obj != null) {
+            jsonArr.push(obj);
+          }
+        });
+
+        jsonStr = JSON.stringify(jsonArr); //获取拼接的JSON数据 
+        var saveInfo = {
+          productId: $("#id").val(),
+          data: jsonStr
+        };
+        //后期确认是否校验
+        var __error = [];
+        if (__error.length > 0) {
+          tool.alert("提示", __error.join("<br />"));
+          return false;
+        }
+        $("#saveBtn").attr("disabled", true);
+        $.ajax({
+          url: "product/save_resources",
+          data: saveInfo,
+          dataType: "JSON",
+          type: "POST"
+        }).done(function(data) {
+          if (data.success) {
+            tool.alert('提示', '保存成功');
+          } else {
+            tool.alert("提示", data.message);
+          }
+        }).done(function(data) {
+          $("#saveBtn").attr("disabled", false);
+        });
+        return false;
+      });
+
+    });
+    //序列化表单值
+    function serializeObject(form) {
+      var o = {};
+      $.each(form.serializeArray(), function(index) {
+        if (o[this['name']]) {
+          o[this['name']] = o[this['name']] + this['value'];
+        } else {
+          o[this['name']] = this['value'];
+        }
+      });
+      return o;
+    }
+
+    // serializeObject($('#formId'))
+  </script>
+
+</body>
+
+</html>

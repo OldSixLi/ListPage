@@ -1,0 +1,391 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="https://raw.githubusercontent.com/OldSixLi/ListPage/master/myapp/public/images/my.ico">
+  <title>安全中心设置</title>
+  <!-- Bootstrap引用 -->
+  <link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+  <style type="text/css">
+    body {
+      background-color: #fff;
+    }
+    
+    .safe-top {
+      width: 100%;
+      height: 135px;
+      padding-top: 50px;
+      text-align: center;
+      font-size: 20px;
+      color: #333;
+    }
+    
+    .safe-table {
+      width: 600px;
+      margin-left: 90px;
+      text-align: center;
+      /*position: absolute;*/
+    }
+    
+    .safe-table tr {
+      height: 40px;
+    }
+    
+    .safe-table td {
+      border: 1px solid #c9cee3;
+    }
+    
+    .safe-td-left {
+      width: 185px;
+      font-size: 14px;
+      color: #333;
+    }
+    
+    .safe-td-right {
+      font-size: 14px;
+      color: #4786c8;
+      text-decoration: underline;
+    }
+    
+    #safeAccount {
+      background-color: transparent;
+      border: 0px;
+      width: 280px;
+      font-size: 14px;
+      color: #ccc;
+    }
+    
+    #safeAccountInput {
+      display: none;
+    }
+    
+    #safeAccountSubmit {
+      float: right;
+      margin-right: 10px;
+      display: none;
+    }
+    
+    .safe-alert {
+      float: right;
+      position: relative;
+      font-size: 14px;
+      color: #f4f4f4;
+      background-color: #ff7700;
+      height: 30px;
+      line-height: 28px;
+      margin-right: 15px;
+      z-index: 22;
+      text-align: center;
+      display: none;
+    }
+    /*马少博 2017年3月31日11:13:58  新增*/
+    
+    #phoneModal,
+    #phoneRemoveModal {
+      /*width: 603px;*/
+      margin: 0 auto;
+      font-family: "MicroSoft YaHei";
+    }
+    
+    .half-block {
+      width: 50%;
+      float: left;
+    }
+    
+    .half-block.send-info {
+      padding-left: 15px;
+      line-height: 35px;
+    }
+    
+    .p-alert {
+      color: #ddd;
+      padding: 0;
+      margin: -10px 0 10px -10px;
+      /*font-size: 12px;*/
+    }
+    
+    .p-bangding {
+      color: #4786c8;
+    }
+    
+    .p-remove {
+      color: #ff7700;
+      font-size: 18px;
+      line-height: 60px;
+    }
+    
+    .button {
+      width: 170px;
+      height: 30px;
+      border: 1px solid #ff7700;
+      border-radius: 0;
+      display: inline-block;
+      font-size: 12px;
+      color: #7f7f7f;
+    }
+    
+    .btn-default:hover {
+      background-color: #ff7700;
+      color: #f4f4f4;
+    }
+    
+    .btn-success {
+      background-color: #ff7700;
+      /*margin-left:20px;*/
+      color: #f4f4f4;
+    }
+    
+    .btn-success:hover {
+      background-color: #fff;
+      color: #7f7f7f;
+      border-color: #ff7700;
+    }
+    
+    .button-block {
+      width: 360px;
+      margin: 30px auto 0;
+    }
+    
+    .erweima {
+      font-family: "MicroSoft YaHei";
+      width: 500px;
+      height: 500px;
+      margin: 0 auto;
+      /*padding: 130px;*/
+      background-color: #333333;
+      position: absolute;
+      top: 100px;
+      left: 0;
+      right: 0;
+      box-shadow: 0 0 15px #888888;
+      display: none;
+    }
+    
+    .erweima>.close-erweima {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 20px;
+      color: #fff;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    
+    .erweima>.close-erweima:hover {
+      color: #ddd;
+    }
+    
+    .erweima>.img {
+      width: 270px;
+      height: 270px;
+      margin: 85px 115px 40px 115px;
+    }
+    
+    .p-weixin {
+      width: 300px;
+      height: 45px;
+      line-height: 45px;
+      border-radius: 35px;
+      font-size: 15px;
+      color: #fff;
+      text-align: center;
+      margin: 0 auto;
+      /*border: 1px solid #fff;*/
+      background-color: #232323;
+    }
+  </style>
+</head>
+
+<body ontouchstart="" style="">
+  <div class="row">
+    <!-- 消除外边距 -->
+    <div class="col-md-12">
+      <div class="safe-top">请完善您的安全信息</div>
+      <!-- 错误弹框 -->
+      <div id="safeAccountError" class="safe-alert" style="width:140px;margin-top:5px;"></div>
+      <div id="safePasswordError" class="safe-alert" style="width:240px;margin-top:45px;"></div>
+      <!-- 错误弹框 -->
+      <table class="safe-table table">
+        <tbody>
+          <tr>
+            <td class="safe-td-left">个性账号</td>
+            <td>
+              <div id="safeAccountInput">
+                <input id="safeAccount" class="safe-input" type="text" placeholder="请在此输入，20次以内，一旦创建不可修改" maxlength="20" onblur="showSubmit();">
+                <span class="safe-td-right" id="safeAccountSubmit">提交</span>
+              </div>
+              <div id="safeAccountText"></div>
+              <span class="safe-td-right" id="safeAccountButton">添加个性账号</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="safe-td-left">登录密码</td>
+            <td class="safe-td-right">添加登录密码</td>
+          </tr>
+          <tr>
+            <td class="safe-td-left">绑定手机号</td>
+            <td class="safe-td-right">
+              <a href="#phoneModal" class="btn btn-link" data-toggle="modal" id="phoneAdd">添加手机号</a>
+              <a class="btn btn-link" id="phoneRemove" href="#phoneRemoveModal" data-toggle="modal">解绑</a>
+            </td>
+          </tr>
+          <tr>
+            <td class="safe-td-left">绑定邮箱</td>
+            <td class="safe-td-right"> <a href="#emailModal" class="btn btn-link" data-toggle="modal" id="emailAdd">添加邮箱</a>
+              <a class="btn btn-link" id="emailRemove" href="#emailRemoveModal" data-toggle="modal">解绑邮箱</a></td>
+          </tr>
+          <tr>
+            <td class="safe-td-left">绑定微信</td>
+            <td class="safe-td-right">
+              <a class="btn btn-link" id="erweimaLink">微信扫一扫</a>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <div>
+
+    <!--//绑定手机号MODAL-->
+    <div class="modal fade" id="phoneModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><b>x</b></button>
+            <h4 class="modal-title p-bangding">绑定手机号</h4>
+          </div>
+          <div class="modal-body ">
+            <p class="p-alert">我们将把验证码发送到您的手机短信,请注意查收</p>
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <form role="form">
+                  <div class="form-group">
+                    <input class="form-control" id="newPhone" placeholder="请输入手机号,获取验证码" type="text">
+                  </div>
+                  <div class="form-group half-block">
+                    <input class="form-control" id="newNumber" placeholder="输入4位数验证码" type="text">
+                  </div>
+                  <div class="half-block send-info"> <a class="btn btn-link" id="getNumber">发送验证码</a></div>
+                  <button type="submit" class="btn btn-block btn-warning" id="savePhoneNum">确定</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--解绑手机号MODAL-->
+    <div class="modal fade" id="phoneRemoveModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><b>x</b></button>
+            <h4 class="modal-title p-bangding">提示</h4>
+          </div>
+          <div class="modal-body ">
+            <p class="text-center p-remove">手机号解除绑定后,将不能使用手机号登陆,确定要解绑吗</p>
+            <div class="button-block">
+              <button type="button" class="btn btn-default button" id="removePhoneBtn">确定</button>
+              <button type="button" class="btn btn-success button cancel-remove" id="cancelBtn" data-dismiss="modal">取消</button>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+
+        </div>
+      </div>
+    </div>
+
+    <!--*********************************************************邮箱操作**-->
+    <!--//绑定邮箱MODAL-->
+    <div class="modal fade" id="emailModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><b>x</b></button>
+            <h4 class="modal-title p-bangding">绑定邮箱</h4>
+          </div>
+          <div class="modal-body ">
+            <p class="p-alert">我们将把验证码发送到您的邮箱,请注意查收</p>
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <form role="form">
+                  <div class="form-group">
+                    <input class="form-control" id="newEmail" placeholder="请输入邮箱地址,获取验证码" type="text">
+                  </div>
+                  <div class="form-group half-block">
+                    <input class="form-control" id="newEmailNumber" placeholder="输入6位数验证码" type="text">
+                  </div>
+                  <div class="half-block send-info"> <a class="btn btn-link" id="getEmailNumber">发送验证码</a></div>
+                  <button type="submit" class="btn btn-block btn-warning" id="saveEmailNum">确定</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--解绑邮箱MODAL-->
+    <div class="modal fade" id="emailRemoveModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><b>x</b></button>
+            <h4 class="modal-title p-bangding">提示</h4>
+          </div>
+          <div class="modal-body ">
+            <p class="text-center p-remove">邮箱解除绑定后,将不能使用邮箱地址登陆,确定要解绑吗</p>
+            <div class="button-block">
+              <button type="button" class="btn btn-default button" id="removeEmailBtn">确定</button>
+              <button type="button" class="btn btn-success button cancel-remove" id="cancelEmailBtn" data-dismiss="modal">取消</button>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="erweima">
+    <a class="close-erweima">X</a>
+    <img src="../../images/erweima.png" class="img" alt="二维码">
+    <p class="p-weixin ">请用微信扫描二维码绑定</p>
+  </div>
+  <!-- 脚本 -->
+  <!-- <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script> -->
+  <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+  <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="../../Script/safe.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $("#safeAccountButton").on("click", function() {
+        $(this).hide();
+        $("#safeAccountInput").show();
+      });
+    });
+
+    function showSubmit() {
+      //$("#safeAccountSubmit").show();
+      $("#safeAccountError").html("已被使用");
+      //$("#safeAccountError").show();
+      $("#safePasswordError").show();
+    }
+  </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,328 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="https://raw.githubusercontent.com/OldSixLi/ListPage/master/myapp/public/images/my.ico">
+  <title></title>
+  <!-- Bootstrap引用 -->
+  <link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+  <link href="http://www.bootcss.com/p/bootstrap-datetimepicker/bootstrap-datetimepicker/css/datetimepicker.css" rel="stylesheet">
+  <style>
+    .modal-backdrop {
+      position: fixed;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      z-index: -1;
+      background-color: #fff;
+    }
+    
+    .modal {
+      position: fixed;
+      top: 100px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      z-index: 1050;
+      display: none;
+      overflow: hidden;
+      outline: 0px;
+    }
+    
+    #course_panel {
+      margin-bottom: 0;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    
+    #newcolumn>div {
+      display: inline-block;
+      font-size: 14px;
+      padding: 4px 8px;
+    }
+    
+    #newcolumn {
+      font-size: 0;
+      border: 1px solid #ddd;
+      border-top: none;
+    }
+    
+    .course_column_bottom {
+      padding: 5px 0;
+      border: 1px solid #ddd;
+      background-color: #EFF0F4;
+      border-top: none;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+    
+    .course_column_bottom:hover {
+      background-color: #E5E7EC;
+    }
+    
+    #addCourseColumn {
+      margin: 0;
+      cursor: pointer;
+    }
+    
+    .img-responsive {
+      width: 110px;
+      height: 110px;
+    }
+    
+    .close-media {
+      position: absolute;
+      right: 0;
+      top: -5px;
+    }
+    
+    .media {
+      padding: 15px;
+      position: relative;
+    }
+    
+    .has-error .select2-container--default span.select2-selection--single {
+      border: 1px solid #a94442;
+      border-radius: 4px;
+    }
+    
+    .nav-tabs>li.active>a,
+    .nav-tabs>li.active>a:focus,
+    .nav-tabs>li.active>a:hover {
+      border-top-width: 2px;
+      border-top-color: #09c;
+      border-bottom: none;
+    }
+    
+    .nav-tabs>li>a {
+      padding: 15px;
+      border-radius: 0;
+      margin-right: 0;
+      font-size: 16px;
+    }
+    
+    .nav-tabs>li {
+      padding: 0;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .nav-tabs {
+      height: 56px;
+      border: none;
+    }
+    
+    .nav-tabs>.active {
+      border-bottom: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header container-fluid">
+    <div class="row">
+      <ol class="breadcrumb col-xs-6">
+        <li><a href="javascript:;">产品管理</a></li>
+        <li>
+          <a>${webSoftware.name}</a>
+        </li>
+      </ol>
+    </div>
+  </div>
+  <div class="workframe">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- 消除外边距 -->
+        <div class="col-md-6">
+          <div class="form-group" style="margin-top: 10px">
+            <label class="col-xs-3 control-label" style="margin-top:-3px;width:90px;">查询日期:</label>
+            <div class="col-xs-9" style="margin-top:-10px;">
+              <div style="width:47%;float:left">
+                <div class="input-group input-append date form_datetime" data-picker-position="bottom-left">
+                  <input size="16" class="form-control" readonly id="startTime" type="text" name="start" placeholder="请输入注册起始时间" value="">
+                  <span class="add-on input-group-addon"><i class="icon-th glyphicon glyphicon-calendar"></i></span>
+                </div>
+              </div>
+              <div style="width:6%;float:left;text-align:center;line-height:34px;font-weight:bold;">
+                <span>至</span>
+              </div>
+              <div style="width:47%;float:left">
+                <div class="input-group input-append date form_datetime" data-picker-position="bottom-left">
+                  <input size="16" class="form-control" readonly id="endTime" type="text" name="end" placeholder="请输入注册终止时间" value="">
+                  <span class="add-on input-group-addon"><i class="icon-th glyphicon glyphicon-calendar"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tabbable" id="tabs" style="margin-top: 10px;">
+        <ul class="nav nav-tabs">
+          <li class="active col-xs-6 text-center">
+            <a href="#panel-info" data-toggle="tab">未回复建议</a>
+          </li>
+          <li class="col-xs-6 text-center" onclick="redirect()">
+            <a href="#panel-intro" data-toggle="tab">已回复建议</a>
+          </li>
+        </ul>
+        <div class="tab-content" style="padding-top:20px;">
+          <!--咨询建议管理-->
+          <div class="tab-pane active" id="panel-info">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                未回复管理
+              </div>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <!--#,,,,,,,-->
+                    <th>日期</th>
+                    <th>建议人名称</th>
+                    <th>联系电话</th>
+                    <th>联系邮箱</th>
+                    <th>类型</th>
+                    <th>项目</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>2017-03-24</td>
+                    <td>张先生</td>
+                    <td>13000000001</td>
+                    <td>tan@sina.com</td>
+                    <td>建议</td>
+                    <td>电子申报平台</td>
+                    <td>
+                      <a href="#?id=">回复</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="tab-pane" id="panel-intro">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                已回复管理
+              </div>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>日期</th>
+                    <th>建议人名称</th>
+                    <th>类型</th>
+                    <th>回复人员</th>
+                    <th>回复日期</th>
+                    <th>回复方式</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>2017-03-24</td>
+                    <td>张先生</td>
+                    <td>13000000001</td>
+                    <td>tan@sina.com</td>
+                    <td>建议</td>
+                    <td>电子申报平台</td>
+                    <td>
+                      <a href="#?id=">查看</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- 脚本 -->
+  <!-- <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script> -->
+  <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+  <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="http://www.bootcss.com/p/bootstrap-datetimepicker/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+
+  <script>
+    function redirect() {
+      window.location.href = "a.html";
+      return false;
+    }
+    $(function() {
+      Date.prototype.format = function(fmt) { //author: meizz   
+        var o = {
+          "M+": this.getMonth() + 1, //月份   
+          "d+": this.getDate(), //日   
+          "h+": this.getHours(), //小时   
+          "m+": this.getMinutes(), //分   
+          "s+": this.getSeconds(), //秒   
+          "q+": Math.floor((this.getMonth() + 3) / 3), //季度   
+          "S": this.getMilliseconds() //毫秒   
+        };
+        if (/(y+)/.test(fmt))
+          fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+          if (new RegExp("(" + k + ")").test(fmt))
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+      }
+      var page = $("#startTime").val();
+      if (page == "") {
+        document.getElementById('startTime').value = new Date().format("yyyy-MM-dd");
+        document.getElementById('endTime').value = new Date().format("yyyy-MM-dd");
+      }
+      var flag = false;
+      var title = '${title}';
+      if (title != "") {
+        $("#sms option[value='" + title + "']").attr("selected", true);
+      }
+
+      $("#startTime").datetimepicker({
+        format: "yyyy-mm-dd",
+        weekStart: 1,
+        autoclose: true,
+        startView: 2,
+        minView: 2,
+        language: 'zh-CN',
+        endDate: new Date()
+      }).on("changeDate", function(e) {
+        var startTime = e.date;
+        $("#endTime").datetimepicker("setStartDate", startTime);
+        $("#endTime").datetimepicker("setEndDate", fun_date(startTime, 6));
+        document.getElementById('endTime').value = new Date(startTime).format("yyyy-MM-dd");
+      });
+      $("#endTime").datetimepicker({
+        format: "yyyy-mm-dd",
+        weekStart: 1,
+        autoclose: true,
+        startView: 2,
+        minView: 2,
+        language: 'zh-CN',
+        endDate: new Date(),
+        startDate: new Date()
+      }).on("changeDate", function(e) {
+        var endTime = e.date;
+        $('#startTime').datetimepicker('setStartDate', fun_date(endTime, -6));
+      });
+    });
+
+    //计算时间
+    function fun_date(date, num) {
+      var date1 = new Date(date);
+      var date2 = new Date(date1);
+      date2.setDate(date1.getDate() + num);
+      return date2;
+    }
+  </script>
+</body>
+
+</html>
