@@ -10,50 +10,61 @@
   <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/myapp/public/images/my.ico' />
   <title> 标题</title>
   <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>
+  <style>
+    td>img {
+      width: 25px;
+      height: 25px;
+    }
+  </style>
 </head>
 
 <body ng-app="myApp">
   <!--检索项-->
   <div ng-controller="customersCtrl" class="container-fluid">
-    <div class=" tab-content container-fluid">
-      <div class=" fixed-table-container">
-        <table class="table table-hover  ">
+    <!-- 数据绑定部分 -->
+    <div class="ng-scope tab-content container-fluid">
+      <div class="fixed-table-container">
+        <table class="table table-hover">
           <!-- 表头 -->
           <thead>
             <tr>
-              <th> 序号 </th>
-              <th> 支付项目 </th>
-              <th> 金额 </th>
-              <th> 昵称 </th>
-              <th> 姓名 </th>
-              <th> 支付时间</th>
-              <th class="order" ng-click="title='outTradeNo';desc=!desc">
-                收据号<span></span></th>
-              <th> 支付方式</th>
+              <th style="width:15%;">序号</th>
+              <th data-order='userName' class="order text-left" ng-click="title='userName';desc=!desc;sort('userName')">
+                昵称
+                <span class="glyphicon glyphicon-sort"></span></th>
+              <th data-order='gender' class="order" ng-click="title='gender';desc=!desc;sort('gender')">
+                性别
+                <span class="glyphicon glyphicon-sort"></span></th>
+              <th data-order='district' class="order" ng-click="title='district';desc=!desc;sort('district')">
+                地区
+                <span class="glyphicon glyphicon-sort"></span></th>
+              <!--<th>推荐人</th>-->
+              <!--data-order='time' class="order" ng-click="title='time';desc=!desc;sort('time')"-->
+              <th>
+                注册时间
+                <!--<span class="glyphicon glyphicon-sort"></span></th>-->
             </tr>
           </thead>
+          <!-- 数据主体部分 -->
           <tbody id="databody">
-            <tr ng-show="dataLengths" ng-repeat="x in data.content | orderBy : title : desc">
-              <td>{{ $index+data.page*data.pageNum+1}}</td>
-              <td>{{ x.commodity.commodityName }}</td>
-              <td>{{ x.commodity.price }}</td>
-              <td>
-                <a href="#?id={{x.user.id}}">{{x.user.userName}}</a>
-              </td>
-              <td>
-                <a href="{{x.vipEntity.id}}">{{x.user.vipEntity.realName}}</a>
-              </td>
-              <td>{{ x.payment.payAt | date:"yyyy/MM/dd HH:mm:ss"}}</td>
-              <td>{{ outTradeNo=x.payment.outTradeNo }}</td>
-              <td>{{ x.tradeType=="offline"?"线下支付":"微信支付"}}</td>
+            <tr ng-show="dataLengths" ng-repeat="x in data.content|orderBy:title :desc">
+              <td> {{x.length=$index+data.page*data.pageNum+1}}{{ x.userName }}</td>
+              <td style="text-align: left;"><img src="{{x.iconUrl}}" alt="">
+                <a href="#?id={{x.id}}&type=create">{{ x.userName }}</a></td>
+              <td>{{ x.gender=="M"?"男":"女" }}</td>
+              <td>{{ x.district }}</td>
+              <td>{{ x.time=x.createAt| date:"yyyy/MM/dd HH:mm:ss"}}</td>
             </tr>
             <tr ng-show="!dataLengths">
-              <td colspan="100" class="text-center ">没有相关数据</td>
+              <td colspan="100" class="text-center ">暂无结果</td>
             </tr>
           </tbody>
         </table>
       </div>
-    </div><button class="btn btn-primary col-sm-2" ng-click="page()">登录</button>
+    </div>
+
+    <!-- 当前页隐藏域 -->
+    <button class="btn btn-primary col-sm-2" ng-click="page()">按钮方法</button>
   </div>
 
   <!-- 脚本 -->
@@ -63,164 +74,6 @@
   <script src='../../Script/Angularjs/service.js'></script>
   <script src='../../Script/Angularjs/controller.js'></script>
   <script>
-    var app = angular.module('myApp', []);
-    app.factory('myFactory',
-      function($http, $q) {
-        var pageing = function(pageindex) {
-          var defer = $q.defer();
-
-          var url = "http://60.205.170.209:8080/admin/api/" + "payment?" + "page=" + pageindex + "&pageNum=10"; //请求的参数和地址
-          $http.get(url)
-            .success(function(data, status, headers, config) {
-              // if (data != null && data != "" && data != "null") {
-              //   //判断当前是否存在记录
-              //   $scope.dataLengths = data.content.length > 0;
-              //   if (data.content != null && data.content.length > 0) {
-              //     //赋值操作 
-              //     $scope.data = data;
-              //   } else {
-              //     alert("未获取到数据");
-              //   }
-
-              // }
-              // console.log(JSON.stringify(data));
-              var res = {
-                data: data,
-                status: status
-              };
-              defer.resolve(res);
-              // defer.resolve(res);
-            })
-          console.log(defer.promise);
-          return defer.promise;
-
-        };
-        return {
-          pageing: pageing
-        };
-
-      }
-    );
-    app.controller('customersCtrl', function($scope, myFactory) {
-      $scope.page = function() {
-        var data = myFactory.pageing(0).then(
-          function(res) {
-            $scope.data = JSON.parse(res.data);
-            // switch (res.status) {}
-            console.log("*********" + JSON.stringify(res));
-            console.log("*********" + JSON.stringify(res.status));
-          }
-        );
-
-      }
-    });
-    // app.factory('myFactory',
-    //   function($http, $q) {
-    //     var defer = $q.defer();
-    //     var pageing = function(pageindex, params) {
-    //       alert("21232");
-    //       var url = "http://60.205.170.209:8080/admin/api/" + "payment?" + params + "page=" + pageindex + "&pageNum=10"; //请求的参数和地址
-    //       $http.get(url)
-    //         .success(function(data, status, headers, config) {
-    //           if (data != null && data != "" && data != "null") {
-    //             //判断当前是否存在记录
-    //             $scope.dataLengths = data.content.length > 0;
-    //             if (data.content != null && data.content.length > 0) {
-    //               //赋值操作 
-    //               $scope.data = data;
-    //             } else {
-    //               alert("未获取到数据");
-    //             }
-
-    //           }
-    //           var res = {
-    //             data: data,
-    //             status: status
-    //           };
-    //           defer.resolve(res);
-    //         })
-    //         .error(function(data, status, headers, config) {
-    //           var res = {
-    //             data: data,
-    //             status: status
-    //           };
-    //           defer.resolve(res);
-    //         });
-    //       return defer.promise;
-    //     };
-    //     return {
-    //       pageing: pageing
-    //     };
-
-    //   }
-    // );
-    // app.controller('customersCtrl', ['myFactory', function($scope, myFactory) {
-    //   //   $scope.page = function() {
-    //   $scope.page = function() {
-    //     myFactory.pageing(0, "")
-    //       .then(function(res) {
-    //         switch (res.status) {
-    //           case 200:
-    //             {
-    //               var str = JSON.stringify(res);
-    //               alert(str);
-    //               // $scope.message = "登录成功";
-    //               // save_key("userName", $scope.user.name);
-    //               // save_key("password", $scope.user.password);
-    //               // localStorage.accessKey = res.data.mtoken.accessKey;
-    //               // localStorage.securityKey = res.data.mtoken.securityKey;
-    //               // $state.go('main.home');
-    //               break;
-    //             }
-    //           case 403:
-    //             {
-    //               var str = JSON.stringify(res);
-    //               alert(str);
-    //               // $scope.promptMes = "登录失败，请检查用户名和密码是否正确！";
-    //               // $('#messages_model').modal('show');
-    //               break;
-    //             }
-    //           case 404:
-    //             {
-    //               var str = JSON.stringify(res);
-    //               alert(str);
-    //               // $scope.promptMes = "登录失败，用户名不存在！";
-    //               // $('#messages_model').modal('show');
-    //               break;
-    //             }
-    //           default:
-    //             {
-    //               var str = JSON.stringify(res);
-    //               alert(str);
-    //               // $scope.promptMes = "登录失败，请检查网络连接！";
-    //               // $('#messages_model').modal('show');
-    //               break;
-    //             }
-    //         }
-    //       });
-    //   };
-
-
-    // }]);
-    // var app = angular.module('myApp', []);
-    // app.factory('myFactory',
-    //   function() {
-    //     var alerts = function() {
-    //       alert("请测试");
-    //     };
-    //     return {
-    //       pageing: alerts
-    //     };
-
-    //   }
-    // );
-
-
-    // app.controller('customersCtrl', function($scope, myFactory) {
-    //   $scope.page = function() {
-    //     myFactory.pageing();
-    //   };
-    // });
   </script>
 </body>
 
