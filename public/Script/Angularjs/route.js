@@ -16,6 +16,8 @@ var app = angular.module('myApp', ['ngRoute'])
       })
       .when('/info', {
         templateUrl: "../showDoc/info.html"
+      }).when('/form', {
+        templateUrl: "../showDoc/form.html"
       })
       .otherwise({
         redirectTo: '/'

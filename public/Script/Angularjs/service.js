@@ -73,3 +73,35 @@ app.factory('sortService',
     };
   }
 );
+
+//获取当前页面传过来的参数
+app.factory('urlService',
+  function() {
+    /**
+     * 获取URL地址中参数方法
+     * 存储为对象
+     */
+    var UrlSearch = function() {
+      var obj = {};
+      var name, value;
+      var str = location.href; //取得整个地址栏
+      var num = str.indexOf("?");
+      str = str.substr(num + 1);
+      var arr = str.split("&"); //各个参数放到数组里
+      for (var i = 0; i < arr.length; i++) {
+        num = arr[i].indexOf("=");
+        if (num > 0) {
+          name = arr[i].substring(0, num);
+          value = arr[i].substr(num + 1);
+          obj[name] = value;
+        }
+      }
+      return obj;
+    };
+
+    //返回的方法
+    return {
+      UrlSearch: UrlSearch
+    };
+  }
+);

@@ -66,10 +66,13 @@ app.controller('customersCtrl', function($scope, httpService, sortService) {
 
 // 当前页面中存在的第二个控制器
 app.controller('secondCtrl', function($scope) {
-  $scope.count = '测试当前的内容';
+  $scope.count = '同一个页面,第二个controller的数据绑定';
 });
 
-// 当前页面中存在的第二个控制器
-app.controller('infoCtrl', function($scope) {
-  $scope.datas = '我是数据部分';
+
+//info页面数据绑定
+app.controller('infoCtrl', function($scope, urlService) {
+  // $scope.datas = '我是详情页数据绑定部分';
+  var urlObj = urlService.UrlSearch();
+  $scope.datas = urlObj.id;
 });
