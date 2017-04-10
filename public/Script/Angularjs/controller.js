@@ -70,9 +70,27 @@ app.controller('secondCtrl', function($scope) {
 });
 
 
-//info页面数据绑定
-app.controller('infoCtrl', function($scope, urlService) {
+//info页面 控制器
+app.controller('infoCtrl', function($scope, $location, urlService) {
+  $(document).ready(function() {
+    //利用JS改变DOM value值,然后同步到Angularjs的作用域中(仅为试行办法,不推荐在Angularjs中使用)
+    $("#changeNumBtn").on("click", function() {
+      $("#num").val($("#num").val() - 0 + 1);
+      $scope.number = $("#num").val();
+      changes();
+    });
+  });
   // $scope.datas = '我是详情页数据绑定部分';
   var urlObj = urlService.UrlSearch();
-  $scope.datas = urlObj.id;
+
+  function changes() {
+    $scope.$apply();
+  }
+  if (!urlObj.id) {
+    alert("当前页面没有传入参数,返回到列表页面");
+    //$location服务解析地址栏中的URL（基于window.location），让你在应用代码中能获取到。改变地址栏中的URL会反应$location服务中，反之亦然。可以获取url参数,也可以改变地址
+    $location.path('/data');
+  } else {
+    $scope.datas = urlObj.id;
+  }
 });

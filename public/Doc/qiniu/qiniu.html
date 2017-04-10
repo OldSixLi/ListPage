@@ -18,9 +18,7 @@
     <input type="hidden" name="iconUrl" id="iconUrl" value="">
   </div>
   <!-- 脚本 -->
-  <!-- <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script> -->
   <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>
-  <!--<script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>-->
   <script src="https://cdn.rawgit.com/OldSixLi/oldSixLi.github.io/master/script/QiniuCloud/plupload.full.min.js"></script>
   <script src="https://cdn.rawgit.com/OldSixLi/oldSixLi.github.io/master/script/QiniuCloud/moxie.js"></script>
   <script src="https://cdn.rawgit.com/OldSixLi/oldSixLi.github.io/master/script/QiniuCloud/qiniu.min.js"></script>
@@ -80,6 +78,7 @@
           var json = JSON.parse(info);
           alert("上传成功");
           //图片压缩处理:限制图片长宽均为200px ,且图片质量为原来75%;←←←←←←←图片质量自定义
+          // ?imageView2/1/w/350/h/200/q/100|imageslim //设置长度宽度
           var imgSrc = domainUrl + json.key + "?imageView2/1/q/100|imageslim";
           $("#img").attr("src", imgSrc);
           $("[name='iconUrl']").val(imgSrc);

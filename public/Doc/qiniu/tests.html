@@ -18,15 +18,14 @@
     <button type="button" class="btn btn-default btn-sm btn-block" id="pickfiles">上传默认日程背景</button>
     <input type="hidden" name="iconUrl" id="iconUrl" value="">
   </div>
+
   <!-- 脚本 -->
-  <!-- <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script> -->
   <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>
-  <!--<script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>-->
   <script src="https://cdn.rawgit.com/OldSixLi/oldSixLi.github.io/master/script/QiniuCloud/plupload.full.min.js"></script>
   <script src="https://cdn.rawgit.com/OldSixLi/oldSixLi.github.io/master/script/QiniuCloud/moxie.js"></script>
   <script src="https://cdn.rawgit.com/OldSixLi/oldSixLi.github.io/master/script/QiniuCloud/qiniu.min.js"></script>
   <script>
-    var domainUrl = "http://om6fr85l4.bkt.clouddn.com/";
+    var domainUrl = "http://om6fr85l4.bkt.clouddn.com/"; //←←←←←←←修改上传的空间地址←←←←←←←
     //获取七牛uptoken　
     uploader = Qiniu.uploader({
       runtimes: 'html5,flash,html4',
@@ -41,11 +40,11 @@
         var token = "";
         $.ajax({
           type: "get",
-          url: "/users/token",
+          url: "/token", //←←←←←←←修改请求token的地址←←←←←←←
           async: false,
           dataType: "json",
           success: function(data) {
-            token = data.uptoken;
+            token = data.uptoken; //←←←←←←←修改字段名称←←←←←←←
           }
         });
         return token;
@@ -70,6 +69,8 @@
         },
         'UploadProgress': function(up, file) {
           //可以在这里控制上传进度的显示
+          console.log(up);
+          console.log(file);
           //可参考七牛的例子
         },
         'UploadComplete': function() {
@@ -77,9 +78,10 @@
         },
         'FileUploaded': function(up, file, info) {　
           var json = JSON.parse(info);
-          console.log("上传成功");
-          //图片压缩处理:限制图片长宽均为200px ,且图片质量为原来75%;
-          var imgSrc = domainUrl + json.key + "?imageView2/0/q/75|imageslim";
+          alert("上传成功");
+          //图片压缩处理:限制图片长宽均为200px ,且图片质量为原来75%;←←←←←←←图片质量自定义
+          // ?imageView2/1/w/350/h/200/q/100|imageslim //设置长度宽度
+          var imgSrc = domainUrl + json.key + "?imageView2/1/q/100|imageslim";
           $("#img").attr("src", imgSrc);
           $("[name='iconUrl']").val(imgSrc);
         },
