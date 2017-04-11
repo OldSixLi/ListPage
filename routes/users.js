@@ -1,18 +1,23 @@
 var express = require('express');
-
 var qiniu = require('qiniu'); //七牛获取uptoken
 var DBhelper = require('../mysql/sql.js');
 var url = require('url');
-var app = express();
-//获取POST请求
 var bodyParser = require("body-parser");
+var app = express();
+var router = express.Router();
+
 // router.use(bodyParser.urlencoded({ extended: false }));
+//NOTE:在接收POST数据时,因为URL中并不存在参数,需要使用此方法转化数据,获取参数
 app.use(bodyParser.json({ limit: '1mb' })); //body-parser 解析json格式数据
 app.use(bodyParser.urlencoded({ //此项必须在 bodyParser.json 下面,为参数编码
   extended: true
 }));
-var router = express.Router();
-// 处理请求的接口
+
+/* 获取用户请求,进行相关处理 */
+router.get('/', function(req, res, next) {
+  res.send('此接口不返回任何有效信息!');
+});
+//JOSN数据
 var obj = {
   "content": [{
       "createAt": 1482248703000,
@@ -107,45 +112,47 @@ var obj = {
 };
 //请求的是/users/users接口才会访问到此处
 router.get('/users', function(req, res, next) {
-  // res.send('返回的数据内容');
+  //控制延时返回数据
   setTimeout(function() {
     res.json(obj);
   }, 0);
 
 });
-// /users/name
+// /users/name地址
 router.get('/name', function(req, res, next) {
-  // res.send('返回的数据内容');
   res.send("马三立老师");
 });
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resourcess');
-});
+
 
 // 获取某个用户的具体信息
 router.get('/userinfo', function(req, res, next) {
+  //获取参数,并将参数转化为对象
   var params = url.parse(req.url, true).query;
   var returnObj = {};
   returnObj.dataSuccess = false;
   if (!params.id) {
+    //参数不存在
     returnObj.errorMessage = "未提供用户参数,获取不到数据";
     res.json(returnObj);
   } else {
+    //参数存在,请求查询数据库
     var id = params.id;
     var result = DBhelper.getDS(id, function(result) {
       if (result) {
+        //查询成功
         returnObj.dataSuccess = true;
         returnObj.data = result;
         res.json(returnObj);
       } else {
+        //查询失败处理操作
         returnObj.errorMessage = '没数据' + new Date().getSeconds();
         res.json(returnObj);
       }
     });
   }
 });
+
 // 新增用户信息
 router.get('/add', function(req, res, next) {
   var data = req;
@@ -194,8 +201,6 @@ router.post('/add', function(req, res, next) {
   } catch (err) {
     console.log(err);
   }
-  // data.body.user = "是大";
-  // res.send(data.body);
 });
 
 

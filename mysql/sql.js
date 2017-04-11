@@ -12,7 +12,7 @@ var TEST_TABLE = 'user';
 var client = mysql.createConnection({
   host: '127.0.0.1',
   user: 'root',
-  password: '',
+  password: '123456',
   port: '3306'
 });
 
@@ -48,9 +48,7 @@ function finds(id, next) {
 
 function start(model) {
 
-  //语句
-
-  // INSERT into `user`(gender,name,age,regtime) values ('W','李荣浩','56','2')
+  //语句 
   var addSql = 'INSERT INTO  `user`(gender,name,age,regtime)  VALUES(?,?,?,NOW())';
   //参数
   var addParams = [
@@ -65,11 +63,8 @@ function start(model) {
       console.log('[INSERT ERROR] - ', err.message);
       return;
     } else {
-      console.log('~~~~~~~~~~~~~~~~~~~数据插入成功~~~~~~~~~~~~~~~~~~~~~~~');
-      console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n');
+      console.log('~~~~~~~~~用户:' + addParams.name + '插入成功~~~~~~~~~~~~~');
     }
-
-
   });
 
 }
