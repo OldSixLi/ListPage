@@ -1,8 +1,9 @@
 var express = require('express');
-var qiniu = require('qiniu'); //七牛获取uptoken
-var DBhelper = require('../mysql/sql.js');
+var qiniu = require('qiniu'); //七牛云
 var url = require('url');
 var bodyParser = require("body-parser");
+var DBhelper = require('../mysql/sql.js');
+//Express框架相关部分
 var app = express();
 var router = express.Router();
 
@@ -17,6 +18,7 @@ app.use(bodyParser.urlencoded({ //此项必须在 bodyParser.json 下面,为参�
 router.get('/', function(req, res, next) {
   res.send('此接口不返回任何有效信息!');
 });
+
 //JOSN数据
 var obj = {
   "content": [{
@@ -116,14 +118,12 @@ router.get('/users', function(req, res, next) {
   setTimeout(function() {
     res.json(obj);
   }, 0);
-
 });
+
 // /users/name地址
 router.get('/name', function(req, res, next) {
   res.send("马三立老师");
 });
-
-
 
 // 获取某个用户的具体信息
 router.get('/userinfo', function(req, res, next) {
@@ -239,7 +239,5 @@ router.get('/token', function(req, res, next) {
     });
   }
 });
-
-
 
 module.exports = router;
