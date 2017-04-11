@@ -63,7 +63,7 @@ function start(model) {
       console.log('[INSERT ERROR] - ', err.message);
       return;
     } else {
-      console.log('~~~~~~~~~用户:' + addParams.name + '插入成功~~~~~~~~~~~~~');
+      console.log('~~~~~~~~~用户:' + model.name + '插入成功~~~~~~~~~~~~~');
     }
   });
 
