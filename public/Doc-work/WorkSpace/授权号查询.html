@@ -1,0 +1,852 @@
+<!-- 马少博  创建于 2017年3月23日17:34:35 -->
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/myapp/public/images/my.ico' />
+  <title> </title>
+  <!-- Bootstrap引用 -->
+  <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>
+  <style>
+    @import url("non-responsive.css");
+    @import url("ui/ui.css");
+    /** 浣跨敤鍥炬爣瀛椾綋鐨勫厓绱犲彸杈规嵁澧炲姞8鍍忕礌 */
+    
+    .glyphicon {
+      padding-right: 8px;
+    }
+    
+    .ht-navbar-default .glyphicon {
+      padding-right: 0px;
+    }
+    /** 绉婚櫎杩炴帴 鎸夐挳涓婄殑铏氱嚎 */
+    
+    a:focus,
+    a:hover,
+    a:active,
+    button:focus,
+    button:hover,
+    button:active,
+    .btn:focus,
+    .btn:active:focus,
+    .btn.active:focus,
+    .btn.focus,
+    .btn:active.focus,
+    .btn.active.focus {
+      outline-style: none;
+    }
+    
+    .home-logo {
+      background: transparent url("../images/commons/logo.png") no-repeat center;
+      display: inline-block;
+      width: 160px;
+      text-indent: -900px;
+      overflow: hidden;
+    }
+    
+    .ht-navbar-default .navbar-nav>li>a.home-logo:hover,
+    .ht-navbar-default .navbar-nav>li>a.home-logo:focus {
+      color: #ffffff;
+      background-color: transparent;
+    }
+    
+    .notices a,
+    .notices a:hover,
+    .notices a:active,
+    .notices a:focus,
+    a.default-more,
+    a.default-more:hover,
+    a.default-more:active,
+    a.default-more:focus {
+      color: #252525;
+      text-decoration: none;
+    }
+    
+    .notices a:hover,
+    .notices a:active,
+    .notices a:focus,
+    a.default-more:hover,
+    a.default-more:active,
+    a.default-more:focus {
+      text-decoration: underline;
+    }
+    /**
+ * 缁熶竴椤佃剼鏍峰紡
+ */
+    
+    div.footer {
+      background: #f8f8f8;
+      color: #333;
+      margin-top: 40px;
+      border-top: 1px solid #DDD;
+    }
+    
+    div.footer .container .row ul {
+      margin-top: 50px;
+      font-size: 14px;
+    }
+    
+    div.footer .container .row ul li {
+      line-height: 2em;
+    }
+    
+    div.footer .container .row ul .footer-title {
+      font-size: 24px;
+    }
+    
+    div.footer img.qrcode {
+      display: inline-block;
+      margin: 0px auto;
+      padding: 0px;
+      background-repeat: no-repeat;
+      background-color: transparent;
+      background-position: center 20px;
+    }
+    
+    div.footer div.copyright {
+      padding-top: 40px;
+      line-height: 32px;
+      text-align: center;
+      font-size: 14px;
+    }
+    
+    .quick-buttons {
+      position: fixed;
+      bottom: 96px;
+      right: 15px;
+    }
+    
+    .quick-buttons .quick-button {
+      width: 48px;
+      height: 48px;
+      display: block;
+      margin: 7.5px 0;
+      cursor: pointer;
+      border-radius: 5px;
+      padding: 0px 24px;
+      background-color: #ec6d51;
+      background-repeat: no-repeat;
+      background-position: right center;
+      overflow: visible;
+      position: relative;
+    }
+    
+    .quick-buttons>a.quick-button:hover {
+      text-decoration: none;
+    }
+    
+    .quick-buttons>.quick-button>span {
+      display: none;
+      color: #FFF;
+      font-size: 16px;
+      font-weight: 700;
+      top: 0px;
+      right: 45px;
+      position: absolute;
+      padding: 0 12px;
+      line-height: 48px;
+      white-space: nowrap;
+      background-color: #ec6d51;
+      border-radius: 5px 0 0 5px;
+    }
+    
+    .quick-buttons .quick-button.search {
+      background-image: url("/static/images/commons/quick-button/search.png");
+    }
+    
+    .quick-buttons .quick-button.to-top {
+      background-image: url("/static/images/commons/quick-button/uparrow.png");
+    }
+    
+    .quick-buttons .quick-button.qq {
+      background-image: url("/static/images/commons/quick-button/qq.png");
+    }
+    
+    .quick-buttons .quick-button.chat {
+      background-image: url("/static/images/commons/quick-button/chat.png");
+    }
+    
+    .quick-buttons .quick-button.qrcode {
+      background-image: url("/static/images/commons/quick-button/qrcode.jpg");
+    }
+    
+    .quick-buttons .quick-button.course {
+      background-image: url("/static/images/commons/quick-button/course.png");
+      opacity: 1 !important;
+    }
+    
+    .quick-buttons .quick-button.live {
+      background-image: url("/static/images/commons/quick-button/live.png");
+      opacity: 1 !important;
+    }
+    
+    .weixin-ad {
+      width: 620px;
+      height: 620px;
+      position: fixed;
+      _position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -310px;
+      margin-top: -310px;
+      z-index: 999;
+      overflow: visible;
+      background: transparent url("/static/images/commons/weixin-ad.jpg") no-repeat center;
+      box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+    }
+    
+    .weixin-ad .weixin-close {
+      width: 64px;
+      height: 26px;
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      cursor: pointer;
+      background: transparent url("/static/images/commons/weixin-close.png") no-repeat center;
+      opacity: 0.4;
+    }
+    
+    .weixin-ad:hover .weixin-close {
+      opacity: 1;
+    }
+    
+    .weixin-course-ad {
+      width: 360px;
+      height: 250px;
+      position: fixed;
+      _position: absolute;
+      bottom: 20px;
+      left: 20px;
+      z-index: 10;
+      overflow: visible;
+      background: transparent url("/static/images/commons/course-ad.png") no-repeat center;
+    }
+    
+    .weixin-course-close {
+      width: 64px;
+      height: 26px;
+      position: fixed;
+      _position: absolute;
+      bottom: 270px;
+      left: 317px;
+      cursor: pointer;
+      background: transparent url("/static/images/commons/weixin-close.png") no-repeat center;
+    }
+    
+    .weixin-live-ad {
+      width: 320px;
+      height: 280px;
+      position: fixed;
+      _position: absolute;
+      bottom: 0px;
+      left: 20px;
+      z-index: 10;
+      overflow: visible;
+      background: transparent url("/static/images/commons/live-ad.png") no-repeat center;
+    }
+    
+    .weixin-live-close {
+      width: 64px;
+      height: 26px;
+      position: fixed;
+      _position: absolute;
+      bottom: 280px;
+      left: 277px;
+      cursor: pointer;
+      background: transparent url("/static/images/commons/weixin-close.png") no-repeat center;
+    }
+    
+    .quick-buttons>.quick-button.course>span {
+      background-color: #189e6b;
+    }
+    
+    .quick-buttons>.quick-button.live>span {
+      background-color: #189e6b;
+    }
+    
+    .weixin-ad-shadow {
+      position: fixed;
+      _position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      z-index: 998;
+      overflow: visible;
+    }
+    
+    .qqlist {
+      background: #f9f2f4 none repeat scroll 0 0;
+      box-shadow: 1px 5px 15px rgba(0, 0, 0, 0.5);
+      border: 1px solid #f3f3f3;
+      border-radius: 5px;
+      margin-top: -50px;
+      padding: 15px;
+      position: fixed;
+      right: 15px;
+      bottom: 96px;
+      z-index: 999;
+    }
+    
+    .qqlist .qq_links {
+      width: 196px;
+      clear: both;
+    }
+    
+    .qqlist .qq_links a {
+      display: inline-block;
+      margin: 5px;
+    }
+    
+    .qqlist .close {
+      clear: both;
+    }
+    
+    .breadcrumb-block {
+      margin-top: 20px;
+    }
+    
+    .full-height {
+      height: 100%;
+    }
+    
+    .left-list {
+      margin: 0px;
+      padding: 15px 0;
+      background: #f3f3f3;
+      color: #0F0F0F;
+      height: 100%;
+    }
+    
+    .left-list dt {
+      color: #666;
+      line-height: 40px;
+      border-bottom: 1px solid #dadada;
+      padding-left: 15px;
+    }
+    
+    .left-list dd {
+      line-height: 40px;
+      border-right: 2px solid #f3f3f3;
+      padding-left: 45px;
+      cursor: pointer;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    
+    .left-list dd a,
+    .left-list dd a:hover,
+    .left-list dd a:active {
+      color: inherit;
+      text-decoration: none;
+    }
+    
+    .left-list dd:hover,
+    .left-list dd:active,
+    .left-list dd:focus {
+      background: #e3e3e3;
+    }
+    
+    .left-list dd.active {
+      background: #0099cc;
+      color: #FFF;
+    }
+    
+    .articles .list {
+      min-height: 600px;
+    }
+    
+    table.list-block td {
+      max-width: 600px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    
+    .main-content {
+      font-size: 16px;
+      line-height: 2em;
+      color: #666;
+    }
+    
+    .main-content.article h4 {
+      padding: 10px 0;
+      border-bottom: 1px solid #F3f4f5;
+      color: #000;
+    }
+    
+    .main-content.article p {
+      text-indent: 0em;
+    }
+    
+    .main-content.article .indent_1 {
+      padding-left: 1em;
+    }
+    
+    .main-content.article .indent_2 {
+      padding-left: 2em;
+    }
+    
+    .main-content.article .indent_3 {
+      padding-left: 3em;
+    }
+    
+    .main-content.article .important {
+      font-weight: 700;
+      color: #d45111;
+    }
+    /**
+ * 蹇嵎鏈嶅姟鐩稿叧
+ */
+    
+    .functions-control-bar {
+      padding: 24px 0px 48px;
+    }
+    
+    .functions-content {
+      padding: 15px 0 96px;
+      min-height: 128px;
+    }
+    
+    .functions-content.no-control {
+      margin-top: 48px;
+    }
+    
+    .top-bar-btn {
+      line-height: 24px;
+      margin: 0px;
+    }
+    /**
+ * search-bar
+ */
+    
+    .search-bar {}
+    
+    .search-bar label {
+      display: block;
+      line-height: 1em;
+      font-size: 24px;
+      padding: 0 0 1em 0;
+      text-align: center;
+      font-weight: 400;
+    }
+    
+    .search-bar input.big-input {
+      width: 100%;
+      display: block;
+      font-size: 18px;
+      line-height: 1.5em;
+      padding: 0.5em 1em;
+      border: 1px solid #c3c4c5;
+      border-radius: 5px;
+    }
+    
+    .search-bar input.big-input:focus,
+    .search-bar input.big-input:hover {
+      border: 1px solid #09c;
+    }
+    
+    .search-bar .btn-home {
+      padding-left: 0px;
+    }
+    
+    .search-bar .btn-search {
+      width: 100%;
+      display: block;
+      font-size: 18px;
+      line-height: 1.5em;
+      padding: 0.5em 1em;
+      background: #09c;
+      font-weight: 700;
+      color: #FFF;
+      border-radius: 5px;
+    }
+    
+    .search-bar .btn-search:hover,
+    .search-bar .btn-search:active {
+      color: #FFF;
+      background: #1ad;
+    }
+    
+    .news-title {
+      color: #000;
+      line-height: 2em;
+      text-align: center;
+    }
+    
+    .news-title small.time {
+      color: #111;
+      display: block;
+      line-height: 2em;
+      padding: 0 0 25px;
+      text-align: center;
+    }
+    
+    p.link-url {
+      color: #000;
+      font-size: 14px;
+      padding: 24px 0;
+      text-indent: 0;
+    }
+    
+    .top-banner {
+      min-height: 400px;
+      width: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: #09c;
+      margin-bottom: 48px;
+    }
+    
+    .top-banner h2 {
+      color: #FFF;
+      font-size: 48px;
+      font-weight: 700;
+      margin: 0;
+    }
+    
+    .top-banner p {
+      color: #FFF;
+      font-size: 18px;
+      line-height: 2em;
+      padding: 1em 0;
+      text-indent: 2em;
+    }
+    
+    .top-banner.contact {
+      background-image: url("../images/banner/contact.png");
+      background-color: rgb(9, 4, 44);
+    }
+    
+    .top-banner.resource {
+      background-image: url("../images/banner/resource.png");
+      background-color: #044aa9;
+    }
+    
+    h3.left-border {
+      border-left: 2px solid #09c;
+      padding-left: 0.5em;
+      margin: 24px auto;
+    }
+    
+    dl.contact {
+      padding-left: 1em;
+      margin-bottom: 20px;
+    }
+    
+    dl.contact dt {
+      font-size: 18px;
+      line-height: 2em;
+      font-weight: 700;
+    }
+    
+    dl.contact dd {
+      font-size: 16px;
+      line-height: 2em;
+      color: #666;
+    }
+    
+    #products {}
+    
+    #products .product-btn,
+    #products .more-btn {
+      width: 33.333%;
+      float: left;
+      clear: none;
+      padding: 7.5px;
+    }
+    
+    #products .product-btn a,
+    #products .more-btn a {
+      position: relative;
+      display: block;
+    }
+    
+    #products .product-btn a img,
+    #products .more-btn a img {
+      width: 100%;
+      height: 200px;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: block;
+      margin: 0 auto;
+    }
+    
+    #products .product-btn a span {
+      display: block;
+      position: absolute;
+      width: 100%;
+      bottom: 0px;
+      color: #333;
+      padding: 15px 30px;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid #efefef;
+    }
+    
+    #products .product-btn a span .product-title {
+      line-height: 40px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    
+    #products .product-btn a span .product-body {
+      font-size: 14px;
+      line-height: 2em;
+      overflow: hidden;
+      max-height: 160px;
+      text-overflow: ellipsis;
+    }
+    
+    #products .media-list .media {
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      padding: 15px;
+    }
+    
+    #products .media-list .media:hover {
+      border-color: #efefef;
+      background: #f9f9f9;
+    }
+    
+    #products .media-list .media .media-body {}
+    
+    #products .media-list .media .media-body .media-heading {
+      height: 50px;
+      padding: 12px 0 6px 0px;
+      line-height: 32px;
+      font-weight: 700;
+      font-size: 24px;
+      color: #333;
+    }
+    
+    #products .media-list .media .media-body p {
+      height: 64px;
+      font-size: 16px;
+      font-weight: normal;
+      line-height: 32px;
+      color: #666;
+      display: table-cell;
+      vertical-align: middle;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    #products .media-list {
+      min-height: 570px;
+    }
+    
+    .message-dialog {
+      display: block;
+      width: 480px;
+      height: 408px;
+      position: fixed;
+      right: 0px;
+      bottom: 0px;
+      background: #f3f7f6;
+      border-radius: 5px 5px 0 0;
+      overflow: hidden;
+    }
+    
+    .message-dialog .message-title {
+      color: #fff;
+      background: #059cd4;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 48px;
+      padding: 0 15px;
+    }
+    
+    .message-dialog .message-body {
+      padding: 15px;
+      border: 1px solid #e0e2e2;
+    }
+    
+    .message-dialog .message-body .tooltip {}
+    
+    .message-dialog .message-body .tooltip.left .tooltip-arrow {
+      border-left-color: #09c;
+    }
+    
+    .message-dialog .message-body .tooltip.right .tooltip-arrow {
+      border-right-color: #09c;
+    }
+    
+    .message-dialog .message-body .tooltip.top .tooltip-arrow {
+      border-top-color: #09c;
+    }
+    
+    .message-dialog .message-body .tooltip.bottom .tooltip-arrow {
+      border-bottom-color: #09c;
+    }
+    
+    .message-dialog .message-body .tooltip .tooltip-inner {
+      background: #09c;
+      padding: 8px 16px;
+    }
+    /**
+ * 璧勬簮鍒楄〃鏍峰紡
+ */
+    
+    .resource-list-vertical {
+      min-height: 128px;
+      background-repeat: no-repeat;
+      background-position: left center;
+      padding-left: 140px;
+      margin: 20px auto 40px auto;
+    }
+    
+    .resource-list-vertical .resouce-name {
+      line-height: 40px;
+      font-size: 24px;
+      padding-top: 24px;
+    }
+    
+    .resource-list-vertical .resouce-descript {
+      font-size: 16px;
+      line-height: 2em;
+      color: #666;
+    }
+    
+    .container-fluid.even {
+      background: #f3f3f3;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .outer-block {
+      padding: 45px 0;
+    }
+    
+    .default-block {
+      padding-bottom: 45px;
+    }
+    /** 
+ * 閫氱敤椤堕儴瀵艰埅鏉�
+ **/
+    
+    .tab-bar {
+      margin: auto;
+      height: 56px;
+      line-height: 56px;
+      background: #fff;
+      padding: 0px;
+    }
+    
+    .fixed-bar {
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      z-index: 9999;
+      background: #fff;
+      border-bottom: 1px solid #c5c6c7;
+      overflow: visible;
+    }
+    
+    .tab-bar .tab-item {
+      height: 56px;
+      line-height: 56px;
+      display: inline-block;
+      text-align: center;
+      font-size: 16px;
+      border-top: 2px solid #fff;
+      border-left: 0px solid #fff;
+      border-right: 0px solid #fff;
+      border-bottom: 1px solid #c5c6c7;
+      color: #666;
+      cursor: pointer;
+      float: left;
+      clear: none;
+    }
+    
+    .tab-bar .tab-item.active {
+      display: inline-block;
+      text-align: center;
+      font-size: 16px;
+      border-top: 2px solid #09c;
+      border-left: 1px solid #c5c6c7;
+      border-right: 1px solid #c5c6c7;
+      border-bottom: 1px solid #fff;
+    }
+    
+    .tab-bar .tab-item.active,
+    .tab-bar .tab-item:hover {
+      color: #000;
+    }
+    
+    .propaganda-info {
+      margin-top: 45px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="functions-control-bar">
+    <div class="container">
+      <div class="control-bar">
+        <form class="search-bar">
+          <label for="nsrsbh">纳税人识别号、统一社会信用代码</label>
+          <div class="row">
+            <div class="col-xs-10">
+              <input type="text" class="big-input" name="nsrsbh" id="nsrsbh" placeholder="请输入要查询的纳税人识别号、统一社会信用代码">
+            </div>
+            <div class="col-xs-2 btn-home">
+              <a class="btn btn-search" id="toSearch" href="javascript:void(0)"><i class="glyphicon glyphicon-search"></i>查询</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="functions-content">
+    <div class="container">
+      <div class="alert hide" role="alert" id="alert">没有对应的授权信息！</div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>纳税人识别号</th>
+            <th>纳税人名称</th>
+            <th>光盘号码</th>
+            <th>授权号码</th>
+            <th>授权号类别</th>
+          </tr>
+        </thead>
+        <tbody id="result">
+          <tr>
+            <td>120223572314195</td>
+            <td>天津市亿方达建筑砌块有限公司</td>
+            <td>2MA7CFF8O8W8</td>
+            <td>064E466DE346EFA6E8827D3428A828EF</td>
+            <td>介质申报</td>
+          </tr>
+          <tr>
+            <td>120223572314195</td>
+            <td>天津市亿方达建筑砌块有限公司</td>
+            <td>2MA7CFF8O8W8</td>
+            <td>EF119B4E27D14170A14239D9D7C131B1</td>
+            <td>网上申报</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row">
+        <div style="position: relative;" class="center-block col-sm-12">
+          <input type="button" value="复制到剪贴板" class="btn btn-primary pull-right" id="toCopy" style="position: absolute;">
+          <div class="zclip" id="zclip-ZeroClipboardMovie_1" style="position: absolute; left: 0px; top: 0px; width: 110px; height: 34px; z-index: 99;"><embed id="ZeroClipboardMovie_1" src="/static/jquery/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="110" height="34" name="ZeroClipboardMovie_1" align="middle" allowscriptaccess="always" allowfullscreen="false"
+              type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=1&amp;width=110&amp;height=34" wmode="transparent"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 脚本 -->
+  <!-- <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script> -->
+  <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>
+  <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+</body>
+
+</html>

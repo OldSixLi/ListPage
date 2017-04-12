@@ -19,7 +19,7 @@ var setting = {
   },
   async: {
     enable: true,
-    url: "/tree",
+    url: "/knowbase/type/find_type_tree",
     dataType: "JSON"
   },
   data: {

@@ -3,6 +3,8 @@ var qiniu = require('qiniu'); //七牛云
 var url = require('url');
 var bodyParser = require("body-parser");
 var DBhelper = require('../mysql/sql.js');
+var multiparty = require('multiparty');
+
 //Express框架相关部分
 var app = express();
 var router = express.Router();
@@ -10,7 +12,8 @@ var fs = require("fs");
 
 // router.use(bodyParser.urlencoded({ extended: false }));
 //NOTE:在接收POST数据时,因为URL中并不存在参数,需要使用此方法转化数据,获取参数
-app.use(bodyParser.json({ limit: '1mb' })); //body-parser 解析json格式数据
+app.use(bodyParser.json({ limit: '1mb', uploadDir: "../image" })); //body-parser 解析json格式数据
+// app.use(express.bodyParser({}));
 app.use(bodyParser.urlencoded({ //此项必须在 bodyParser.json 下面,为参数编码
   extended: true
 }));
@@ -64,12 +67,7 @@ router.get('/userinfo', function(req, res, next) {
   }
 });
 
-// 新增用户信息
-router.get('/add', function(req, res, next) {
-  var data = req;
-  console.log("GET:" + req.url)
-  res.send(data.url);
-});　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 // 　●●●●●●　　　●●●●●　　　●●●●●●　●●●●●●●●　
 // 　●●●　●●●　●●●　●●●　　●●●●●●●　　　●●●　　　
 // 　●●●　　●●●●●●　　●●●●●●　　●●●　　　●●●　　　
@@ -82,6 +80,7 @@ router.get('/add', function(req, res, next) {
 // 　●●●　　　　　●●●●●●●　●●●●●●●●　　　●●●　　　
 // 　●●●　　　　　　　●●●●　　　　●●●●　　　　　●●●　
 // POST新增用户信息
+
 router.post('/add', function(req, res, next) {
 
   try {
@@ -115,7 +114,6 @@ router.post('/add', function(req, res, next) {
 });
 
 
-
 // ************************************************************************ 
 // 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 // 　　　　　　●●●　　　　　　　　　　　　　　　●●●　　　　　　　　　　　　　　　　　　　　　　　
@@ -137,7 +135,6 @@ router.post('/add', function(req, res, next) {
 qiniu.conf.ACCESS_KEY = 'gfmlM2ZmBqZkpPZixYkPzb2zy-FbJv2mvR1KY3t_';
 qiniu.conf.SECRET_KEY = '7ksC_gm9kaNmUHMaphcypwFK3nWzafwbxNKLxaNN';
 router.get('/token', function(req, res, next) {
-
   var myUptoken = new qiniu.rs.PutPolicy('hes-upload');
   var token = myUptoken.token();
   res.header("Cache-Control", "max-age=0, private, must-revalidate");
