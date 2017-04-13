@@ -34,6 +34,11 @@ router.all('/tree', function(req, res, next) {
   }, 0);
 });
 
+
+
+
+
+
 // ************************************************************************ 
 // 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 // 　　　　　　●●●　　　　　　　　　　　　　　　●●●　　　　　　　　　　　　　　　　　　　　　　　
@@ -69,3 +74,12 @@ router.get('/token', function(req, res, next) {
   }
 });
 module.exports = router;
+
+/**
+ * 异步请求获取数据表中数据
+ * 
+ * @param {any} state  文章状态
+ * @param {any} page 页码
+ * @param {any} typeId 文章目录分类ID
+ */
+function getDs(state, page, typeId) {}

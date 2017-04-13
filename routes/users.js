@@ -1,3 +1,10 @@
+/*
+ * users分类下请求处理(Node文件)
+ * @Author:马少博 (ma.shaobo@qq.com)
+ * @Date: 2017年4月10日15:09:26
+ * @Last Modified by: 马少博
+ * @Last Modified time:2017年4月13日10:09:32
+ */
 var express = require('express');
 var qiniu = require('qiniu'); //七牛云
 var url = require('url');
@@ -97,7 +104,7 @@ router.post('/infoAdd', function(req, res, next) {
   try {
     //NOTE:这个地方的data.body特别傻,不能直接输出,否则就报错.哪怕你输出一个object我都不会怪你
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓就是这个错误↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-    // Cannot convert object to primitive value
+    // BUG:Cannot convert object to primitive value
     // at F:\PersonCodes\ListPage\routes\users.js:172:25
     // at Layer.handle [as handle_request] (F:\PersonCodes\ListPage\node_modules\express\lib\router\layer.js:95:5)
     // at next (F:\PersonCodes\ListPage\node_modules\express\lib\router\route.js:131:13)
@@ -190,7 +197,6 @@ router.post('/add', function(req, res, next) {
   }
 });
 
-//***********************************************************************
 // 　　　　　　　　　　　　　　　　　　　◆◆　　　　　　　　　　　　　　　　　　
 // 　　　　　◆◆　　　　　　　　　◆◆　◆◆　　　　　　◆◆◆◆◆◆◆◆◆　　　
 // 　　　　　◆◆　　　　　　　　◆◆◆　◆◆　　　　　　　　　　　　　　　　　　
