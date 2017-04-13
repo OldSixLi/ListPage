@@ -46,15 +46,15 @@ function finds(id, next) {
   };
 }
 
-function start(model) {
+function start(model, next) {
 
   //语句 
-  var addSql = 'INSERT INTO  `user`(gender,name,age,regtime)  VALUES(?,?,?,NOW())';
+  var addSql = 'INSERT INTO  `user`(gender,name,age,iconUrl,regtime)  VALUES(?,?,?,?,NOW())';
   //参数
   var addParams = [
     model.gender,
     model.name,
-    model.age
+    model.age, model.iconUrl
   ];
 
   //增 add
@@ -63,6 +63,7 @@ function start(model) {
       console.log('[INSERT ERROR] - ', err.message);
       return;
     } else {
+      next(true);
       console.log('~~~~~~~~~用户:' + model.name + '插入成功~~~~~~~~~~~~~');
     }
   });
