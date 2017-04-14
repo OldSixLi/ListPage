@@ -25,6 +25,7 @@ var BasicUrl = "http://60.205.170.209:8080/admin/api/";
     return serializeObj;
   };
 })(jQuery);
+
 $(function() {
   if ($.datetimepicker) {
     $.datetimepicker.setLocale('ch'); //时间选择控件默认设置中文
@@ -41,56 +42,7 @@ $(function() {
     });
   });
 });
-$(function() {
-  /// <summary>表格排序功能</summary>
-  var isdesc = false; //定义一个全局变量，用来确定升序还是降序
-  $("[data-type]").click(function() {
-    //  点击列表的表头进行排序，图标操作部分start
-    $(this).find("span").addClass("glyphicon").end().siblings("th").find("span").removeClass();
-    //添加正序或倒序图标
-    if (isdesc) {
-      isdesc = false;
-      $(this).find("span").removeClass("glyphicon-chevron-up").addClass("glyphicon-chevron-down").attr("title", "降序");
-    } else {
-      isdesc = true;
-      $(this).find("span").removeClass("glyphicon-chevron-down").addClass("glyphicon-chevron-up").attr("title", "升序");
-    }
-    //图标操作部分 end
-    //当前TH的行数以及列数序号
-    var trlength = $(".fixed-table-container tr").length - 1,
-      colunindex = $(this).index();
-    //获取需要进行比对的数据行
-    var tablearr = $.makeArray($("tbody tr:lt(" + trlength + ")"));
-    //排序规则三种：1、时间；2、字符串；3、数字
-    if ($(this).attr("data-type") === "time") { //时间类型值排序操作
-      tablearr.sort(function(a, b) {
-        return isdesc ? timescompare($(a).find('td').eq(colunindex).text(), $(b).find('td').eq(colunindex).text()) : timescompare($(b).find('td').eq(colunindex).text(), $(a).find('td').eq(colunindex).text());
-      });
-    } else if ($(this).attr("data-type") === "str") { //字符串类型值排序操作
-      tablearr.sort(function(a, b) {
-        var avalue = $(a).find("td").eq(colunindex).text().trim();
-        var bvalue = $(b).find("td").eq(colunindex).text().trim();
-        return isdesc ? avalue.localeCompare(bvalue) : bvalue.localeCompare(avalue);
-        //return avalue < bvalue;
-        var ass = 0;
-        ass = ass > 0 ? 1 : 2;
-      });
-    } else if ($(this).attr("data-type") === "num") { //数字类型值排序操作
-      tablearr.sort(function(a, b) {
-        var avalue = parseInt($(a).find("td").eq(colunindex).text()) - 0;
-        var bvalue = parseInt($(b).find("td").eq(colunindex).text()) - 0;
-        return isdesc ? avalue - bvalue : bvalue - avalue;
-      });
-    }
-    //重新添加到页面中
-    var tbody = $("<tbody></tbody>").append($(tablearr));
-    $("tbody").prepend($(tbody).html());
-  });
-});
-//时间比较函数（直接提取数字进行比较）
-function timescompare(a, b) {
-  return a.replace(/[^0-9]+/g, "") - b.replace(/[^0-9]+/g, "");
-}
+
 //分隔获取各个参数
 function UrlSearch() {
   var name, value;
@@ -199,7 +151,8 @@ var JSTOOL = function() {
     var confirm = callback && typeof callback === "function" ? callback :
       function() {};
     if (myBrowser() == "IE8") {
-      window.top.bootbox.alert({
+
+      $.alert({
         buttons: {
           ok: {
             label: '',
@@ -212,6 +165,8 @@ var JSTOOL = function() {
         },
         title: title,
       });
+
+
     } else {
       var alertClass = "";
       if (typeof className == "undefined") {
@@ -219,7 +174,7 @@ var JSTOOL = function() {
       } else {
         alertClass = className;
       }
-      window.top.$.alert({
+      $.alert({
         title: title,
         content: content,
         confirm: confirm,
@@ -238,7 +193,7 @@ var JSTOOL = function() {
     var cancel = cancelCallback && typeof cancelCallback === "function" ? cancelCallback :
       function() {};
     if (myBrowser() == "IE8") {
-      window.top.bootbox.confirm({
+      window.confirm({
         buttons: {
           confirm: {
             label: '确认',
@@ -262,12 +217,13 @@ var JSTOOL = function() {
     } else {
       var confirm = okCallback && typeof okCallback === "function" ? okCallback : function() {};
       var cancel = cancelCallback && typeof cancelCallback === "function" ? cancelCallback : function() {};
-      window.top.window.top.$.confirm({
+      $.confirm({
         title: title,
+        offsetTop: 10,
         content: content,
         confirm: confirm,
         cancel: cancel,
-        confirmButton: '确定',
+        confirmButton: '确定s',
         cancelButton: '取消',
         confirmButtonClass: 'btn-primary',
         cancelButtonClass: 'btn-danger',
