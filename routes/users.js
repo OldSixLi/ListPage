@@ -159,6 +159,7 @@ router.post('/add', function(req, res, next) {
         console.log("当前数据为:" + JSON.stringify(fields));
         var inputFile = files.iconUrl[0];
         var uploadedPath = inputFile.path;
+        uploadedPath = uploadedPath.substr(9);
         // var dstPath = '../public/images/upload/' + inputFile.originalFilename;
         //BUG:按理说当前originalFilename应该为新生成的唯一名称,uploadedPath为上传的表单中的文件名
         // 但是在console中查看数据时:两者结果相反,有时间仔细查阅资料解决此疑问

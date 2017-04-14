@@ -41,6 +41,7 @@
         <li><a href="#/data" class="btn btn-link">数据绑定</a></li>
         <li><a href="#/info" class="btn btn-link">信息详情</a></li>
         <li><a href="#/form" class="btn btn-link">表单提交</a></li>
+        <li><a href="#/upload" class="btn btn-link">文件上传</a></li>
       </ul>
     </div>
     <!--显示内容区域-->
@@ -52,12 +53,54 @@
   <script src='http://apps.bdimg.com/libs/angular-route/1.3.13/angular-route.js'></script>
   <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>
   <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+  <script src='../../Script/jquery-form.js'></script>
   <!--路由-->
   <script src='../../Script/Angularjs/route.js'></script>
   <!--服务-->
   <script src='../../Script/Angularjs/service.js'></script>
   <!--控制器-->
   <script src='../../Script/Angularjs/controller.js'></script>
+  <script>
+    $(document).ready(function() {
+
+    });
+
+    function uploadPic(btn) {
+      $("#imageRes").click();
+      var divId = $(btn).parent().attr("id");
+      $("#hidden_divname").val(divId); //当前上传图片的父元素div的ID
+    }
+
+    /*上传协议*/
+    function uploadImage() {
+      var options = {
+        dataType: 'json',
+        success: function(data) {
+          // alert();
+
+          $("#uplpadBlock img").attr("src", data.message);
+          // if (data.success == true) {
+          //   tool.confirm("确定课程描述图片",
+          //     "<img style='width:100%' src=" + data.bean + " onclick='show(this)'>",
+          //     function() {
+          //       //发请求对数据库进行修改
+          //       var divId = $("#hidden_divname").val();
+          //       $("#" + divId).find("img").eq(0).attr("src", data.bean);
+          //     },
+          //     function() {
+          //       //删除缓存图片
+          //       $.post(deletePic, {
+          //         picurl: data.bean
+          //       }, function(data) {});
+          //     });
+          // } else {
+          //   tool.alert('提示', '上传图片必须为JPG、PNG、JEPG', function() {});
+          // }
+        }
+      };
+      $('#headForm').ajaxSubmit(options);
+    }
+  </script>
 </body>
 
 </html>

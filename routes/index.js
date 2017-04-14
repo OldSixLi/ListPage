@@ -2,6 +2,8 @@ var express = require('express');
 var qiniu = require('qiniu'); //七牛获取uptoken
 var router = express.Router();
 var fs = require("fs");
+var multiparty = require('multiparty');
+var util = require('util');
 
 /* 主页地址的返回 */
 router.get('/', function(req, res, next) {
@@ -34,8 +36,51 @@ router.all('/tree', function(req, res, next) {
   }, 0);
 });
 
+// 　　　　　◆◆　　　　　　　　　◆◆　　◆◆　　　　　　　　◆◆◆　　　　　　　◆◆　　◆◆　　　　　
+// 　　　　　◆◆◆　　　　　　　◆◆◆◆◆◆◆　　　　　　　　◆◆　　　　　　　　◆◆◆　◆◆　　　　　
+// 　　　　　　◆◆　　　　　　　◆◆◆◆◆◆◆　　　　　　　　◆◆　　　　　　　◆◆◆◆◆◆◆◆◆◆　　
+// 　◆◆◆◆◆◆◆◆◆◆◆◆　◆◆◆◆◆◆◆◆◆◆◆　　　　　◆◆　　　　　　　◆◆◆　◆◆◆　　　　　
+// 　　　◆◆◆　　◆◆　　　◆◆◆◆◆◆　◆◆　　　　　　　　◆◆◆◆◆◆◆　◆◆◆◆◆◆◆◆◆◆◆◆　
+// 　　　　◆◆　◆◆◆　　　◆◆◆◆◆　　◆◆　　　　　　　　◆◆　　　　　　◆◆◆◆　◆◆　　　　　　
+// 　　　　◆◆◆◆◆　　　　　　◆◆◆◆◆◆◆◆◆◆◆　　　　◆◆　　　　　　　◆◆◆　◆◆◆◆◆◆　　
+// 　　　　　◆◆◆◆　　　　　　◆◆　　　◆◆　　　　　　　　◆◆　　　　　　　◆◆◆　◆　　◆◆◆　　
+// 　　　　　◆◆◆　　　　　　　◆◆　　　◆◆　　　　　　　　◆◆　　　　　　　◆◆◆　◆◆　◆◆　　　
+// 　　　　◆◆◆◆◆◆　　　　　◆◆　　　◆◆　　　　　　　　◆◆　　　　　　　◆◆◆　◆◆◆◆◆　　　
+// 　◆◆◆◆　　　　◆◆◆◆　　◆◆　　　◆◆　　　　◆◆◆◆◆◆◆◆◆◆◆◆　◆◆◆　　　　◆◆◆　　
+//文件上传
+router.post('/upload', function(req, res, next) {
+  try {
 
+    var form = new multiparty.Form({ uploadDir: '../public/images/upload/' });
+    form.parse(req, function(err, fields, files) {
+      var filesTmp = JSON.stringify(files, null, 2);
+      if (err) {
+        console.log('parse error: ' + err);
+        var obj = {
+          success: false,
+          message: ""
+        }
+        res.json(obj);
+      } else {
+        console.log('上传路径为: ' + filesTmp);　
+        if (files.imageRes) {
+          var inputFile = files.imageRes[0];
+        }
 
+        var uploadedPath = inputFile.path;
+        uploadedPath = uploadedPath.substr(9); //利用public,截取public后的内容
+        var obj = {
+          success: true,
+          message: uploadedPath
+        }
+        res.json(obj);
+      }
+    });
+
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 
 
@@ -74,12 +119,3 @@ router.get('/token', function(req, res, next) {
   }
 });
 module.exports = router;
-
-/**
- * 异步请求获取数据表中数据
- * 
- * @param {any} state  文章状态
- * @param {any} page 页码
- * @param {any} typeId 文章目录分类ID
- */
-function getDs(state, page, typeId) {}

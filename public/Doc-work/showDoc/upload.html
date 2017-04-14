@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group" id="uplpadBlock">上传图片
+      <a onclick="uploadPic(this)">
+        <img class="img-responsive img-thumbnail" src="../../images/upload.jpg"></a>
+    </div>
+    <input type="hidden" id="hidden_divname" name="" value="">
+    <form action="/upload" id="headForm" method="post" enctype="multipart/form-data">
+      <input type="file" style="display:none" name="imageRes" id="imageRes" onchange="uploadImage()" />
+      <input type="hidden" name="type" value="turn" />
+    </form>
+  </div>
+  <div class="col-md-3"></div>
+  <div class="col-md-3"></div>
+  <div class="col-md-3"></div>
+</div>
