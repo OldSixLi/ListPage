@@ -16,9 +16,9 @@ var client = mysql.createConnection({
   port: '3306'
 });
 
-client.connect();
+// client.connect();
 //和哪个数据库建立连接
-client.query("use " + TEST_DATABASE);
+// client.query("use " + TEST_DATABASE);
 
 
 /**
@@ -30,7 +30,7 @@ client.query("use " + TEST_DATABASE);
 function finds(id, next) {
   if (id) {
     var sql = 'select * from  user where ID=' + id;
-    client.query(sql, function(err, result) {
+    client.query(sql, function (err, result) {
       if (!err) {
         try {
           console.log("--当前结果为:" + JSON.stringify(result));
@@ -58,7 +58,7 @@ function start(model, next) {
   ];
 
   //增 add
-  client.query(addSql, addParams, function(err, result) {
+  client.query(addSql, addParams, function (err, result) {
     if (err) {
       console.log('[INSERT ERROR] - ', err.message);
       return;
