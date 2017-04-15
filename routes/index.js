@@ -4,7 +4,6 @@ var router = express.Router();
 var fs = require("fs");
 var multiparty = require('multiparty');
 var util = require('util');
-var fs = require('fs');
 var path = require('path');
 
 console.log("当前组合的路径为：" + path.resolve(__dirname, '../public/images/upload/'));

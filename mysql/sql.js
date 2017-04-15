@@ -10,15 +10,15 @@ var mysql = require('mysql');
 var TEST_DATABASE = 'nodesql';
 var TEST_TABLE = 'user';
 var client = mysql.createConnection({
-  host: '127.0.0.1',
+  host: 'localhost',
   user: 'root',
   password: '123456',
   port: '3306'
 });
 
-// client.connect();
-//和哪个数据库建立连接
-// client.query("use " + TEST_DATABASE);
+client.connect();
+// 和哪个数据库建立连接
+client.query("use " + TEST_DATABASE);
 
 
 /**
