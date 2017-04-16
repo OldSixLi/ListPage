@@ -20,45 +20,45 @@
 // 　　◆◆◆　◆◆◆◆　◆◆◆　　　◆◆◆　　　　　◆◆　　　　◆◆◆　　　◆◆◆　　
 // 　◆◆◆◆◆◆◆　　◆◆◆◆◆　　◆◆◆◆　　◆◆◆◆◆◆　◆◆◆◆◆　　◆◆◆◆　
 // 第一个控制器
-app.controller('customersCtrl', function($scope, httpService, sortService) {
+app.controller('customersCtrl', function ($scope, httpService, sortService) {
   /**
    * 异步分页请求数据 
    * @param {any} pageindex 当前页面(从0开始计算)
    * @param {any} url 请求服务地址
    * @param {any} params  请求参数
    */
-  $scope.page = function(pageindex, url, params) {
+  $scope.page = function (pageindex, url, params) {
     httpService.pageing(pageindex, '')
       .then(
         //请求成功操作
-        function(res) {
+        function (res) {
           switch (res.status) {
-            case 200:
-              {
-                //请求成功操作
-                var data = res.data;
-                $scope.data = data;
-                $scope.dataLengths = data.content.length > 0;
-                break;
-              }
-            case 404:
-              {
-                //请求地址不存在
-                break;
-              }
-            case 500:
-              {
-                //服务器内部错误
-                console.log(JSON.stringify(res));
-                alert(res.data.errorMessage);
-                break;
-              }
-            default:
-              {
-                //请求服务失败
-                alert("请求服务失败");
-                break;
-              }
+          case 200:
+            {
+              //请求成功操作
+              var data = res.data;
+              $scope.data = data;
+              $scope.dataLengths = data.content.length > 0;
+              break;
+            }
+          case 404:
+            {
+              //请求地址不存在
+              break;
+            }
+          case 500:
+            {
+              //服务器内部错误
+              console.log(JSON.stringify(res));
+              alert(res.data.errorMessage);
+              break;
+            }
+          default:
+            {
+              //请求服务失败
+              alert("请求服务失败");
+              break;
+            }
           }
         }
       );
@@ -72,14 +72,14 @@ app.controller('customersCtrl', function($scope, httpService, sortService) {
    * 排序方法相关的操作 
    * @param {any} ziduan 排序的字段名称 
    */
-  $scope.sort = function(ziduan) {
+  $scope.sort = function (ziduan) {
     sortService.sort(ziduan, $scope.desc);
   };
 
 });
 
 // 当前页面中存在的第二个控制器
-app.controller('secondCtrl', function($scope) {
+app.controller('secondCtrl', function ($scope) {
   $scope.count = '同一个页面,第二个controller的数据绑定';
 });
 
@@ -97,10 +97,12 @@ app.controller('secondCtrl', function($scope) {
 // 　◆◆◆　　　◆◆◆　　◆◆◆　　　　　　　　◆◆◆　　　　　　　◆◆◆◆◆　　　
 
 //info页面 控制器
-app.controller('infoCtrl', function($scope, $location, urlService, httpService) {
-  $(document).ready(function() {
+app.controller('infoCtrl', function ($scope, $location, urlService, httpService) {
+
+
+  $(document).ready(function () {
     //利用JS改变DOM value值,然后同步到Angularjs的作用域中(仅为试行办法,不推荐在Angularjs中使用)
-    $("#changeNumBtn").on("click", function() {
+    $("#changeNumBtn").on("click", function () {
       $("#num").val($("#num").val() - 0 + 1);
       $scope.number = $("#num").val();
       //同步angularjs作用域值
@@ -123,36 +125,36 @@ app.controller('infoCtrl', function($scope, $location, urlService, httpService) 
     $scope.datas = urlObj.id;
     var id = urlObj.id;
     httpService.pageing(id, "/users/userinfo?id=" + id).then(
-      function(res) {
+      function (res) {
         switch (res.status) {
-          case 200:
-            {
-              var data = res.data;
-              //请求成功操作
-              if (data != null && data != "" && data.data != null && data.data != "" && data.data.length > 0) {
-                $scope.data = data.data[0];
-                console.log(JSON.stringify(data.data[0]));
-              }
-              break;
+        case 200:
+          {
+            var data = res.data;
+            //请求成功操作
+            if (data != null && data != "" && data.data != null && data.data != "" && data.data.length > 0) {
+              $scope.data = data.data[0];
+              console.log(JSON.stringify(data.data[0]));
             }
-          case 404:
-            {
-              //请求地址不存在
-              break;
-            }
-          case 500:
-            {
-              //服务器内部错误
-              console.log(JSON.stringify(res));
-              alert(res.data.errorMessage);
-              break;
-            }
-          default:
-            {
-              //请求服务失败
-              alert("请求服务失败");
-              break;
-            }
+            break;
+          }
+        case 404:
+          {
+            //请求地址不存在
+            break;
+          }
+        case 500:
+          {
+            //服务器内部错误
+            console.log(JSON.stringify(res));
+            alert(res.data.errorMessage);
+            break;
+          }
+        default:
+          {
+            //请求服务失败
+            alert("请求服务失败");
+            break;
+          }
         }
       }
     );

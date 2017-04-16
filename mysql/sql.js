@@ -6,6 +6,7 @@
  */
 
 var mysql = require('mysql');
+var Q = require('q');
 
 var TEST_DATABASE = 'nodesql';
 var TEST_TABLE = 'user';
@@ -45,9 +46,8 @@ function finds(id, next) {
     });
   };
 }
-
-function start(model, next) {
-
+var start = function (model, next) {
+  var deferred = Q.defer();
   //语句 
   var addSql = 'INSERT INTO  `user`(gender,name,age,iconUrl,regtime)  VALUES(?,?,?,?,NOW())';
   //参数
@@ -58,18 +58,54 @@ function start(model, next) {
   ];
 
   //增 add
-  client.query(addSql, addParams, function (err, result) {
+  var B = client.query(addSql, addParams, function (err, result) {
     if (err) {
-      console.log('[INSERT ERROR] - ', err.message);
-      return;
+      deferred.reject(false);
+      // console.log('[INSERT ERROR] - ', err.message);
+      // return;
     } else {
-      next(true);
-      console.log('~~~~~~~~~用户:' + model.name + '插入成功~~~~~~~~~~~~~');
+      deferred.resolve(true);
+      // next(true);
+      // console.log('~~~~~~~~~用户:' + model.name + '插入成功~~~~~~~~~~~~~');
     }
+    return deferred.promise;
   });
+  console.log(B.toString() + "~~~~~~~~~~");
 
 }
+
+function returnModel(model) {
+  var A = start(model);
+  // A.then(
+
+  //   function () {
+  //     var obj = {
+  //       success: true,
+  //       message: "保存成功"
+  //     }
+  //     res.json(obj);
+  //   },
+  //   function () {
+  //     var obj = {
+  //       success: false,
+  //       message: "保存失败"
+  //     }
+  //     res.json(obj);
+  //   });
+
+  A.done(function () {
+    console.log("success");
+  })
+}
+
+
+
+
 //输出函数
 // exports.start = start;
+
+
+
 exports.getDS = finds;
 exports.addModel = start;
+exports.returnModel = returnModel;

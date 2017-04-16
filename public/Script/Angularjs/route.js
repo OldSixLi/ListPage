@@ -6,7 +6,7 @@
  * @Last Modified time:2017年4月7日15:28:08
  */
 var app = angular.module('myApp', ['ngRoute'])
-  .config(['$routeProvider', function($routeProvider) {
+  .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: "../showDoc/image.html"
@@ -18,7 +18,7 @@ var app = angular.module('myApp', ['ngRoute'])
         templateUrl: "../showDoc/info.html"
       })
       .when('/form', {
-        templateUrl: "../showDoc/form.html"
+        templateUrl: "../showDoc/formAdd.html"
       }).when('/upload', {
         templateUrl: "../showDoc/upload.html"
       })

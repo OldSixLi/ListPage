@@ -17,6 +17,7 @@ var path = require('path');
 var app = express();
 var router = express.Router();
 var fs = require("fs");
+var Q = require('promise');
 
 // router.use(bodyParser.urlencoded({ extended: false }));
 //NOTE:在接收POST数据时,因为URL中并不存在参数,需要使用此方法转化数据,获取参数
@@ -45,7 +46,8 @@ router.get('/', function (req, res, next) {
 
 //请求的是/users/users接口才会访问到此处
 router.get('/users', function (req, res, next) {
-  var data = fs.readFileSync("../public/JSON/userlist.json", "utf-8");
+  var absolutePath = path.resolve(__dirname, '../public/JSON/userlist.json');
+  var data = fs.readFileSync(absolutePath, "utf-8");
   //控制延时返回数据
   var obj = JSON.parse(data);
   setTimeout(function () {
@@ -124,13 +126,31 @@ router.post('/infoAdd', function (req, res, next) {
       gender: postData.gender,
       age: postData.age
     }
-    DBhelper.addModel(model, function (issuccess) { //返回T/F,是否插入数据成功
-      var obj = {
-        success: issuccess,
-        message: "保存成功"
-      }
-      res.json(obj);
-    });
+
+    // DBhelper.addModel(model, function (issuccess) { //返回T/F,是否插入数据成功
+    //   var obj = {
+    //     success: issuccess,
+    //     message: "保存成功"
+    //   }
+    //   res.json(obj);
+    // });
+    DBhelper.returnModel(model);
+    console.log(JSON.stringify(promise));
+    // promise.then(
+    //   function () {
+    //     var obj = {
+    //       success: true,
+    //       message: "保存成功"
+    //     }
+    //     res.json(obj);
+    //   },
+    //   function () {
+    //     var obj = {
+    //       success: false,
+    //       message: "保存失败"
+    //     }
+    //     res.json(obj);
+    //   })
   } catch (err) {
     console.log(err);
   }
@@ -161,8 +181,16 @@ router.post('/add', function (req, res, next) {
         console.log("当前数据为:" + JSON.stringify(fields));
         var inputFile = files.iconUrl[0];
         var uploadedPath = inputFile.path;
-        //再次将绝对路径转化为public下的相对路径：截取public后的内容
-        uploadedPath = uploadedPath.substr(inputFile.path.indexOf('public') + 6);
+        //进行判断是否为空
+        if (path.extname(uploadedPath)) {
+          //再次将绝对路径转化为public下的相对路径：截取public后的内容
+          uploadedPath = uploadedPath.substr(inputFile.path.indexOf('public') + 6);
+        } else {
+          console.log("当前为空的路径为：" + uploadedPath);
+          uploadedPath = "";
+        }
+
+        //TODO 这插件，在不上传文件的时候也会生成表一个没有后缀的0字节的文件，所以需要处理文件，校验一下是否为空并且后缀名是否存在
         // var dstPath = '../public/images/upload/' + inputFile.originalFilename;
         //BUG:按理说当前originalFilename应该为新生成的唯一名称,uploadedPath为上传的表单中的文件名
         // 但是在console中查看数据时:两者结果相反,有时间仔细查阅资料解决此疑问
@@ -176,6 +204,8 @@ router.post('/add', function (req, res, next) {
         //     console.log('rename ok');
         //   }
         // });
+        //TODO 校验有后缀名并且字节不为空
+
 
         //添加的Model
         var model = {
