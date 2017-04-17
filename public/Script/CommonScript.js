@@ -229,12 +229,7 @@ var JSTOOL = function() {
         cancelButtonClass: 'btn-danger',
         backgroundDismiss: false,
         animation: 'zoom',
-        closeAnimation: 'scale',
-        // title: 'Asynchronous content',
-        // content: 'url:table.html',
-        animation: 'top',
-        // columnClass: 'col-md-6 col-md-offset-3',
-        closeAnimation: 'bottom',
+        closeAnimation: 'scale'
       });
     }
   };
