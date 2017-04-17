@@ -7,7 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('myapp:server');
 var http = require('http');
-
+var sio = require('socket.io');
 /**
  * Get port from environment and store in Express.
  */
@@ -28,6 +28,35 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+var io = sio.listen(server);
+var names = [];
+io.sockets.on('connection', function(socket) {
+  socket.on('login', function(name) {
+    for (var i = 0; i < names.length; i++) {
+      if (names[i] === name) {
+        socket.emit('duplicate');
+        return;
+      }
+    }
+    names.push(name);
+    io.sockets.emit('login', name);
+    io.sockets.emit('sendClients', names);
+  });
+  socket.on('chat', function(data) {
+    io.sockets.emit('chat', data);
+  });
+  socket.on('logout', function(name) {
+    for (var i = 0; i < names.length; i++) {
+      if (names[i] === name) {
+        names.splice(i, 1);
+        break;
+      }
+    }
+    socket.broadcast.emit('logout', name);
+    io.sockets.emit('sendClients', names);
+  });
+});
 
 /**
  * Normalize a port into a number, string, or false.
