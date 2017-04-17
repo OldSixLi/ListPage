@@ -1,4 +1,13 @@
+body {
+  font-family: "MicroSoft YaHei";
+}
+
 td>img {
-    width: 25px;
-    height: 25px;
+  width: 25px;
+  height: 25px;
+}
+
+.icon-img {
+  width: 300px;
+  height: 300px;
 }

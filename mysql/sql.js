@@ -6,18 +6,19 @@
  */
 
 var mysql = require('mysql');
+var Q = require('q');
 
 var TEST_DATABASE = 'nodesql';
 var TEST_TABLE = 'user';
 var client = mysql.createConnection({
-  host: '127.0.0.1',
+  host: 'localhost',
   user: 'root',
   password: '123456',
   port: '3306'
 });
 
 client.connect();
-//和哪个数据库建立连接
+// 和哪个数据库建立连接
 client.query("use " + TEST_DATABASE);
 
 
@@ -30,7 +31,7 @@ client.query("use " + TEST_DATABASE);
 function finds(id, next) {
   if (id) {
     var sql = 'select * from  user where ID=' + id;
-    client.query(sql, function(err, result) {
+    client.query(sql, function (err, result) {
       if (!err) {
         try {
           console.log("--当前结果为:" + JSON.stringify(result));
@@ -45,9 +46,8 @@ function finds(id, next) {
     });
   };
 }
-
-function start(model, next) {
-
+var start = function (model, next) {
+  var deferred = Q.defer();
   //语句 
   var addSql = 'INSERT INTO  `user`(gender,name,age,iconUrl,regtime)  VALUES(?,?,?,?,NOW())';
   //参数
@@ -58,18 +58,54 @@ function start(model, next) {
   ];
 
   //增 add
-  client.query(addSql, addParams, function(err, result) {
+  var B = client.query(addSql, addParams, function (err, result) {
     if (err) {
-      console.log('[INSERT ERROR] - ', err.message);
-      return;
+      deferred.reject(false);
+      // console.log('[INSERT ERROR] - ', err.message);
+      // return;
     } else {
-      next(true);
-      console.log('~~~~~~~~~用户:' + model.name + '插入成功~~~~~~~~~~~~~');
+      deferred.resolve(true);
+      // next(true);
+      // console.log('~~~~~~~~~用户:' + model.name + '插入成功~~~~~~~~~~~~~');
     }
+    return deferred.promise;
   });
+  console.log(B.toString() + "~~~~~~~~~~");
 
 }
+
+function returnModel(model) {
+  var A = start(model);
+  // A.then(
+
+  //   function () {
+  //     var obj = {
+  //       success: true,
+  //       message: "保存成功"
+  //     }
+  //     res.json(obj);
+  //   },
+  //   function () {
+  //     var obj = {
+  //       success: false,
+  //       message: "保存失败"
+  //     }
+  //     res.json(obj);
+  //   });
+
+  A.done(function () {
+    console.log("success");
+  })
+}
+
+
+
+
 //输出函数
 // exports.start = start;
+
+
+
 exports.getDS = finds;
 exports.addModel = start;
+exports.returnModel = returnModel;
