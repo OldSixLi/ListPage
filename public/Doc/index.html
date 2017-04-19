@@ -1,98 +1,98 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="../Style/bootstrap.css" rel="stylesheet" type="text/css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="../Style/bootstrap.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-    <div class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- 标题 -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active">
-                            <a href="#AlreadyPanel" aria-controls="AlreadyPanel" role="tab" data-toggle="tab">已开具发票</a>
-                        </li>
-                        <li role="presentation">
-                            <a href="#TodoPanel" aria-controls="TodoPanel" role="tab" data-toggle="tab">未开具发票</a>
-                        </li>
-                    </ul>
-                    <!-- 主体内容 -->
-                    <div class="tab-content">
-                        <!-- 已开票数据列表begin -->
-                        <div role="tabpanel" class="tab-pane active" id="AlreadyPanel">
-                            <div class="panel panel-default ">
-                                <div class="panel-heading"><b>已开具发票列表</b></div>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>1</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="databody">
-                                        <tr>
-                                            <td colspan="100" class="text-center notFound">没有相关数据</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="pull-right">
-                                <ul class="pagination" id="alreadyPage">
-                                </ul>
-                            </div>
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- 标题 -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+              <a href="#AlreadyPanel" aria-controls="AlreadyPanel" role="tab" data-toggle="tab">已开具发票</a>
+            </li>
+            <li role="presentation">
+              <a href="#TodoPanel" aria-controls="TodoPanel" role="tab" data-toggle="tab">未开具发票</a>
+            </li>
+          </ul>
+          <!-- 主体内容 -->
+          <div class="tab-content">
+            <!-- 已开票数据列表begin -->
+            <div role="tabpanel" class="tab-pane active" id="AlreadyPanel">
+              <div class="panel panel-default ">
+                <div class="panel-heading"><b>已开具发票列表</b></div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>1</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Username</th>
+                    </tr>
+                  </thead>
+                  <tbody id="databody">
+                    <tr>
+                      <td colspan="100" class="text-center notFound">没有相关数据</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="pull-right">
+                <ul class="pagination" id="alreadyPage">
+                </ul>
+              </div>
 
-                        </div>
-                        <!-- 已开票数据列表end -->
-                        <!-- 未开具发票列表begin -->
-                        <div role="tabpanel" class="tab-pane" id="TodoPanel">
-                            <div class="panel panel-default ">
-                                <div class="panel-heading"><b>未开具发票列表</b></div>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>1</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tododatabody">
-                                        <tr>
-                                            <td colspan="100" class="text-center notFound">没有相关数据</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="pull-right">
-                                <ul class="pagination" id="todoPage">
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- 未开具发票列表end -->
-                    </div>
-
-                </div>
             </div>
+            <!-- 已开票数据列表end -->
+            <!-- 未开具发票列表begin -->
+            <div role="tabpanel" class="tab-pane" id="TodoPanel">
+              <div class="panel panel-default ">
+                <div class="panel-heading"><b>未开具发票列表</b></div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>1</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Username</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tododatabody">
+                    <tr>
+                      <td colspan="100" class="text-center notFound">没有相关数据</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="pull-right">
+                <ul class="pagination" id="todoPage">
+                </ul>
+              </div>
+            </div>
+            <!-- 未开具发票列表end -->
+          </div>
+
         </div>
+      </div>
     </div>
-    <!-- 脚本 -->
-    <script type="text/javascript" src="../Script/jquery-1.9.1.js"></script>
-    <script type="text/javascript" src="../Script/bootstrap.js"></script>
-    <!-- <script type="text/javascript" src="../Script/page.js"></script> -->
-    <script type="text/javascript" src="../Script/bootstrap-paginator.js"></script>
-    <script>
-        $(function() {
-            $.getJSON('../JSON/data.json', function(json) {
-                alert(json.list[0].ORDER_ID);
-            });
-        });
-    </script>
+  </div>
+  <!-- 脚本 -->
+  <script type="text/javascript" src="../Script/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="../Script/bootstrap.js"></script>
+  <!-- <script type="text/javascript" src="../Script/page.js"></script> -->
+  <script type="text/javascript" src="../Script/bootstrap-paginator.js"></script>
+  <script>
+    $(function() {
+      $.getJSON('../JSON/data.json', function(json) {
+        alert(json.list[0].ORDER_ID);
+      });
+    });
+  </script>
 </body>
 
 </html>
