@@ -1,0 +1,25 @@
+{
+  // 有效的七牛 AccessKey 签名授权
+
+  // qiniu.conf.ACCESS_KEY = 'gfmlM2ZmBqZkpPZixYkPzb2zy-FbJv2mvR1KY3t_';
+  // qiniu.conf.SECRET_KEY = '7ksC_gm9kaNmUHMaphcypwFK3nWzafwbxNKLxaNN';
+  "pasteImageToQiniu.access_key": "gfmlM2ZmBqZkpPZixYkPzb2zy-FbJv2mvR1KY3t_",
+
+  // 有效的七牛 SecretKey 签名授权
+  "pasteImageToQiniu.secret_key": "7ksC_gm9kaNmUHMaphcypwFK3nWzafwbxNKLxaNN",
+
+  // 七牛图片上传空间
+  "pasteImageToQiniu.bucket": "hes-upload",
+
+  // 七牛图片上传路径，参数化命名，暂时支持 ${fileName}、${mdFileName}、${date}、${dateTime}
+  // 示例：
+  //   ${fileName}-${date} -> picName-20160725.jpg
+  //   ${mdFileName}-${dateTime} -> markdownName-20170412222810.jpg
+  "pasteImageToQiniu.remotePath": "${fileName}-${dateTime}",
+
+  // 七牛图床域名
+  "pasteImageToQiniu.domain": "http://om6fr85l4.bkt.clouddn.com/",
+
+  // 本地储存位置
+  "pasteImageToQiniu.localPath": "D:/Image"
+}
