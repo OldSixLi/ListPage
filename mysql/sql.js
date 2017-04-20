@@ -31,7 +31,7 @@ client.query("use " + TEST_DATABASE);
 function finds(id, next) {
   if (id) {
     var sql = 'select * from  user where ID=' + id;
-    client.query(sql, function (err, result) {
+    client.query(sql, function(err, result) {
       if (!err) {
         try {
           console.log("--当前结果为:" + JSON.stringify(result));
@@ -46,7 +46,7 @@ function finds(id, next) {
     });
   };
 }
-var start = function (model, next) {
+var start = function(model, next) {
   var deferred = Q.defer();
   //语句 
   var addSql = 'INSERT INTO  `user`(gender,name,age,iconUrl,regtime)  VALUES(?,?,?,?,NOW())';
@@ -58,7 +58,7 @@ var start = function (model, next) {
   ];
 
   //增 add
-  var B = client.query(addSql, addParams, function (err, result) {
+  var B = client.query(addSql, addParams, function(err, result) {
     if (err) {
       deferred.reject(false);
       // console.log('[INSERT ERROR] - ', err.message);
@@ -93,7 +93,7 @@ function returnModel(model) {
   //     res.json(obj);
   //   });
 
-  A.done(function () {
+  A.done(function() {
     console.log("success");
   })
 }
