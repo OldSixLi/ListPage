@@ -1,0 +1,113 @@
+{
+  /*
+  	// Place your snippets for HTML here. Each snippet is defined under a snippet name and has a prefix, body and 
+  	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+  	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+  	// same ids are connected.
+  	// Example:
+  	"Print to console": {
+  		"prefix": "log",
+  		"body": [
+  			"console.log('$1');",
+  			"$2"
+  		],
+  		"description": "Log output to console"
+  	}
+  */
+  "Print to console": {
+    "prefix": "log",
+    "body": [
+      "console.log('$1');",
+      "$2"
+    ],
+    "description": "自定义输出"
+  },
+  "HTML开始": {
+
+    "prefix": "kaishi",
+    "body": ["<!-- 马少博  创建于 ${1:Date} -->\r\n<!DOCTYPE html>\r\n<html lang='en'>\r\n<head>\r\n  <meta charset='utf-8'>\r\n  <meta http-equiv='X-UA-Compatible' content='IE=edge'>\r\n  <meta name='viewport' content='width=device-width, initial-scale=1'>\r\n  <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/myapp/public/images/my.ico' />\r\n  <title> ${2:标题}</title>\r\n  <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>\r\n</head>\r\n<body>\r\n  $3\r\n  <!-- 脚本 -->\r\n  <!-- <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script> -->\r\n  <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>\r\n  <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>\r\n</body>\r\n</html>"],
+    "description": "自定义HTML模板"
+  },
+  "自定义图片": {
+
+    "prefix": "img",
+    "body": ["<img src='http://usr.im/100x100$1?text=文字说明' class='img-responsive img-thumbnail' alt='自定义$2'>"],
+    "description": "自定义图片"
+  },
+  "xs布局": {
+    "prefix": "xs",
+    "body": ["<div class=\"col-xs-$1\"></div>"],
+    "description": "xs布局"
+  },
+  "sm布局": {
+    "prefix": "sm",
+    "body": ["<div class=\"col-sm-$1\"></div>"],
+    "description": "sm布局"
+  },
+  "md布局": {
+    "prefix": "md",
+    "body": ["<div class=\"col-md-$1\"></div>"],
+    "description": "md布局"
+  },
+  "lg布局": {
+    "prefix": "lg",
+    "body": ["<div class=\"col-lg-$1\"></div>"],
+    "description": "lg布局"
+  },
+  "row行布局": {
+    "prefix": "row",
+    "body": ["<div class=\"row\"><!-- 消除外边距 -->\r\n<div class=\"col-md-12\">$1</div>\r\n</div>"],
+    "description": "row行布局"
+  },
+  "3333布局": {
+    "prefix": "col3333",
+    "body": [" <div class=\"row\">\r\n          <div class=\"col-md-3\">$1</div>\r\n          <div class=\"col-md-3\"></div>\r\n          <div class=\"col-md-3\"></div>\r\n          <div class=\"col-md-3\"></div>\r\n        </div>"],
+    "description": "COL-3-3-3-3布局"
+  },
+  "Bootstrap-container布局": {
+    "prefix": "container",
+    "body": ["<div class=\"container\">\r\n    <div class=\"row\">\r\n      <!-- 消除外边距 -->\r\n      <div class=\"col-md-4 col-sm-4\">\r\n        <!--在此处编辑内容-->\r\n        $1\r\n      </div>\r\n      <div class=\"col-md-4 col-sm-4\">\r\n        <!--在此处编辑内容-->\r\n        $2\r\n      </div>\r\n      <div class=\"col-md-4 col-sm-4\">\r\n        <!--在此处编辑内容-->\r\n        $3\r\n      </div>\r\n    </div>\r\n  </div>"],
+    "description": "Bootstrap-container布局"
+  },
+  "444布局": {
+    "prefix": "col444",
+    "body": ["<div class=\"row\">\r\n    <div class=\"col-md-4\"></div>\r\n    <div class=\"col-md-4\"></div>\r\n    <div class=\"col-md-4\"></div>\r\n  </div>"],
+    "description": "COL-4-4-4布局"
+  },
+  "282布局": {
+    "prefix": "col282",
+    "body": ["<div class=\"row\">\r\n    <div class=\"col-md-2\"></div>\r\n    <div class=\"col-md-8\"></div>\r\n    <div class=\"col-md-2\"></div>\r\n  </div>"],
+    "description": "COL-2-8-2布局"
+  },
+  "TABLE": {
+    "prefix": "tablebuju",
+    "body": ["<!--table-bordered   边框\r\n      table-condensed  收缩\r\n      table-striped    斑马色-->\r\n  <table class=\"table table-hover ${1:table-bordered} ${2:table-condensed} ${3:table-striped}\">\r\n    <thead>\r\n      <tr>\r\n        <th>#</th>\r\n        <th>第一列</th>\r\n        <th>第二列</th>\r\n        <th>第三列</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr>\r\n        <td>1</td>\r\n        <td>数据1</td>\r\n        <td>数据2</td>\r\n        <td>数据3</td>\r\n      </tr>\r\n    </tbody>\r\n  </table>"],
+    "description": "Bootstrap Table布局"
+  },
+  "Bootstrap-Modal": {
+    "prefix": "modalbuju",
+    "body": ["<!--按钮  移动到其他DOM中-->\r\n<a class=\"btn btn-primary\" data-toggle=\"modal\" href=\"#modal\">模态框</a>\r\n<!--按钮END-->\r\n  <div class=\"modal fade\" id=\"modal\">\r\n    <div class=\"modal-dialog\">\r\n      <div class=\"modal-content\">\r\n        <div class=\"modal-header\">\r\n          <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button>\r\n          <h4 class=\"modal-title\">modal标题</h4>\r\n        </div>\r\n        <div class=\"modal-body\">\r\n          <form class=\"form-horizontal\" role=\"form\">\r\n            <div class=\"form-group\">\r\n              <div class=\"col-sm-2 text-right\"><label for=\"inputEmail3\" class=\"control-label\">Email</label></div>\r\n              <div class=\"col-sm-10\"><input type=\"text\" class=\"form-control\" id=\"inputEmail3\" placeholder=\"Email\"></div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <div class=\"col-sm-2 text-right\"><label for=\"inputPassword3\" class=\"control-label\">Password</label></div>\r\n              <div class=\"col-sm-10\"><input type=\"text\" class=\"form-control\" id=\"inputPassword3\" placeholder=\"Password\"></div>\r\n            </div>\r\n          </form>\r\n        </div>\r\n        <div class=\"modal-footer\">\r\n          <a class=\"btn btn-default\" data-dismiss=\"modal\">Close</a>\r\n          <a class=\"btn btn-primary\">Save changes</a>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <script>\r\n    $(\"#modal\").modal({　\r\n      show: false, //默认是否展示\r\n      backdrop: ${1:false}, //隐藏背景\r\n      keyboard: false\r\n    });\r\n  </script>"],
+    "description": "Bootstrap Modal布局--马少博"
+  },
+  "Angularjs-Tabel": {
+    "prefix": "table-angularjs",
+    "body": [
+      "<!-- Angularjs 表格相关HTML代码 -->\r\n  <div class=\"tab-content container-fluid\">\r\n    <table class=\"table table-hover\">\r\n      <!-- 表头 -->\r\n      <thead>\r\n        <tr>\r\n          <th>序号</th>\r\n          <th data-order=\"name\" class=\"order\" ng-click=\"title='name';desc=!desc;sort('name')\">\r\n            标题1\r\n            <!--排序字段需设置字段名称以及span标签-->\r\n            <span class=\"glyphicon glyphicon-sort\"></span>\r\n          </th>\r\n          <th> 标题2 </th>\r\n          <th> 标题3 </th>\r\n        </tr>\r\n      </thead>\r\n      <tbody id=\"databody\">\r\n        <tr ng-show=\"dataLengths\" ng-repeat=\"x in data.content | orderBy : title : desc\">\r\n          <td>{{ $index+1 }}</td>\r\n          <td>{{ x.name }}</td>\r\n          <td>{{ x.prescriptionType==\"Sport\"?\"运动\":\"营养\" }}</td>\r\n          <td>{{ x.spell}}</td>\r\n        </tr>\r\n        <tr ng-show=\"!dataLengths\">\r\n          <td colspan=\"100\" class=\"text-center \">没有相关数据</td>\r\n        </tr>\r\n      </tbody>\r\n    </table>\r\n  </div>\r\n  <div ng-show=\"dataLengths\">\r\n    <div class=\"form-group pull-right topage_block\">\r\n      <!-- 跳转至 -->\r\n      <label>{{totalRecord}}条/{{totalPage}}页</label>\r\n      <label>跳至</label>\r\n      <input type=\"text\" onkeyup=\"this.value=this.value.replace(/\/\/D/g,'')\" onafterpaste=\"this.value=this.value.replace(/\/\/D/g,'')\" class=\"form-control topage\" ng-model=\"toPageValue\" />\r\n      <label>页</label>\r\n      <button class=\"btn btn-primary btn-sm\" ng-click=\"skip()\">确定</button>\r\n    </div>\r\n    <!-- 分页控件 -->\r\n    <div class=\"pull-right\">\r\n      <ul class=\"pagination\" id=\"alreadyPage\"></ul>\r\n    </div>\r\n  </div>"
+    ],
+    "description": "Angularjs-Tabel布局--马少博"
+  },
+  "rawgit": {
+    "prefix": "raw",
+    "body": [
+      " <!-- https://rawgit.com/ -->\r\n <!-- http://www.bootcdn.cn/ -->\r\n <!--贴你github上的文件地址，就能自动变成CDN地址 -->"
+    ],
+    "description": "github自动变成CDN地址"
+  },
+  "qiniu-upload": {
+    "prefix": "qiniuupload",
+    "body": [
+      "<div class=\"col-md-3\" id=\"btn-uploader\">\r\n    <img id=\"img\" src='http://usr.im/350x200?text=文字说明' class='img-responsive img-thumbnail' alt='自定义'>\r\n    <button type=\"button\" class=\"btn btn-default btn-sm btn-block\" id=\"pickfiles\">上传默认日程背景</button>\r\n    <input type=\"hidden\" name=\"iconUrl\" id=\"iconUrl\" value=\"\">\r\n  </div>\r\n  <!-- 脚本 -->\r\n  <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>\r\n  <script src=\"https://cdn.rawgit.com/OldSixLi/oldSixLi.github.io/master/script/QiniuCloud/plupload.full.min.js\"></script>\r\n  <script src=\"https://cdn.rawgit.com/OldSixLi/oldSixLi.github.io/master/script/QiniuCloud/moxie.js\"></script>\r\n  <script src=\"https://cdn.rawgit.com/OldSixLi/oldSixLi.github.io/master/script/QiniuCloud/qiniu.min.js\"></script>\r\n  <script>\r\n    var domainUrl = \"http://om6fr85l4.bkt.clouddn.com/\"; //←←←←←←←修改上传的空间地址←←←←←←←\r\n    //获取七牛uptoken　\r\n    uploader = Qiniu.uploader({\r\n      runtimes: 'html5,flash,html4',\r\n      browse_button: 'pickfiles', //上传按钮的ID\r\n      container: 'btn-uploader', //上传按钮的上级元素ID\r\n      drop_element: 'btn-uploader',\r\n      max_file_size: '100mb', //最大文件限制　\r\n      dragdrop: false,\r\n      chunk_size: '4mb', //分块大小  \r\n      save_key: true,\r\n      uptoken_func: function() { // 在需要获取uptoken时，该方法会被调用　\r\n        var token = \"\";\r\n        $.ajax({\r\n          type: \"get\",\r\n          url: \"/token\", //←←←←←←←修改请求token的地址←←←←←←←\r\n          async: false,\r\n          dataType: \"json\",\r\n          success: function(data) {\r\n            token = data.uptoken; //←←←←←←←修改字段名称←←←←←←←\r\n          }\r\n        });\r\n        return token;\r\n      },\r\n      unique_names: false,\r\n      domain: domainUrl, //自己的七牛云存储空间域名\r\n      multi_selection: false, //是否允许同时选择多文件\r\n      //文件类型过滤，这里限制为图片类型\r\n      filters: {\r\n        mime_types: [{\r\n          title: \"Image files\",\r\n          extensions: \"jpg,jpeg,gif,png\"\r\n        }]\r\n      },\r\n      auto_start: true,\r\n      init: {\r\n        'FilesAdded': function(up, files) {\r\n          //do something\r\n        },\r\n        'BeforeUpload': function(up, file) {\r\n          //do something\r\n        },\r\n        'UploadProgress': function(up, file) {\r\n          //可以在这里控制上传进度的显示\r\n          console.log(up);\r\n          console.log(file);\r\n          //可参考七牛的例子\r\n        },\r\n        'UploadComplete': function() {\r\n          //do something\r\n        },\r\n        'FileUploaded': function(up, file, info) {　\r\n          var json = JSON.parse(info);\r\n          alert(\"上传成功\");\r\n          //图片压缩处理:限制图片长宽均为200px ,且图片质量为原来75%;←←←←←←←图片质量自定义\r\n          // ?imageView2/1/w/350/h/200/q/100|imageslim //设置长度宽度\r\n          var imgSrc = domainUrl + json.key + \"?imageView2/1/q/100|imageslim\";\r\n          $(\"#img\").attr(\"src\", imgSrc);\r\n          $(\"[name='iconUrl']\").val(imgSrc);\r\n        },\r\n        'Error': function(up, err, errTip) {\r\n          alert(errTip);\r\n        },\r\n        'Key': function(up, file) {\r\n          return file.name;\r\n        }\r\n      }\r\n    });\r\n  </script>"
+    ],
+    "description": "七牛云上传图片代码-马少博"
+  }
+}
