@@ -13,7 +13,6 @@ var DBhelper = require('../mysql/sql.js');
 var multiparty = require('multiparty');
 var util = require('util');
 var path = require('path');
-//Express框架相关部分
 var app = express();
 var router = express.Router();
 var fs = require("fs");
@@ -40,28 +39,28 @@ app.use(bodyParser.urlencoded({ //此项必须在 bodyParser.json 下面,为参�
 // 　　◆◆◆◆◆◆◆　　　　◆◆◆◆　　　◆◆　　　　　◆◆◆◆◆　　◆◆◆　◆◆◆　　◆◆　◆◆◆◆　
 // 　◆◆◆　　　◆◆◆◆◆◆　　　　◆◆◆◆◆◆◆◆◆　　　　◆◆　　◆◆◆　　　　◆◆◆◆　　　　　　
 /* 获取用户请求,进行相关处理 */
-router.get('/', function (req, res, next) {
+router.get('/', function(req, res, next) {
   res.send('此接口不返回任何有效信息!');
 });
 
 //请求的是/users/users接口才会访问到此处
-router.get('/users', function (req, res, next) {
+router.get('/users', function(req, res, next) {
   var absolutePath = path.resolve(__dirname, '../public/JSON/userlist.json');
   var data = fs.readFileSync(absolutePath, "utf-8");
   //控制延时返回数据
   var obj = JSON.parse(data);
-  setTimeout(function () {
+  setTimeout(function() {
     res.json(obj);
   }, 0);
 });
 
 // /users/name地址
-router.get('/name', function (req, res, next) {
+router.get('/name', function(req, res, next) {
   res.send("马三立老师");
 });
 
 // 获取某个用户的具体信息
-router.get('/userinfo', function (req, res, next) {
+router.get('/userinfo', function(req, res, next) {
   //获取参数,并将参数转化为对象
   var params = url.parse(req.url, true).query;
   var returnObj = {};
@@ -73,7 +72,7 @@ router.get('/userinfo', function (req, res, next) {
   } else {
     //参数存在,请求查询数据库
     var id = params.id;
-    var result = DBhelper.getDS(id, function (result) {
+    var result = DBhelper.getDS(id, function(result) {
       if (result) {
         //查询成功
         returnObj.dataSuccess = true;
@@ -101,7 +100,7 @@ router.get('/userinfo', function (req, res, next) {
 // 　◆◆◆　　　　　　　◆◆◆◆　　　　◆◆◆◆　　　　　◆◆◆　　　
 // POST新增用户信息
 
-router.post('/infoAdd', function (req, res, next) {
+router.post('/infoAdd', function(req, res, next) {
 
   try {
     //NOTE:这个地方的data.body特别傻,不能直接输出,否则就报错.哪怕你输出一个object我都不会怪你
@@ -167,12 +166,12 @@ router.post('/infoAdd', function (req, res, next) {
 // 　　　　◆◆◆◆◆◆　　　　　◆◆　　　◆◆　　　　　　　　◆◆　　　　　　　◆◆◆　◆◆◆◆◆　　　
 // 　◆◆◆◆　　　　◆◆◆◆　　◆◆　　　◆◆　　　　◆◆◆◆◆◆◆◆◆◆◆◆　◆◆◆　　　　◆◆◆　　
 //文件上传
-router.post('/add', function (req, res, next) {
+router.post('/add', function(req, res, next) {
   try {
     var absolutePath = path.resolve(__dirname, '../public/images/upload/');
     //设置表单文件上传的解析路径
     var form = new multiparty.Form({ uploadDir: absolutePath });
-    form.parse(req, function (err, fields, files) {
+    form.parse(req, function(err, fields, files) {
       var filesTmp = JSON.stringify(files, null, 2);
       if (err) {
         console.log('parse error: ' + err);
@@ -216,7 +215,7 @@ router.post('/add', function (req, res, next) {
         }
 
         // 数据库添加操作
-        DBhelper.addModel(model, function (issuccess) { //返回T/F,是否插入数据成功
+        DBhelper.addModel(model, function(issuccess) { //返回T/F,是否插入数据成功
           var obj = {
             success: issuccess,
             message: issuccess ? "保存成功" : "保存失败"
@@ -246,7 +245,7 @@ router.post('/add', function (req, res, next) {
 //获取七牛云Token接口
 qiniu.conf.ACCESS_KEY = 'gfmlM2ZmBqZkpPZixYkPzb2zy-FbJv2mvR1KY3t_';
 qiniu.conf.SECRET_KEY = '7ksC_gm9kaNmUHMaphcypwFK3nWzafwbxNKLxaNN';
-router.get('/token', function (req, res, next) {
+router.get('/token', function(req, res, next) {
   var myUptoken = new qiniu.rs.PutPolicy('hes-upload');
   var token = myUptoken.token();
   res.header("Cache-Control", "max-age=0, private, must-revalidate");
