@@ -25,13 +25,20 @@
   "HTML开始": {
 
     "prefix": "kaishi",
-    "body": ["<!-- 马少博  创建于 ${1:Date} -->\r\n<!DOCTYPE html>\r\n<html lang='en'>\r\n<head>\r\n  <meta charset='utf-8'>\r\n  <meta http-equiv='X-UA-Compatible' content='IE=edge'>\r\n  <meta name='viewport' content='width=device-width, initial-scale=1'>\r\n  <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/myapp/public/images/my.ico' />\r\n  <title> ${2:标题}</title>\r\n  <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>\r\n</head>\r\n<body>\r\n  $3\r\n  <!-- 脚本 -->\r\n  <!-- <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script> -->\r\n  <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>\r\n  <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>\r\n</body>\r\n</html>"],
+    "body": ["<!-- 马少博  创建于 ${2:Date} -->\r\n<!DOCTYPE html>\r\n<html lang='en'>\r\n<head>\r\n  <meta charset='utf-8'>\r\n  <meta http-equiv='X-UA-Compatible' content='IE=edge'>\r\n  <meta name='viewport' content='width=device-width, initial-scale=1'>\r\n  <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/myapp/public/images/my.ico' />\r\n  <title> ${3:标题}</title>\r\n  <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>\r\n</head>\r\n<body>\r\n  $4\r\n  <!-- 脚本 -->\r\n  <!-- <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script> -->\r\n  <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>\r\n  <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>\r\n<script>\r\n    var filePath = '${1:Doc/test.html}'; //此处填写相对于public/的目录\r\n  </script>\r\n   <script src='https://rawgit.com/OldSixLi/ResourceOnLine/master/webscoket/ScoketByMa.js'></script>\r\n  </body>\r\n</html>"],
     "description": "自定义HTML模板"
+  },
+  "HTML-AngularJs开始": {
+
+    "prefix": "kaishiangular",
+    "body": ["<!-- 马少博  创建于 ${1:时间} -->\r\n<!DOCTYPE html>\r\n<html lang='en'>\r\n<head>\r\n  <meta charset='utf-8'>\r\n  <meta http-equiv='X-UA-Compatible' content='IE=edge'>\r\n  <meta name='viewport' content='width=device-width, initial-scale=1'>\r\n  <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/myapp/public/images/my.ico' />\r\n  <title>${2:标题}</title>\r\n  <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>\r\n</head>\r\n<body ng-app=\"myApp\">\r\n  <div ng-controller=\"customersCtrl\" class=\"container-fluid\">\r\n    $3\r\n  </div>\r\n  <!-- 脚本 -->\r\n  <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script>\r\n  <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>\r\n  <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>\r\n  <script>\r\n    $(function() {\r\n      // NOTE:在此输入jQuery代码\r\n      $(\".start_end_time\").datetimepicker();\r\n      tool.changeSelect($(\"#sltDistrict\"), false);\r\n    });\r\n    var app = angular.module('myApp', []);\r\n    app.controller('customersCtrl', function($$scope, $$http) {\r\n      // NOTE:在此输入angularjs代码\r\n    });\r\n  </script>\r\n</body>\r\n</html>"],
+    "body": ["<!-- 马少博  创建于 ${1:时间} -->\r\n<!DOCTYPE html>\r\n<html lang='en'>\r\n<head>\r\n  <meta charset='utf-8'>\r\n  <meta http-equiv='X-UA-Compatible' content='IE=edge'>\r\n  <meta name='viewport' content='width=device-width, initial-scale=1'>\r\n  <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/myapp/public/images/my.ico' />\r\n  <title>${2:标题}</title>\r\n  <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>\r\n</head>\r\n<body ng-app=\"myApp\">\r\n  <div ng-controller=\"customersCtrl\" class=\"container-fluid\">\r\n    $3\r\n  </div>\r\n  <!-- 脚本 -->\r\n  <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script>\r\n  <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>\r\n  <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>\r\n  <script>\r\n    $(function() {\r\n      // NOTE:在此输入jQuery代码\r\n      });\r\n    var app = angular.module('myApp', []);\r\n    app.controller('customersCtrl', function($$scope, $$http) {\r\n      // NOTE:在此输入angularjs代码\r\n    });\r\n  </script>\r\n</body>\r\n</html>"],
+    "description": "自定义AngularJs-HTML模板"
   },
   "自定义图片": {
 
-    "prefix": "img",
-    "body": ["<img src='http://usr.im/100x100$1?text=文字说明' class='img-responsive img-thumbnail' alt='自定义$2'>"],
+    "prefix": "img-mashaobo",
+    "body": ["<img src='http://iph.href.lu/${1:100}x${1:100}?text=文字说明' class='img-responsive img-thumbnail' alt='自定义$2'>"],
     "description": "自定义图片"
   },
   "xs布局": {
@@ -113,8 +120,29 @@
   "radio": {
     "prefix": "radio-zujian",
     "body": [
-      "    <input type=\"radio\" name=\"${1:role}\" ng-model=\"model.${1:role}\" value=\"1\">TODO1&nbsp;&nbsp;\r\n    <input type=\"radio\" name=\"${1:role}\" ng-model=\"model.${1:role}\" value=\"2\">TODO2&nbsp;&nbsp;\r\n    <input type=\"radio\" name=\"${1:role}\" ng-model=\"model.${1:role}\" value=\"3\">TODO3&nbsp;&nbsp;\r\n    <script>\r\n      // 取值：\r\n      var radioVal = $('input:radio[name=TODO]:checked').val();\r\n    </script>"
+      "    <input type=\"radio\" name=\"${1:role}\" ng-model=\"model.${1:role}\" value=\"1\">TODO1&nbsp;&nbsp;\r\n    <input type=\"radio\" name=\"${1:role}\" ng-model=\"model.${1:role}\" value=\"2\">TODO2&nbsp;&nbsp;\r\n    <input type=\"radio\" name=\"${1:role}\" ng-model=\"model.${1:role}\" value=\"3\">TODO3&nbsp;&nbsp;\r\n    <script>\r\n      // 取值：\r\n      var radioVal = $('input:radio[name=${1:role}]:checked').val();\r\n    </script>"
     ],
     "description": "radio组件与取值"
+  },
+  "form表单": {
+    "prefix": "formbiaodan-mashaobo",
+    "body": [
+      "<!--横向form-->\r\n  <form class=\"form-horizontal\" role=\"form\" name=\"addForm\">\r\n    <!--输入框-->\r\n    <div class=\"form-group\">\r\n      <div class=\"${1:col-sm-4} text-right\"><label for=\"inputEmail3\" class=\"control-label\">姓名</label></div>\r\n      <div class=\"${2:col-sm-8}\">\r\n        <input type=\"text\" class=\"form-control\" id=\"name\" name=\"name\" placeholder=\"请输入姓名\"></div>\r\n    </div>\r\n    <!--radio类型-->\r\n    <div class=\"form-group\">\r\n      <div class=\"${1:col-sm-4} text-right\">\r\n        <label for=\"inputPassword3\" class=\"control-label\">权限</label>\r\n      </div>\r\n      <div class=\"${2:col-sm-8}\" style=\"line-height:35px;\">\r\n        <label class=\"control-label\"><input type=\"radio\" name=\"role\" value=\"1\">会籍顾问&nbsp;&nbsp;</label>\r\n        <label class=\"control-label\"><input type=\"radio\" name=\"role\" value=\"2\">运动专家&nbsp;&nbsp;</label>\r\n        <label class=\"control-label\"><input type=\"radio\" name=\"role\" value=\"3\">饮食专家&nbsp;&nbsp;</label>\r\n      </div>\r\n    </div>\r\n    <!--checkBox类型-->\r\n    <div class=\"form-group\">\r\n      <div class=\"${1:col-sm-4} text-right\">\r\n        <label for=\"inputEmail3\" class=\"control-label\">水果类型</label>\r\n      </div>\r\n      <div class=\"${2:col-sm-8}\">\r\n        <label class=\"control-label\"><input name=\"fruit\" type=\"checkbox\" value=\"1\" />苹果 </label>\r\n        <label class=\"control-label\"><input name=\"fruit\" type=\"checkbox\" value=\"2\" />桃子 </label>\r\n        <label class=\"control-label\"><input name=\"fruit\" type=\"checkbox\" value=\"3\" />香蕉 </label>\r\n      </div>\r\n    </div>\r\n    <div class=\"form-group\">\r\n      <div class=\"col-sm-12 text-right\">\r\n        <a class=\"btn btn-primary\" href=\"javascript:save()\">保存</a>\r\n      </div>\r\n    </div>\r\n  </form>\r\n  <script>\r\n    function save() {\r\n      var saveInfo = {\r\n        //文本框,下拉菜单选择值\r\n        name: $.trim($(\"#name\").val()),\r\n        //单选框值\r\n        role: $(\"[name='role']\").val(),\r\n        //复选框选择值\r\n        fruit: getCheckBoxValue(\"fruit\")\r\n      };\r\n      var __error = [];\r\n      if (saveInfo.name == \"\") {\r\n        __error.push(\"错误提示！\");\r\n      }\r\n      if (__error.length > 0) {\r\n        tool.alert(\"提示\", __error.join(\"<br />\"));\r\n        return false;\r\n      }\r\n      $.ajax({\r\n        type: \"POST\",\r\n        url: \"url\",\r\n        data: saveInfo,\r\n        dataType: \"json\",\r\n        success: function(data, textStatus, jqXHR) {\r\n          if (data != null && data != \"\") {\r\n            if (data.success) {\r\n              tool.alert(\"提示\", \"保存成功\");\r\n            } else {\r\n              tool.alert(\"提示\", \"保存失败\");\r\n            }\r\n          } else {\r\n            //NOTE 数据为空时提示 \r\n            tool.alert(\"提示\", \"未获取到数据!\");\r\n          }\r\n        },\r\n        error: function(response) {\r\n          //NOTE 获取服务出错时提示\r\n          tool.alert(\"提示\", \"请求服务失败,请重试!\");\r\n        },\r\n        complete: function(xhr, textStatus) {\r\n          //NOTE 异步事件完成后需要操作的内容\r\n        }\r\n      });\r\n    }\r\n    //获取多选框的值\r\n    function getCheckBoxValue(name) {\r\n      var obj = document.getElementsByName(name); //选择所有name=\"'test'\"的对象，返回数组\r\n      //取到对象数组后，我们来循环检测它是不是被选中\r\n      var s = [];\r\n      for (var i = 0; i < obj.length; i++) {\r\n        if (obj[i].checked) {\r\n          s.push(obj[i].value); //如果选中，将value添加到变量s中\r\n        }\r\n      }\r\n      return s.join(',');\r\n    }\r\n  </script>"
+    ],
+    "description": "Form表单的HTML与JS"
+  },
+  "inputgroup": {
+    "prefix": "inputgroup-mashaobo",
+    "body": [
+      "<div class=\"input-group\">\r\n  <span class=\"input-group-addon\">$</span>\r\n  <input type=\"text\" class=\"form-control\" aria-label=\"Amount (to the nearest dollar)\">\r\n  <span class=\"input-group-addon\">.00</span>\r\n</div>"
+    ],
+    "description": "Bootstrap InputGroup输入框组--by马少博"
+  },
+  "zidongshuaxin": {
+    "prefix": "zidongshuaxin-mashaobo",
+    "body": [
+      "  <!--自动刷新页面的代码-->\r\n  <script>\r\n    var filePath = 'Doc/test.html'; //当前文件名，此处填写相对于public/的目录\r\n  </script>\r\n  <script src='https://rawgit.com/OldSixLi/ResourceOnLine/master/webscoket/ScoketByMa.js'></script>"
+    ],
+    "description": "用于网页自动刷新的代码-- 马少博"
   }
 }

@@ -36,7 +36,7 @@
   },
   "复制操作相关方法 ": {
     "prefix": "copy-Fun",
-    "body": [
+    "body": [，
       "window.onload = function(event) {\r\n            var button = document.getElementById(\"toCopy\");\r\n            button.onclick = function(event) {\r\n              if (window.clipboardData) {\r\n                window.clipboardData.clearData();\r\n                clipboardData.setData(\"Text\", $.trim($(\"#copyvalue\").val()));\r\n              } else {\r\n                document.getElementById(\"copyvalue\").select();\r\n                document.execCommand(\"copy\", false, null);\r\n              }\r\n              showInfo(\"copysuccess\");\r\n            };\r\n          };"
     ],
     "description": "复制的JS方法"
@@ -51,7 +51,7 @@
   "yibuqingqiu": {
     "prefix": "ajaxpost",
     "body": [
-      "$.ajax({\r\n  type: \"POST\",\r\n  url: \"${1:url}\",\r\n  data: saveInfo,\r\n  dataType: \"json\",\r\n  success: function(data) {\r\n    if (data != null && data != \"\") {\r\n      if (data.success) {\r\n        tool.alert(\"提示\", \"保存成功\");\r\n      } else {\r\n        tool.alert(\"提示\", \"保存失败\");\r\n      }\r\n      //获取到数组\r\n      var json = data;\r\n      for (var i = 0; i < json.length; i++) {\r\n        //do something\r\n      }\r\n    } else {\r\n      //failed  do something\r\n    }\r\n  },\r\n  error: function(response) {\r\n    tool.alert(\"提示\", \"请求服务失败,请重试!\");\r\n  }\r\n});"
+      "$.ajax({\r\n  type: \"POST\",\r\n  url: \"${1:url}\",\r\n  data: ${2:saveInfo},\r\n  dataType: \"json\",\r\n  success: function(data, textStatus, jqXHR) {\r\n    if (data != null && data != \"\") {\r\n      if (data.success) {\r\n        tool.alert(\"提示\", \"保存成功\");\r\n      } else {\r\n        tool.alert(\"提示\", \"保存失败\");\r\n      }\r\n      //获取到数组\r\n      var json = data;\r\n     $3 for (var i = 0; i < json.length; i++) {\r\n        //NOTE 循环操作数据 \r\n      }\r\n    } else {\r\n      //NOTE 数据为空时提示 \r\n      tool.alert(\"提示\", \"未获取到数据!\");\r\n    }\r\n  },\r\n  error: function(response) {\r\n    //NOTE 获取服务出错时提示\r\n    tool.alert(\"提示\", \"请求服务失败,请重试!\");\r\n  },\r\n  complete: function(xhr, textStatus) {\r\n    //NOTE 异步事件完成后需要操作的内容\r\n  }\r\n});"
     ],
     "description": "异步请求POST操作"
   },
@@ -155,6 +155,26 @@
       "// 回车事件\r\n            $(function() {\r\n              document.onkeydown = function(e) {\r\n                var ev = document.all ? window.event : e;\r\n                if (ev.keyCode == 13) {\r\n                  search();\r\n                  return false; //防止其他默认事件\r\n                }\r\n              }\r\n            });"
     ],
     "description": "Javascript回车事件"
+  },
+  "AJAX-getJson方法": {
+    "prefix": "getJson-mashaobo",
+    "body": [
+      "//更改用户地址以及请求数据部分\r\n$.getJSON(\r\n  \"${1:TODOurl}\",\r\n  ${2:saveInfo},\r\n  function(data) {\r\n    $3\r\n  },\r\n  \"json\");"
+    ],
+    "description": "getJson方法By马少博"
+  },
+  "AJAX-$.post方法": {
+    "prefix": "post-mashaobo",
+    "body": [
+      "$.post(\r\n  \"${1:TODOurl}\",\r\n  ${2:saveInfo},\r\n  function(data) {\r\n    console.log(data);$3 \r\n  }, \r\n \"json\");"
+    ],
+    "description": "$.post方法By马少博"
+  },
+  "跳转": {
+    "prefix": "tiaozhuan-JSP",
+    "body": [
+      "var goToDetail = \"http://\" + tool.getUrlArea() + \"${1:/user/advice/show}\";\r\n      window.location.href = goToDetail;"
+    ],
+    "description": "JSP页面跳转方法--马少博"
   }
-
 }
