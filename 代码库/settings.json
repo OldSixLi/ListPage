@@ -1,0 +1,60 @@
+// 将设置放入此文件中以覆盖默认设置
+{
+  "editor.fontWeight": "normal",
+  "editor.fontSize": 18,
+  "editor.lineHeight": 25,
+  "editor.fontFamily": "Consolas , Microsoft YaHei,Consolas, 'Courier New', monospace",
+  "editor.cursorStyle": "line",
+  "editor.rulers": [],
+  "editor.minimap.enabled": true,
+  "css.lint.compatibleVendorPrefixes": "warning",
+  "css.lint.duplicateProperties": "warning",
+  "css.lint.zeroUnits": "warning",
+  "workbench.iconTheme": "vscode-great-icons",
+  "editor.wordWrap": "on",
+  "editor.wrappingIndent": "same",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.renderIndentGuides": true,
+  "css.lint.emptyRules": "ignore",
+  "html.format.unformatted": "a, abbr, acronym, b, bdo, big, br, cite, code, dfn, em, i, img, input, kbd, label, map, object, q, samp, small, sub, sup, tt, var",
+  "workbench.colorTheme": "Dracula",
+  "todohighlight.isEnable": true, //toggle the highlight, default is true
+  "todohighlight.isCaseSensitive": true, //whether the keywords are case sensitive or not
+  "todohighlight.highlightWholeLine": false, //highlight whole line instead of keyword only
+  "todohighlight.keywords": [
+    "BUG:", // adding custom keywords without specifying the look, default color will be applied
+    "REVIEW:", //another custom keyword
+    {
+      "text": "NOTE", // custom text to be highlighted
+      "color": "#ff0000", // the text color, any css color identifier is valid
+      "backgroundColor": "yellow", // the text background color
+      "overviewRulerColor": "grey" //the color of the ruler mark on the scroll bar. use rgba() and define transparent colors to play well with other decorations.
+    },
+    {
+      "text": "HACK",
+      "color": "#000"
+    },
+    { //this block will override the built-in keyword `TODO:` and give it new style
+      "text": "TODO",
+      "color": "red",
+      "backgroundColor": "#EAF10C"
+    }
+  ],
+  "todohighlight.defaultStyle": { //specify the default style for custom keywords, if not specified, build in default style will be applied
+    "color": "#0000ff",
+    "backgroundColor": "yellow",
+    "overviewRulerColor": "grey"
+  },
+  "todohighlight.include": "{**/*.js,**/*.jsx,**/*.ts,**/*.html,**/*.php,**/*.css,**/*.scss}", //A glob pattern that defines the files to search for. Only include files you need, DO NOT USE `{**/*.*}` for both permormance and avoiding binary files reason
+  "todohighlight.exclude": "{**/node_modules/**,**/bower_components/**,**/dist/**,**/build/**,**/.vscode/**,**/_output/**,**/*.min.*,**/*.map}", //A glob pattern that defines files and folders to exclude while listing annotations
+  "todohighlight.maxFilesForSearch": 5120,
+  "css.remoteStyleSheets": [
+    "http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css"
+  ],
+  "editor.parameterHints": true,
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": true,
+    "strings": true
+  }
+}
