@@ -22,18 +22,39 @@
     ],
     "description": "自定义输出"
   },
+  "startendTimeBlock": {
+    "prefix": "timestartblock--start",
+    "body": [
+      "<div class=\"input-group timeblock\">\r\n \r\n            <div class=\"input-group-btn\">\r\n              <button type=\"button\" class=\"btn btn-default\" id=\"btnStarttime\">\r\n                <span class=\"glyphicon glyphicon-calendar\"></span></button>\r\n            </div>\r\n          </div>"
+    ],
+    "description": "开始时间选择框"
+  },
+  " endTimeBlock": {
+    "prefix": "timeendblock--end",
+    "body": [
+      "<div class=\"input-group timeblock\">\r\n \r\n            <div class=\"input-group-btn\">\r\n              <button type=\"button\" class=\"btn btn-default\" id=\"btnEndtime\">\r\n                <span class=\"glyphicon glyphicon-calendar\"></span></button>\r\n            </div>\r\n          </div>"
+    ],
+    "description": "结束时间选择框"
+  },
   "HTML开始": {
 
     "prefix": "kaishi",
-    "body": ["<!-- 马少博  创建于 ${2:Date} -->\r\n<!DOCTYPE html>\r\n<html lang='en'>\r\n<head>\r\n  <meta charset='utf-8'>\r\n  <meta http-equiv='X-UA-Compatible' content='IE=edge'>\r\n  <meta name='viewport' content='width=device-width, initial-scale=1'>\r\n  <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/myapp/public/images/my.ico' />\r\n  <title> ${3:标题}</title>\r\n  <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>\r\n</head>\r\n<body>\r\n  $4\r\n  <!-- 脚本 -->\r\n  <!-- <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script> -->\r\n  <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>\r\n  <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>\r\n<script>\r\n    var filePath = '${1:Doc/test.html}'; //此处填写相对于public/的目录\r\n  </script>\r\n   <script src='https://rawgit.com/OldSixLi/ResourceOnLine/master/webscoket/ScoketByMa.js'></script>\r\n  </body>\r\n</html>"],
-    "description": "自定义HTML模板"
+    "body": ["<!-- 马少博  创建于 ${1:Date} -->\r\n<!DOCTYPE html>\r\n<html lang='en'>\r\n<head>\r\n  <meta charset='utf-8'>\r\n  <meta http-equiv='X-UA-Compatible' content='IE=edge'>\r\n  <meta name='viewport' content='width=device-width, initial-scale=1'>\r\n  <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/public/images/my.ico' />\r\n  <title> ${2:标题}</title>\r\n  <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>\r\n</head>\r\n<body>\r\n  $4\r\n  <!-- 脚本 -->\r\n  <!-- <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script> -->\r\n  <!-- <script src='https://cdn.bootcss.com/vue/2.3.3/vue.js'></script> -->\r\n   <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>\r\n  <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>\r\n <script>\r\n    var filePath = ''; //此处填写相对于public/的目录\r\n  </script>\r\n   <script src='https://rawgit.com/OldSixLi/ResourceOnLine/master/webscoket/ScoketByMa.js'></script>\r\n  </body>\r\n</html>"],
+    "description": "自定义HTML模板By马少博"
   },
   "HTML-AngularJs开始": {
 
-    "prefix": "kaishiangular",
+    "prefix": "kaishi-angular",
     "body": ["<!-- 马少博  创建于 ${1:时间} -->\r\n<!DOCTYPE html>\r\n<html lang='en'>\r\n<head>\r\n  <meta charset='utf-8'>\r\n  <meta http-equiv='X-UA-Compatible' content='IE=edge'>\r\n  <meta name='viewport' content='width=device-width, initial-scale=1'>\r\n  <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/myapp/public/images/my.ico' />\r\n  <title>${2:标题}</title>\r\n  <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>\r\n</head>\r\n<body ng-app=\"myApp\">\r\n  <div ng-controller=\"customersCtrl\" class=\"container-fluid\">\r\n    $3\r\n  </div>\r\n  <!-- 脚本 -->\r\n  <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script>\r\n  <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>\r\n  <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>\r\n  <script>\r\n    $(function() {\r\n      // NOTE:在此输入jQuery代码\r\n      $(\".start_end_time\").datetimepicker();\r\n      tool.changeSelect($(\"#sltDistrict\"), false);\r\n    });\r\n    var app = angular.module('myApp', []);\r\n    app.controller('customersCtrl', function($$scope, $$http) {\r\n      // NOTE:在此输入angularjs代码\r\n    });\r\n  </script>\r\n</body>\r\n</html>"],
-    "body": ["<!-- 马少博  创建于 ${1:时间} -->\r\n<!DOCTYPE html>\r\n<html lang='en'>\r\n<head>\r\n  <meta charset='utf-8'>\r\n  <meta http-equiv='X-UA-Compatible' content='IE=edge'>\r\n  <meta name='viewport' content='width=device-width, initial-scale=1'>\r\n  <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/myapp/public/images/my.ico' />\r\n  <title>${2:标题}</title>\r\n  <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>\r\n</head>\r\n<body ng-app=\"myApp\">\r\n  <div ng-controller=\"customersCtrl\" class=\"container-fluid\">\r\n    $3\r\n  </div>\r\n  <!-- 脚本 -->\r\n  <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script>\r\n  <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>\r\n  <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>\r\n  <script>\r\n    $(function() {\r\n      // NOTE:在此输入jQuery代码\r\n      });\r\n    var app = angular.module('myApp', []);\r\n    app.controller('customersCtrl', function($$scope, $$http) {\r\n      // NOTE:在此输入angularjs代码\r\n    });\r\n  </script>\r\n</body>\r\n</html>"],
-    "description": "自定义AngularJs-HTML模板"
+    "description": "自定义AngularJs-HTML模板By马少博"
+  },
+  "HTML-Vue.js开始": {
+
+    "prefix": "kaishi-vue",
+    "body": [
+      "<!-- 马少博  创建于 ${1:时间} -->\r\n<!DOCTYPE html>\r\n<html lang='en'>\r\n<head>\r\n  <meta charset='utf-8'>\r\n  <meta http-equiv='X-UA-Compatible' content='IE=edge'>\r\n  <meta name='viewport' content='width=device-width, initial-scale=1'>\r\n  <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/public/images/my.ico' />\r\n  <title> ${2:标题}</title>\r\n  <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>\r\n</head>\r\n<body>\r\n  <!--NOTE 此处声明Vue-->\r\n  <div id=\"${3:vueBlock}\">\r\n  $4\r\n  </div>\r\n  <!-- 脚本 -->\r\n  <script src='https://cdn.bootcss.com/vue/2.3.3/vue.js'></script>\r\n  <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>\r\n  <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>\r\n  <script>\r\n    var ${3:vueBlock} = new Vue({\r\n      el: \"#${3:vueBlock}\",\r\n      //数据部分 \r\n      data: {},\r\n      //方法\r\n      methods: {},\r\n      //过滤器\r\n      filters: {},\r\n      //实时计算\r\n      computed: {},\r\n      //加载后立即执行的方法(created 这个钩子在实例被创建之后被调用)\r\n      created: function() {}\r\n    });\r\n  </script>\r\n</body>\r\n</html>"
+    ],
+    "description": "自定义Vue.js-HTML模板By马少博"
   },
   "自定义图片": {
 
@@ -80,6 +101,11 @@
     "prefix": "col444",
     "body": ["<div class=\"row\">\r\n    <div class=\"col-md-4\"></div>\r\n    <div class=\"col-md-4\"></div>\r\n    <div class=\"col-md-4\"></div>\r\n  </div>"],
     "description": "COL-4-4-4布局"
+  },
+  "Bootstrap-panel布局": {
+    "prefix": "panel-mashaobo",
+    "body": ["<div class=\"panel panel-default\">\r\n      <div class=\"panel-heading\">${1:标题}</div>\r\n      <div class=\"panel-body\">\r\n        $2\r\n      </div>\r\n    </div>"],
+    "description": "Bootstrap-panel布局By马"
   },
   "282布局": {
     "prefix": "col282",
@@ -144,5 +170,19 @@
       "  <!--自动刷新页面的代码-->\r\n  <script>\r\n    var filePath = 'Doc/test.html'; //当前文件名，此处填写相对于public/的目录\r\n  </script>\r\n  <script src='https://rawgit.com/OldSixLi/ResourceOnLine/master/webscoket/ScoketByMa.js'></script>"
     ],
     "description": "用于网页自动刷新的代码-- 马少博"
+  },
+  "分隔字符串 ": {
+    "prefix": "fenge-mashaobo",
+    "body": [
+      "// ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆\r\n    // ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆\r\n    // ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆\r\n    // ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆"
+    ],
+    "description": "将一块块的代码分隔开"
+  },
+  "checkbox形式 ": {
+    "prefix": "checkbox-示例HTMl代码",
+    "body": [
+      "<input type=\"checkbox\" value=\"1\" name=\"${1:orderItem}\" id=\"${1:orderItem}1\">\r\n  <input type=\"checkbox\" value=\"2\" name=\"${1:orderItem}\" id=\"${1:orderItem}2\">\r\n  <input type=\"checkbox\" value=\"3\" name=\"${1:orderItem}\" id=\"${1:orderItem}3\">"
+    ],
+    "description": "checkbox-示例HTMl代码"
   }
 }

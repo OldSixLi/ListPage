@@ -30,13 +30,13 @@
   "changeSelect": {
     "prefix": "changeSelect",
     "body": [
-      " tool.changeSelect($(\"$(1:selector)\"), false);"
+      " tool.changeSelect($(\"${1:selector}\"), false);"
     ],
     "description": "changeSelect"
   },
   "复制操作相关方法 ": {
     "prefix": "copy-Fun",
-    "body": [，
+    "body": [
       "window.onload = function(event) {\r\n            var button = document.getElementById(\"toCopy\");\r\n            button.onclick = function(event) {\r\n              if (window.clipboardData) {\r\n                window.clipboardData.clearData();\r\n                clipboardData.setData(\"Text\", $.trim($(\"#copyvalue\").val()));\r\n              } else {\r\n                document.getElementById(\"copyvalue\").select();\r\n                document.execCommand(\"copy\", false, null);\r\n              }\r\n              showInfo(\"copysuccess\");\r\n            };\r\n          };"
     ],
     "description": "复制的JS方法"
@@ -51,7 +51,7 @@
   "yibuqingqiu": {
     "prefix": "ajaxpost",
     "body": [
-      "$.ajax({\r\n  type: \"POST\",\r\n  url: \"${1:url}\",\r\n  data: ${2:saveInfo},\r\n  dataType: \"json\",\r\n  success: function(data, textStatus, jqXHR) {\r\n    if (data != null && data != \"\") {\r\n      if (data.success) {\r\n        tool.alert(\"提示\", \"保存成功\");\r\n      } else {\r\n        tool.alert(\"提示\", \"保存失败\");\r\n      }\r\n      //获取到数组\r\n      var json = data;\r\n     $3 for (var i = 0; i < json.length; i++) {\r\n        //NOTE 循环操作数据 \r\n      }\r\n    } else {\r\n      //NOTE 数据为空时提示 \r\n      tool.alert(\"提示\", \"未获取到数据!\");\r\n    }\r\n  },\r\n  error: function(response) {\r\n    //NOTE 获取服务出错时提示\r\n    tool.alert(\"提示\", \"请求服务失败,请重试!\");\r\n  },\r\n  complete: function(xhr, textStatus) {\r\n    //NOTE 异步事件完成后需要操作的内容\r\n  }\r\n});"
+      "$.ajax({\r\n  type: \"POST\",\r\n  url: \"${1:url}\",//TODO 修改此时链接\r\n  data: ${2:saveInfo},//TODO 修改此时数据\r\n  dataType: \"json\",\r\n  success: function(data, textStatus, jqXHR) {\r\n    if (data != null && data != \"\") {\r\n      if (data.success) {\r\n        tool.alert(\"提示\", \"保存成功\");\r\n      } else {\r\n        tool.alert(\"提示\", \"保存失败\");\r\n      }\r\n      //获取到数组\r\n      var json = data;\r\n     $3 for (var i = 0; i < json.length; i++) {\r\n        //NOTE 循环操作数据 \r\n      }\r\n    } else {\r\n      //NOTE 数据为空时提示 \r\n      tool.alert(\"提示\", \"未获取到数据!\");\r\n    }\r\n  },\r\n  error: function(response) {\r\n    //NOTE 获取服务出错时提示\r\n    tool.alert(\"提示\", \"请求服务失败,请重试!\");\r\n  },\r\n  complete: function(xhr, textStatus) {\r\n    //NOTE 异步事件完成后需要操作的内容\r\n  }\r\n});"
     ],
     "description": "异步请求POST操作"
   },
@@ -61,6 +61,13 @@
       "//NOTE:这个方法不能用中文参数 \r\n $.ajax({\r\n  type: \"GET\",\r\n  url: \"${1:url}\",\r\n  data: saveInfo,\r\n  dataType: \"json\",\r\n  success: function(data) {\r\n    if (data != null && data != \"\") {\r\n      if (data.success) {\r\n        tool.alert(\"提示\", \"保存成功\");\r\n      } else {\r\n        tool.alert(\"提示\", \"保存失败\");\r\n      }\r\n      //获取到数组\r\n      var json = data;\r\n      for (var i = 0; i < json.length; i++) {\r\n        //do something\r\n      }\r\n    } else {\r\n      //failed  do something\r\n    }\r\n  },\r\n  error: function(response) {\r\n    tool.alert(\"提示\", \"请求服务失败,请重试!\");\r\n  }\r\n});"
     ],
     "description": "异步请求GET操作"
+  },
+  "yibuqingqiu-muban": {
+    "prefix": "ajaxmuban",
+    "body": [
+      "var ${1:jqxhr} = $.ajax({\r\n        url: \"/users/users\", //请求的接口\r\n        type: \"GET\", // 默认为GET,你可以根据需要更改\r\n        cache: true, // 默认为true,但对于script,jsonp类型为false,可以自行设置\r\n        data: {}, // 将请求参数放这里.\r\n        dataType: \"json\", // 指定想要的数据类型\r\n        statusCode: { // 如果你想处理各状态的错误的话（也可以在fail中执行错误处理方式）\r\n          404: function handler404() {\r\n            alert('未请求到接口服务');\r\n          },\r\n          500: function handler500() {\r\n            alert('接口报错');\r\n          }\r\n        }\r\n      });\r\n      ${1:jqxhr}.done(function(data) {\r\n        //成功时调用事件\r\n      });\r\n      ${1:jqxhr}.fail(function(jqXHR, textStatus) {\r\n        //处理错误数据 (在返回的Data为空时会触发此事件) \r\n        console.log(jqXHR);\r\n      });"
+    ],
+    "description": "异步请求模板方法"
   }
 
   ,
@@ -94,7 +101,7 @@
     "description": "当前页面刷新"
   },
   "FOR循环": {
-    "prefix": "forxunhuan",
+    "prefix": "forxunhuan循环",
     "body": [
       "for(var i=0;i<length;i++){\r\n     $1\r\n }"
     ],
@@ -108,11 +115,76 @@
     ],
     "description": "select2异步获取数据"
   },
-
-  "$httpget": {
-    "prefix": "httpget-scope",
+  "AJAX方法拼接table": {
+    "prefix": "table-拼接字符串",
     "body": [
-      "//全局变量  请求的参数\r\nvar params = \"\";\r\nvar app = angular.module('myApp', []);\r\napp.controller('customersCtrl', function($scope, $http) {\r\n  //分页方法声明\r\n  var pageing = function(pageindex, params) {\r\n    // 需要修改部分 请求的参数和地址\r\n    var url = BasicUrl + \"prescription?\" + params + \"page=\" + pageindex + \"&pageNum=10\";\r\n    $http.get(url).success(function(data) {\r\n      if (data != null && data != \"\" && data != \"null\") {\r\n        //修改数组字段名称\r\n        $scope.dataLengths = data.content.length > 0;\r\n        if (data.content != null && data.content.length > 0) {\r\n          //赋值操作\r\n          $scope.data = data;\r\n          $scope.totalPage = data.totalPages; //总页数\r\n          $scope.totalRecord = data.totalElements; //总记录数\r\n          $scope.title = 'name'; //排序字段\r\n          $scope.desc = 0; //排序方式（默认升序）\r\n          //调用生成分页方法\r\n          initPageDiv($(\"#alreadyPage\"), pageindex + 1, data.totalPages, 5, $(\"#currentPage\"),\r\n            function() {\r\n              pageing($(\"#currentPage\").val() - 1, params);\r\n            });\r\n        } else {\r\n          //未获取到信息提示\r\n          tool.alert(\"提示\", \"当前条件下未获取到信息!\");\r\n        }\r\n      }\r\n    }).error(function(data, status, headers, config) {\r\n      //处理错误  \r\n      tool.alert(\"提示\", \"请求出错,请重试!\");\r\n    });\r\n  }\r\n  //调用分页方法\r\n  pageing(0, params);\r\n  //↓↓↓↓↓↓↓↓↓↓↓↓↓在此处添加其他方法↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓\r\n\r\n\r\n});"
+      "/**\r\n * AJAX方法拼接相应模块的HTML布局 \r\n * @param {ARRAY} data 请求到的JSON数据(数组形式) \r\n * @param {int} pageindex 页码\r\n */\r\nfunction createTable(data, pageindex) {\r\n  if (data != null && data != \"\" && data.length > 0) {\r\n    var content = data;\r\n    var htmlstr = \"\";\r\n    for (var i = 0; i < content.length; i++) {\r\n      var singleDataStr = \"<tr>\";\r\n      switch (content[i].state) {\r\n        //相关操作，根据状态转换为不同的状态文字，更改数字为文字（可能用到）\r\n        case \"1\":\r\n          break;\r\n        case \"2\":\r\n          break;\r\n        default:\r\n          break;\r\n      }\r\n      //拼接单行数据操作 (需要注意页数)\r\n      singleDataStr += \"<td class='text-center'>\" + (10 * pageindex + i - 9) + \"</td>\" +\r\n        \"<td class='text-center'>\" + content[i].TODO + \"</td>\" +\r\n        \"<td class='text-center'>\" + content[i].TODO + \"</td>\" +\r\n        \"<td class='text-center'>\" + content[i].TODO + \"</td>\" +\r\n        \"<td class='text-center'>\" + content[i].TODO + \"</td>\" +\r\n        \"<td class='text-center'>\" + content[i].TODO + \"</td>\" +\r\n        \"<td class='text-center'><a class='btn btn-link' href='javascript:edit(\" + content[i].TODO + \");'>TODO操作</a></td>\" +\r\n        \"</tr>\";\r\n      htmlstr += singleDataStr;\r\n    }\r\n    $(\"#TODO\").html(htmlstr);\r\n  } else {\r\n    $(\"#TODO\").html('<tr><td colspan=\"100\" class=\"text-center notFound\">没有相关数据</td></tr> ');\r\n  }\r\n}"
+    ],
+    "description": "马少博：AJAX方法拼接相应模块的HTML布局 "
+  },
+
+  "回车事件": {
+    "prefix": "huiche--事件-javascript",
+    "body": [
+      "// 回车事件\r\n            $(function() {\r\n              document.onkeydown = function(e) {\r\n                var ev = document.all ? window.event : e;\r\n                if (ev.keyCode == 13) {\r\n                  search();\r\n                  return false; //防止其他默认事件\r\n                }\r\n              }\r\n            });"
+    ],
+    "description": "Javascript回车事件"
+  },
+  "跳转": {
+    "prefix": "tiaozhuan-JSP",
+    "body": [
+      "var goToDetail = \"http://\" + tool.getUrlArea() + \"${1:/user/advice/show}\";\r\n      window.location.href = goToDetail;"
+    ],
+    "description": "JSP页面跳转方法--马少博"
+  },
+  "时间戳转化为标准时间": {
+    "prefix": "shijianchuo-mashaobo",
+    "body": [
+      "toNormalTime(${1:shijianchuo });\r\n/**\r\n * 时间戳转化为正常时间 \r\n * @param {any} shijianchuo  时间戳 精确到毫秒\r\n * @returns 正常时间\r\n */\r\nfunction toNormalTime(shijianchuo) {\r\n  var time = new Date(parseInt(shijianchuo));\r\n  var y = time.getFullYear();\r\n  var m = time.getMonth() + 1;\r\n  var d = time.getDate();\r\n  var h = time.getHours();\r\n  var mm = time.getMinutes();\r\n  var s = time.getSeconds();\r\n  return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);\r\n}\r\nfunction add0(m) { return m < 10 ? '0' + m : m; }"
+    ],
+    "description": "时间戳转化为标准时间"
+  },
+
+  "分隔字符串 ": {
+    "prefix": "fenge-mashaobo",
+    "body": [
+      "// ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆   \r\n// ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆\r\n// ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆\r\n// ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆"
+    ],
+    "description": "将一块块的代码分隔开"
+  },
+
+  "CHexkBox取值": {
+    "prefix": "checkbox用JQ方法取值",
+    "body": [
+      "var item = [];\r\n$('[name=\"${1:orderItem}\"]').each(function() {\r\n  if ($(this).is(\":checked\")) {\r\n    item.push($(this).val());\r\n  }\r\n});"
+    ],
+    "description": "checkbox用JQ方法取值"
+  },
+
+  "chexkcox取值": {
+    "prefix": "checkbox用JavaScript方法取值",
+    "body": [
+      "/**\r\n * 获取多选框（CheckBox）的值 \r\n * @param {any} name 控件名称\r\n * @returns \r\n */\r\nfunction getCheckBoxValue(name) {\r\n  var obj = document.getElementsByName(name);\r\n  var s = [];\r\n  for (var i = 0; i < obj.length; i++) {\r\n    if (obj[i].checked) {\r\n      s.push(obj[i].value);\r\n    }\r\n  }\r\n  return s.join(',');\r\n}"
+    ],
+    "description": "checkbox用JavaScript方法取值"
+  },
+
+  // 　　　　◆◆◆　　　◆◆◆　　◆◆◆　　◆◆◆◆◆　◆◆◆　　◆◆◆　◆◆◆　　　　　　　◆◆◆　　　◆◆◆◆◆◆◆　　
+  // 　　　　◆◆◆　　　◆◆◆　　◆◆◆　◆◆◆　◆◆◆◆◆◆　　◆◆◆　◆◆◆　　　　　　　◆◆◆◆　　◆◆◆　◆◆◆◆　
+  // 　　　◆◆◆◆◆　　◆◆◆◆　◆◆◆◆◆◆　　◆◆◆◆◆◆　　◆◆◆　◆◆◆　　　　　　　◆◆◆◆　　◆◆◆　　◆◆◆　
+  // 　　　◆◆◆◆◆　　◆◆◆◆　◆◆◆◆◆◆　　◆◆◆◆◆◆　　◆◆◆　◆◆◆　　　　　　◆◆◆◆◆　　◆◆◆　　◆◆◆　
+  // 　　　◆◆◆◆◆　　◆◆◆◆◆◆◆◆◆◆◆　　　　　◆◆◆　　◆◆◆　◆◆◆　　　　　　◆◆◆◆◆　　◆◆◆　　◆◆◆　
+  // 　　　◆◆　◆◆◆　◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆　　◆◆◆　◆◆◆　　　　　　◆◆◆◆◆◆　◆◆◆◆◆◆◆　　
+  // 　　◆◆◆◆◆◆◆　◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆　　◆◆◆　◆◆◆　　　　　◆◆◆◆◆◆◆　◆◆◆◆◆◆　　　
+  // 　　◆◆◆　◆◆◆　◆◆◆◆◆◆◆◆◆◆◆　　◆◆◆◆◆◆　　◆◆◆　◆◆◆　　　　　◆◆◆　◆◆◆　◆◆◆　◆◆◆　　
+  // 　　◆◆◆　　◆◆　◆◆◆　◆◆◆◆◆◆◆　　◆◆◆◆◆◆　　◆◆◆　◆◆◆　　　　　◆◆◆　　◆◆◆◆◆◆　◆◆◆　　
+  // 　◆◆◆　　　◆◆◆◆◆◆　◆◆◆◆　◆◆◆◆◆◆◆　◆◆◆◆◆◆◆　◆◆◆◆◆◆◆◆◆◆◆　　◆◆◆◆◆◆　　◆◆◆　
+  // 　◆◆◆　　　◆◆◆◆◆◆　　◆◆◆　　◆◆◆◆◆◆　　◆◆◆◆◆　　◆◆◆◆◆◆◆◆◆◆　　　◆◆◆◆◆◆　　◆◆◆　
+  // 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+  "$httpget": {
+    "prefix": "httpget-scope 声明ANjs区域",
+    "body": [
+      "//全局变量  请求的参数\r\nvar params = \"\";\r\nvar app = angular.module('myApp', []);\r\napp.controller('customersCtrl', function($$scope, $$http) {\r\n  //分页方法声明\r\n  var pageing = function(pageindex, params) {\r\n    // 需要修改部分 请求的参数和地址\r\n    var url = BasicUrl + \"prescription?\" + params + \"page=\" + pageindex + \"&pageNum=10\";\r\n    $$http.get(url).success(function(data) {\r\n      if (data != null && data != \"\" && data != \"null\") {\r\n        //修改数组字段名称\r\n        $scope.dataLengths = data.content.length > 0;\r\n        if (data.content != null && data.content.length > 0) {\r\n          //赋值操作\r\n          $scope.data = data;\r\n          $scope.totalPage = data.totalPages; //总页数\r\n          $scope.totalRecord = data.totalElements; //总记录数\r\n          $scope.title = 'name'; //排序字段\r\n          $scope.desc = 0; //排序方式（默认升序）\r\n          //调用生成分页方法\r\n          initPageDiv($(\"#alreadyPage\"), pageindex + 1, data.totalPages, 5, $(\"#currentPage\"),\r\n            function() {\r\n              pageing($(\"#currentPage\").val() - 1, params);\r\n            });\r\n        } else {\r\n          //未获取到信息提示\r\n          tool.alert(\"提示\", \"当前条件下未获取到信息!\");\r\n        }\r\n      }\r\n    }).error(function(data, status, headers, config) {\r\n      //处理错误  \r\n      tool.alert(\"提示\", \"请求出错,请重试!\");\r\n    });\r\n  }\r\n  //调用分页方法\r\n  pageing(0, params);\r\n  //↓↓↓↓↓↓↓↓↓↓↓↓↓在此处添加其他方法↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓\r\n\r\n\r\n});"
     ],
     "description": "ANGULARJS $http 获取数据方法"
   },
@@ -124,11 +196,18 @@
     ],
     "description": "Angularjs 跳页方法"
   },
+  "Angularjs 从数组中获取某个ID下的详情": {
+    "prefix": "getmodel-从数组中获取某个ID下的详情",
+    "body": [
+      "//点击表格内处方名称链接操作\r\n      $$scope.getEditModel = function(id) {\r\n        $$scope.isSave = false;\r\n        $('#modal').modal('show');\r\n        var arr = $$scope.data.content;\r\n        arr.forEach(function(element, index, array) {\r\n          var obj = element;\r\n          if (element.id == id) {\r\n            $$scope.model = {\r\n              id: id,\r\n              name: element.name,\r\n              spell: element.spell,\r\n              prescriptionType: element.prescriptionType,\r\n              description: element.description,\r\n            };\r\n          }\r\n        }, this);\r\n      }"
+    ],
+    "description": "从数组中获取某个ID下的详情"
+  },
 
   "Angularjs查询,搜索按钮方法": {
     "prefix": "search-scope",
     "body": [
-      "//查询按钮\r\n$scope.search = function() {\r\n  var type = $(\"#selector1\").val(); //搜索字段的值\r\n  var name = $(\"#selector2\").val(); //搜索字段的值 \r\n  params = \"\"; //初始化查询条件\r\n  if (!(name || type)) {\r\n    tool.alert(\"提示\", \"请至少输入一个搜索条件\");\r\n    return false;\r\n  }\r\n  params = \"\";\r\n  if (type) {\r\n    params = \"prescriptionType=\" + type + \"&\";\r\n  }\r\n  if (name) {\r\n    params += \"name=\" + name + \"&\";\r\n  }\r\n  pageing(0, params);\r\n}"
+      "//查询按钮\r\n$$scope.search = function() {\r\n  var type = $(\"#selector1\").val(); //搜索字段的值\r\n  var name = $(\"#selector2\").val(); //搜索字段的值 \r\n  params = \"\"; //初始化查询条件\r\n  if (!(name || type)) {\r\n    tool.alert(\"提示\", \"请至少输入一个搜索条件\");\r\n    return false;\r\n  }\r\n  params = \"\";\r\n  if (type) {\r\n    params = \"prescriptionType=\" + type + \"&\";\r\n  }\r\n  if (name) {\r\n    params += \"name=\" + name + \"&\";\r\n  }\r\n  pageing(0, params);\r\n}"
     ],
     "description": "Angularjs搜索方法"
   },
@@ -141,40 +220,66 @@
     "description": "Angularjs 表格排序方法"
   },
 
-  "AJAX方法拼接table": {
-    "prefix": "table-Create-AJAX",
+  "Angularjs-$http方法": {
+    "prefix": "httppost-$http POST请求方法",
     "body": [
-      "/**\r\n * AJAX方法拼接相应模块的HTML布局 \r\n * @param {ARRAY} data 请求到的JSON数据(数组形式) \r\n * @param {int} pageindex 页码\r\n */\r\nfunction createTable(data, pageindex) {\r\n  if (data != null && data != \"\" && data.length > 0) {\r\n    var content = data;\r\n    var htmlstr = \"\";\r\n    for (var i = 0; i < content.length; i++) {\r\n      var singleDataStr = \"<tr>\";\r\n      switch (content[i].state) {\r\n        //相关操作，根据状态转换为不同的状态文字，更改数字为文字（可能用到）\r\n        case \"1\":\r\n          break;\r\n        case \"2\":\r\n          break;\r\n        default:\r\n          break;\r\n      }\r\n      //拼接单行数据操作 (需要注意页数)\r\n      singleDataStr += \"<td class='text-center'>\" + (10 * pageindex + i - 9) + \"</td>\" +\r\n        \"<td class='text-center'>\" + content[i].TODO + \"</td>\" +\r\n        \"<td class='text-center'>\" + content[i].TODO + \"</td>\" +\r\n        \"<td class='text-center'>\" + content[i].TODO + \"</td>\" +\r\n        \"<td class='text-center'>\" + content[i].TODO + \"</td>\" +\r\n        \"<td class='text-center'>\" + content[i].TODO + \"</td>\" +\r\n        \"<td class='text-center'><a class='btn btn-link' href='javascript:edit(\" + content[i].TODO + \");'>TODO操作</a></td>\" +\r\n        \"</tr>\";\r\n      htmlstr += singleDataStr;\r\n    }\r\n    $(\"#TODO\").html(htmlstr);\r\n  } else {\r\n    $(\"#TODO\").html('<tr><td colspan=\"100\" class=\"text-center notFound\">没有相关数据</td></tr> ');\r\n  }\r\n}"
+      "var dataInfo = {\r\n            id: checkId,\r\n            itemId: itemId,\r\n            val: val\r\n          }\r\n          $$http({\r\n              method: 'POST', //TODO修改地址\r\n              url: BasicUrl + \"inspection/\" + checkId + \"/data\",\r\n              data: dataInfo,\r\n              transformRequest: function(obj) {\r\n                var str = [];\r\n                for (var p in obj) {\r\n                  str.push(encodeURIComponent(p) + \"=\" + encodeURIComponent(obj[p]));\r\n                }\r\n                return str.join(\"&\");\r\n              },\r\n              headers: {\r\n                'Content-Type': 'application/x-www-form-urlencoded'\r\n              },\r\n            })\r\n            .success(function(data, xhr) {\r\n              if (xhr == 200) {\r\n                if (data.errorMessage) {\r\n                  tool.alert(\"提示\", data.errorMessage);\r\n                } else {\r\n                  tool.alert(\"提示\", \"保存成功!\");\r\n                }\r\n              } else {\r\n                tool.alert(\"提示\", \"保存失败,请重试!\");\r\n              }\r\n            }).error(function(response) {\r\n              if (response && response.errorMessage) {\r\n                tool.alert(\"提示\", response.errorMessage);\r\n              }\r\n            });"
     ],
-    "description": "马少博：AJAX方法拼接相应模块的HTML布局 "
+    "description": "在Angularjs中的POST/PATCH请求方法"
   },
+  "Angularjs-$httpGET方法": {
+    "prefix": "httpget-$http GET请求方法",
+    "body": [
+      "  $$http.get(BasicUrl + \"TODO/\" + id).success(function(data) {\r\n            if (data != null && data != \"\" && data != \"null\") {\r\n              //数据不为空\r\n              $scope.itemDetail = data; //TODO 修改\r\n            }\r\n          }).error(function() {\r\n            tool.alert(\"提示\", \"获取数据出错！\");\r\n          });"
+    ],
+    "description": "在Angularjs中的Get请求方法"
+  },
+  "Angularjs-页面加载完成方法": {
+    "prefix": "loaded",
+    "body": [
+      "//加载完毕后再显示 \r\n $$scope.$$watch(\"$viewContentLoaded\", function() {\r\n        angular.element(\".myload\").removeClass(\"myload\");\r\n      });"
+    ],
+    "description": "页面加载完成方法"
+  },
+  "删除": {
+    "prefix": "bianji-angularjs",
+    "body": [
+      "//点击变为已完成\r\n        $scope.completeDemand = function(id) {\r\n          tool.confirm(\r\n            \"提示\",\r\n            \"是否更改为已完成？\",\r\n            function() {\r\n              //用户点击确认按钮时操作\r\n              $.ajax({\r\n                type: \"PATCH\",\r\n                url: BasicUrl + \"demand/\" + id,\r\n                data: {\r\n                  adminId: 1,\r\n                  id: id\r\n                },\r\n                dataType: \"json\",\r\n                error: function(response) {\r\n                  if (response && response.responseText && JSON.parse(response.responseText) && JSON.parse(response.responseText).errorMessage) {\r\n                    tool.alert(\"提示\", JSON.parse(response.responseText).errorMessage);\r\n                  }\r\n                },\r\n                complete: function(xhr, textStatus) {\r\n                  if (xhr.status == 200) {\r\n                    tool.alert(\"提示\", \"更改状态成功\", function() {\r\n                      //刷新当前页面.\r\n                      window.location.reload();\r\n                    });\r\n                  }\r\n                }\r\n              });\r\n            },\r\n            function() {\r\n              //用户点击取消按钮时操作\r\n            });\r\n        }"
+    ],
+    "description": "删除或编辑操作--Angularjs--马少博"
+  },
+  "获取参数 ": {
+    "prefix": "params-搜索参数格式",
+    "body": [
+      " params = '';\r\n        if (minExpiredAt) {\r\n          params += \"minAppointAt=\" + minExpiredAt + '&';;\r\n        }\r\n        if (maxExpiredAt) {\r\n          params += \"maxAppointAt=\" + maxExpiredAt + '&';\r\n        }\r\n        if (status) {\r\n          params += \"status=\" + status + '&';\r\n        }\r\n        if (sltItem) {\r\n          params += \"item=\" + sltItem + '&';\r\n        }\r\n        if (keyword) {\r\n          params += \"keyword=\" + keyword + '&';\r\n        }\r\n        pageing(0, params);"
+    ],
+    "description": "params-搜索参数格式"
+  },
+  　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+  // 　◆◆◆　　　◆◆◆◆◆◆　　◆◆◆◆◆◆◆◆◆◆◆　　　　　◆◆◆　　◆◆◆◆◆　　　
+  // 　◆◆◆　　　◆◆◆◆◆◆　　◆◆◆◆◆◆　　　　　　　　　　◆◆◆　◆◆◆　◆◆◆　　
+  // 　　◆◆◆　◆◆◆　◆◆◆　　◆◆◆◆◆◆　　　　　　　　　　◆◆◆　◆◆◆　◆◆◆　　
+  // 　　◆◆◆　◆◆◆　◆◆◆　　◆◆◆◆◆◆　　　　　　　　　　◆◆◆　◆◆◆　　　　　　
+  // 　　◆◆◆　◆◆◆　◆◆◆　　◆◆◆◆◆◆◆◆◆◆　　　　　　◆◆◆　◆◆◆◆◆　　　　
+  // 　　　◆◆◆◆◆　　◆◆◆　　◆◆◆◆◆◆◆◆◆◆　　　　　　◆◆◆　　　◆◆◆◆　　　
+  // 　　　◆◆◆◆◆　　◆◆◆　　◆◆◆◆◆◆　　　　　　　　　　◆◆◆　　　　　◆◆◆　　
+  // 　　　◆◆◆◆◆　　◆◆◆　　◆◆◆◆◆◆　　　　　◆◆◆　　◆◆◆◆◆◆　　　◆◆◆　
+  // 　　　◆◆◆◆◆　　◆◆◆　　◆◆◆◆◆◆　　　　　　◆◆　　◆◆◆　◆◆◆　　◆◆◆　
+  // 　　　　◆◆◆　　　◆◆◆◆◆◆◆　◆◆◆◆◆◆◆◆　◆◆◆◆◆◆◆　◆◆◆◆◆◆◆　　
+  // 　　　　◆◆◆　　　　◆◆◆◆◆　　◆◆◆◆◆◆◆◆　　◆◆◆◆　　　　◆◆◆◆◆　　　　　　　
 
-  "回车事件": {
-    "prefix": "huiche--Enter-javascript",
+  "Vue实例": {
+    "prefix": "newvue-mashaobo",
     "body": [
-      "// 回车事件\r\n            $(function() {\r\n              document.onkeydown = function(e) {\r\n                var ev = document.all ? window.event : e;\r\n                if (ev.keyCode == 13) {\r\n                  search();\r\n                  return false; //防止其他默认事件\r\n                }\r\n              }\r\n            });"
+      "   var ${1:name } = new Vue({\r\n     el: \"#${1:name}\",\r\n     //数据部分 \r\n     data: {\r\n     },\r\n     //方法\r\n     methods: {\r\n     },\r\n     //过滤器\r\n     filters: {\r\n     },\r\n     //实时计算\r\n     computed: {\r\n     },\r\n     //加载后立即执行的方法(created 这个钩子在实例被创建之后被调用)\r\n     created: function() {\r\n     }\r\n   });"
     ],
-    "description": "Javascript回车事件"
+    "description": "一个新的vue实例"
   },
-  "AJAX-getJson方法": {
-    "prefix": "getJson-mashaobo",
+  "Vue声明模板": {
+    "prefix": "vuecomponent-mashaobo",
     "body": [
-      "//更改用户地址以及请求数据部分\r\n$.getJSON(\r\n  \"${1:TODOurl}\",\r\n  ${2:saveInfo},\r\n  function(data) {\r\n    $3\r\n  },\r\n  \"json\");"
+      "Vue.component('${1:name}', {\r\n  template: '${2:htmlstr}',\r\n  //对外获取的数据\r\n  props: { $3 },\r\n  //组件内数据部分\r\n  data: function() {\r\n    return { $4 }\r\n  },\r\n  //组件生成时调用\r\n  mounted: function() { $5 }\r\n});"
     ],
-    "description": "getJson方法By马少博"
-  },
-  "AJAX-$.post方法": {
-    "prefix": "post-mashaobo",
-    "body": [
-      "$.post(\r\n  \"${1:TODOurl}\",\r\n  ${2:saveInfo},\r\n  function(data) {\r\n    console.log(data);$3 \r\n  }, \r\n \"json\");"
-    ],
-    "description": "$.post方法By马少博"
-  },
-  "跳转": {
-    "prefix": "tiaozhuan-JSP",
-    "body": [
-      "var goToDetail = \"http://\" + tool.getUrlArea() + \"${1:/user/advice/show}\";\r\n      window.location.href = goToDetail;"
-    ],
-    "description": "JSP页面跳转方法--马少博"
+    "description": "一个新的Vue声明模板"
   }
 }
