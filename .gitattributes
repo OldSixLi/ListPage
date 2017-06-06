@@ -1,17 +1,1 @@
-# Auto detect text files and perform LF normalization
-* text=auto
-
-# Custom for Visual Studio
-*.cs     diff=csharp
-
-# Standard to msysgit
-*.doc	 diff=astextplain
-*.DOC	 diff=astextplain
-*.docx diff=astextplain
-*.DOCX diff=astextplain
-*.dot  diff=astextplain
-*.DOT  diff=astextplain
-*.pdf  diff=astextplain
-*.PDF	 diff=astextplain
-*.rtf	 diff=astextplain
-*.RTF	 diff=astextplain
+"var ${1:jqxhr} = $.ajax({\r\n        url: \"/users/users\", //请求的接口\r\n        type: \"GET\", // 默认为GET,你可以根据需要更改\r\n        cache: true, // 默认为true,但对于script,jsonp类型为false,可以自行设置\r\n        data: {}, // 将请求参数放这里.\r\n        dataType: \"json\", // 指定想要的数据类型\r\n        statusCode: { // 如果你想处理各状态的错误的话（也可以在fail中执行错误处理方式）\r\n          404: function handler404() {\r\n            alert(\'未请求到接口服务\');\r\n          },\r\n          500: function handler500() {\r\n            alert(\'接口报错\');\r\n          }\r\n        }\r\n      });\r\n      ${1:jqxhr}.done(function(data) {\r\n        //成功时调用事件\r\n      });\r\n      ${1:jqxhr}.fail(function(jqXHR, textStatus) {\r\n        //处理错误数据 (在返回的Data为空时会触发此事件) \r\n        console.log(jqXHR);\r\n      });"

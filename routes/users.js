@@ -48,7 +48,9 @@ router.get('/users', function(req, res, next) {
   var absolutePath = path.resolve(__dirname, '../public/JSON/userlist.json');
   var data = fs.readFileSync(absolutePath, "utf-8");
   //控制延时返回数据
-  var obj = JSON.parse(data);
+  // var obj = JSON.parse(data);
+  var obj;
+
   setTimeout(function() {
     res.json(obj);
   }, 0);

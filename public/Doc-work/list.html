@@ -1,0 +1,247 @@
+<!-- 马少博  创建于 2017年5月27日08:42:00 -->
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/public/images/my.ico' />
+  <title> 订单列表</title>
+  <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>
+  <style>
+    /*◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆*/
+    /*◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆*/
+    /*◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆*/
+    /*◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆*/
+    
+    .grayword {
+      color: #999999;
+    }
+    
+    .redword {
+      color: #4c9954;
+    }
+    
+    .ordernum {
+      width: 385px;
+      padding-left: 20px;
+      float: left;
+    }
+    
+    .status {
+      padding-right: 20px;
+    }
+    
+    .price {
+      color: #ff7700;
+      font-size: 18px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <!-- 消除外边距 -->
+      <div class="col-md-12">
+        <div class="text-right" style="width: 100px;float: left;line-height: 38px;">订单查询：</div>
+        <select id="orderTime" name="orderTime" class="form-control" style="width:670px;"></select>
+      </div>
+    </div>
+    <div class="row" style="margin-top:15px;">
+      <div class="col-md-12" id="dataBlock"></div>
+    </div>
+    <div class="row" style="margin-top:15px;">
+      <div class="col-md-12">
+        <div class="pagination-block text-center">
+          <ul class="pagination">
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <p id="id"></p>
+    <div id="value"></div>
+  </div>
+  <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>
+  <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+
+  <script>
+    // ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+    // ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+    // ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+    // ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+    var timeArr = [];
+    searchOrderTime();
+    //添加到下拉菜单
+    for (var index = 0; index < timeArr.length; index++) {
+      var element = timeArr[index];
+      var option = '<option data-start="' + element.start + '" data-end="' + element.end + '" value="' + element.start + '&&' + element.end + '">' + element.word + '</option>';
+      $("#orderTime").append(option);
+    }
+    //下拉菜单事件
+    $("#orderTime").change(function() {
+      getData(1);
+    });
+
+    // ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+    // ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+    // ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+    // ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+    //获取数据
+    function getData(pageindex) {
+      $.ajax({
+        type: "GET",
+        url: "/restful/getOrderByUser",
+        data: {
+          startTime: $("#orderTime").val().split('&&')[0],
+          endTime: $("#orderTime").val().split('&&')[1],
+          currentPage: pageindex
+        },
+        dataType: "text",
+        success: function(data, textStatus, jqXHR) {
+          if (data != null && data != "") {
+            htmlStr(data);
+          } else {
+            tool.alert("提示", "未获取到数据!");
+          }
+        },
+        error: function(response) {
+          //NOTE 获取服务出错时提示
+          tool.alert("提示", "请求服务失败,请重试!");
+        }
+      });
+    }
+
+    //搜索时间范围
+    function searchOrderTime() {
+      //获取当前时间
+      timeArr.push({
+        start: "",
+        end: "",
+        word: "全部订单"
+      });
+      var nowdate = new Date();
+      nowdate.setMonth(nowdate.getMonth());
+      //一个月前
+      var oneMonthAgo = new Date();
+      oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+      timeArr.push({
+        start: getFormateTime(oneMonthAgo),
+        end: getFormateTime(nowdate),
+        word: "近一个月订单"
+      });
+
+      //三个月前
+      var threeMonthAgo = new Date();
+      threeMonthAgo.setMonth(threeMonthAgo.getMonth() - 3);
+      var formatnowdate = getFormateTime(threeMonthAgo);
+
+      timeArr.push({
+        start: getFormateTime(threeMonthAgo),
+        end: getFormateTime(nowdate),
+        word: "近三个月订单"
+      });
+      //今年
+      var thisYear = new Date();
+      //   thisYear.setMonth(thisYear.getFullYear());
+      //   return thisYear.getFullYear() + '-1-1'
+      timeArr.push({
+        start: thisYear.getFullYear() + '-1-1',
+        end: thisYear.getFullYear() + '-12-31',
+        word: "今年内订单"
+      });
+      //去年
+      var lastYear = new Date();
+      timeArr.push({
+        start: (lastYear.getFullYear() - 1) + '-1-1',
+        end: (thisYear.getFullYear() - 1) + '-12-31',
+        word: (thisYear.getFullYear() - 1) + "年订单"
+      });
+      //两年前
+      var towYear = new Date();
+      timeArr.push({
+        start: (towYear.getFullYear() - 2) + '-1-1',
+        end: (towYear.getFullYear() - 2) + '-12-31',
+        word: (towYear.getFullYear() - 2) + "年订单"
+      });
+      //三年前
+      var threeYear = new Date();
+      timeArr.push({
+        start: '1970-1-1',
+        end: (towYear.getFullYear() - 3) + '-12-31',
+        word: (towYear.getFullYear() - 3) + "年以前订单"
+      });
+
+    }
+    // ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+    // ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+    // ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+    // ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+    //拼接表格字符串
+    // function htmlStr(data) {
+    var data = '{"success":false,"message":null,"bean":{"pageNum":1,"pageSize":5,"pageCount":1,"rowCount":2,"data":[{"id":"20170428090301492000000000000003","amount":"750.00","sendStatus":"0","time":1493341381000,"nsrmc":"天津昌昊实业有限公司","goodsName":"智慧财税服务 720,智慧财税服务 360"},{"id":"20170428090503230000000000000004","amount":"360.00","sendStatus":"0","time":1493341503000,"nsrmc":"天津市静海县懿昱服饰商行","goodsName":"智慧财税服务（续费）"}]}}';
+    var jsonObj = JSON.parse(data);
+    if (jsonObj) {
+      var dataArr = jsonObj.bean.data;
+      var htmlstr = '';
+      for (var i = 0; i < dataArr.length; i++) {
+        var ele = dataArr[i];
+        var riqi = getFormateTime(new Date(parseInt(ele.time)));
+
+        var status = '';
+        switch (ele.sendStatus) {
+          case "0":
+            status = "<b class='redword'>未邮寄</b>";
+            break;
+          case "1":
+            status = "<b class='redword'>邮寄中</b>";
+            break;
+          case "2":
+            status = "<b class='grayword'>已送达</b>";
+            break;
+          default:
+            break;
+        }
+
+        var singleStr = '    <div class="panel panel-default" style="width:770px;">' +
+          '      <div class="panel-heading" style="background-color:#ECF3F9;height:46px;"><p class="ordernum">订单号：' + ele.id + '</p>订单日期：' + riqi + '<span class="pull-right status">' + status + ' </span></div>' +
+          '      <div class="panel-body" style="padding: 0;border:none;">' +
+          '        <table class="table table-bordered" style="margin-bottom: 0;">' +
+          '          <tbody id="dataBody">' +
+          '            <tr>' +
+          '              <td style="width:400px;height:118px;"><span style="width:120px;display:inline-block;text-align:center;margin:20px 0;">企业名称：</span>' + ele.nsrmc + '<br> <span style="width:120px;display:inline-block;text-align:center;">购买产品：</span>' + ele.goodsName +
+          '              </td>' +
+          '              <td style="text-align: center;">' +
+          '                <span style="margin:20px 0;display:inline-block;">订单金额</span><br><b class="price">￥' + ele.amount +
+          '              </b> </td>' +
+          '              <td style="vertical-align: middle;text-align: center;">' +
+          '                <a href="?' + ele.id + '">查看详情</a></td>' +
+          '            </tr>' +
+          '          </tbody>' +
+          '        </table>' +
+          '      </div>' +
+          '    </div>';
+
+        htmlstr += singleStr;
+      }
+
+      $("#dataBlock").html(htmlstr);
+      //   }
+    }
+
+    //转化为标准时间
+    function getFormateTime(nowdate) {
+      var y = nowdate.getFullYear();
+      var m = nowdate.getMonth() + 1;
+      var d = nowdate.getDate();
+      return y + '-' + m + '-' + d;
+    }
+  </script>
+</body>
+
+
+</html>

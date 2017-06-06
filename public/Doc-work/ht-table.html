@@ -1,0 +1,128 @@
+﻿<!-- 马少博  创建于 2017年5月25日10:31:09 -->
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/public/images/my.ico' />
+  <title> 标题</title>
+  <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>
+</head>
+
+<body>
+  <div class="container">
+    <!--table-bordered   边框
+      table-condensed  收缩
+      table-striped    斑马色-->
+    <table class="table table-hover table-bordered" id="table">
+    </table>
+
+
+    <!--table-bordered   边框
+          table-condensed  收缩
+          table-striped    斑马色-->
+    <table class="table table-hover table-bordered ">
+      <thead>
+        <tr>
+          <th>日期</th>
+          <th>产品名称</th>
+          <th>价格</th>
+          <th>数量</th>
+          <th>有效期</th>
+        </tr>
+      </thead>
+      <tbody id="secondbody">
+
+      </tbody>
+    </table>
+  </div>
+  <!-- 脚本 -->
+  <!-- <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script> -->
+  <!-- <script src='https://cdn.bootcss.com/vue/2.3.3/vue.js'></script> -->
+  <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>
+  <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+  <script>
+    $(function() {
+      var jsonstr = '{"info":{"id":2,"type":"1","shxydm":"120223562665863","gsNsrsbh":"","dsNsrsbh":"","nsrmc":"天津市久久电器设备有限公司","address":"天津南开区","zip":"100000","phone":"13821887470","contact":"王振义","wechatOpenid":null,"qqOpenid":null,"mobilePhone":"13389901885","vipLevel":1,"regTime":1495618387000,"modifyTime":1493963891000,"source":null,"jobs":"公司负责人"},"allposition":[{"ID":"000","NAME":"园区"},{"ID":"001","NAME":"河西"},{"ID":"002","NAME":"西青"},{"ID":"003","NAME":"武清"},{"ID":"004","NAME":"北辰"},{"ID":"005","NAME":"河北"},{"ID":"006","NAME":"宝坻"},{"ID":"007","NAME":"蓟县"},{"ID":"008","NAME":"静海"},{"ID":"009","NAME":"津南"},{"ID":"010","NAME":"大港"},{"ID":"011","NAME":"东丽"},{"ID":"012","NAME":"滨海"},{"ID":"013","NAME":"塘沽"},{"ID":"014","NAME":"河东"},{"ID":"015","NAME":"宁河"},{"ID":"016","NAME":"技术服务"},{"ID":"017","NAME":"汉沽"},{"ID":"018","NAME":"南开"},{"ID":"019","NAME":"东疆"},{"ID":"020","NAME":"红桥"},{"ID":"021","NAME":"和平"},{"ID":"022","NAME":"空港"},{"ID":"online","NAME":"在线支付"}],"allgoods":[{"ID":"360","NAME":"智慧财税服务 360"},{"ID":"720","NAME":"智慧财税服务 720"},{"ID":"CS02212","NAME":"测试"},{"ID":"CSFW_1000","NAME":"智慧财税服务特级版"},{"ID":"CSFW_360","NAME":"智慧财税服务"},{"ID":"CSFW_360_XF","NAME":"智慧财税服务（续费）"},{"ID":"CSFW_720","NAME":"智慧财税服务高级版 "},{"ID":"GE_PRINT","NAME":"个人版打印机"},{"ID":"test-01","NAME":"测试商品1"},{"ID":"TEST-02","NAME":"测试商品2 "},{"ID":"TEST-03","NAME":"测试商品3 "}],"positionSale":[{"gID":"720","gNAME":"智慧财税服务 720","pID":"000","pNAME":"园区","CON":1},{"gID":"CSFW_360","gNAME":"智慧财税服务","pID":"online","pNAME":"在线支付","CON":1}],"con":{"720":1,"CSFW_360":1}}';
+      var jsonObj = JSON.parse(jsonstr);
+      //当前销售记录
+      var allSellObj = {};
+      for (var k = 0; k < jsonObj.positionSale.length; k++) {
+        var saleObj = jsonObj.positionSale[k];
+        allSellObj[saleObj.pID + saleObj.gID] = saleObj.CON;
+      }
+      //合计
+      var totalObj = jsonObj.con;
+      var htmlstr = '';
+
+      for (var i = 0; i < jsonObj.allposition.length; i++) {
+        var singObj = jsonObj.allposition[i];
+        var singlestr = "<tr>" + "<td>" + singObj.NAME + "</td>";
+        var tdstr = '',
+          thstr = '<thead><tr><th>园区</th>',
+          totalstr = '<tr><td><b>合计</b></td>';
+        for (var j = 0; j < jsonObj.allgoods.length; j++) {
+          var goodObj = jsonObj.allgoods[j];
+          thstr += '<th>' + goodObj.NAME + '</th>';
+          //销售数量
+          var sellCount = allSellObj[singObj.ID + goodObj.ID] ? allSellObj[singObj.ID + goodObj.ID] : 0;
+          tdstr += '<td>' + sellCount + '</td>';
+          //合计
+          var total = totalObj[goodObj.ID] ? totalObj[goodObj.ID] : 0;
+          totalstr += '<td>' + total + '</td>';
+        }
+        thstr += '</tr></thead>';
+        singlestr += tdstr + "</tr>";
+        htmlstr += singlestr;
+      }
+
+      $("#table").html(thstr + htmlstr + totalstr);
+    });
+
+    $(document).ready(function() {
+      var jsonstr = '{"info":{"id":2,"type":"1","shxydm":"120223562665863","gsNsrsbh":"","dsNsrsbh":"","nsrmc":"天津市久久电器设备有限公司","address":"天津南开区","zip":"100000","phone":"13821887470","contact":"王振义","wechatOpenid":null,"qqOpenid":null,"mobilePhone":"13389901885","vipLevel":1,"regTime":"2017-05-24 17:33:07","modifyTime":"2017-05-05 13:58:11","source":null,"jobs":"公司负责人"},"goods":[{"Name":"智慧财税服务 360","TIME":"2017-01-13","PRICE":"3000.00","MONTHS_OF_VALIDITY":"24","QUANTITY":"2"},{"Name":"智慧财税服务 360","TIME":"2017-01-22","PRICE":"1500.00","MONTHS_OF_VALIDITY":"12","QUANTITY":"1"},{"Name":"智慧财税服务 720","TIME":"2017-01-18","PRICE":"750.00","MONTHS_OF_VALIDITY":"36","QUANTITY":"1"},{"Name":"智慧财税服务特级版","TIME":"2017-01-24","PRICE":"360.00","MONTHS_OF_VALIDITY":"36","QUANTITY":"1"},{"Name":"智慧财税服务特级版","TIME":"2017-01-25","PRICE":"360.00","MONTHS_OF_VALIDITY":"36","QUANTITY":"1"},{"Name":"智慧财税服务特级版","TIME":"2017-02-22","PRICE":"360.00","MONTHS_OF_VALIDITY":"36","QUANTITY":"1"},{"Name":"智慧财税服务","TIME":"2017-01-22","PRICE":"720.00","MONTHS_OF_VALIDITY":"24","QUANTITY":"2"},{"Name":"智慧财税服务（续费）","TIME":"2017-01-22","PRICE":"360.00","MONTHS_OF_VALIDITY":"12","QUANTITY":"1"},{"Name":"智慧财税服务高级版  ","TIME":"2017-01-22","PRICE":"360.00","MONTHS_OF_VALIDITY":"24","QUANTITY":"1"},{"Name":"智慧财税服务高级版  ","TIME":"2017-01-24","PRICE":"360.00","MONTHS_OF_VALIDITY":"24","QUANTITY":"1"},{"Name":"智慧财税服务高级版  ","TIME":"2017-01-25","PRICE":"360.00","MONTHS_OF_VALIDITY":"24","QUANTITY":"1"},{"Name":"智慧财税服务高级版  ","TIME":"2017-02-20","PRICE":"720.00","MONTHS_OF_VALIDITY":"48","QUANTITY":"2"},{"Name":"智慧财税服务高级版  ","TIME":"2017-02-22","PRICE":"360.00","MONTHS_OF_VALIDITY":"24","QUANTITY":"1"},{"Name":"智慧财税服务高级版  ","TIME":"2017-03-02","PRICE":"360.00","MONTHS_OF_VALIDITY":"24","QUANTITY":"1"},{"Name":"智慧财税服务高级版  ","TIME":"2017-05-05","PRICE":"360.00","MONTHS_OF_VALIDITY":"24","QUANTITY":"1"},{"Name":"智慧财税服务高级版  ","TIME":"2017-05-23","PRICE":"360.00","MONTHS_OF_VALIDITY":"24","QUANTITY":"1"},{"Name":"个人版打印机","TIME":"2017-01-22","PRICE":"5000.00","MONTHS_OF_VALIDITY":"24","QUANTITY":"2"},{"Name":"个人版打印机","TIME":"2017-02-22","PRICE":"5000.00","MONTHS_OF_VALIDITY":"24","QUANTITY":"2"},{"Name":"测试商品2 ","TIME":"2017-05-02","PRICE":"1500.00","MONTHS_OF_VALIDITY":"12","QUANTITY":"1"},{"Name":"测试商品2 ","TIME":"2017-05-05","PRICE":"1500.00","MONTHS_OF_VALIDITY":"12","QUANTITY":"1"},{"Name":"测试商品3  ","TIME":"2017-03-06","PRICE":"0.00","MONTHS_OF_VALIDITY":"12","QUANTITY":"1"}],"gift":{"2017-01-13":[{"Name":"鼠标垫","TIME":"2017-01-05","CON":1}],"2017-03-02":[{"Name":"小米手机7","TIME":"2017-03-02","CON":1},{"Name":"小米手机7","TIME":"2017-01-05","CON":1},{"Name":"鼠标垫","TIME":"2017-01-05","CON":1}],"2017-02-22":[{"Name":"小米手机7","TIME":"2017-02-22","CON":1}]}}';
+      var jsonObj = JSON.parse(jsonstr);
+      var goodsArr = jsonObj.goods;
+      //排序
+      goodsArr.sort(function(a, b) {
+        return (a.TIME.replace(/[^0-9]+/g, '') - 0) - (b.TIME.replace(/[^0-9]+/g, '') - 0);
+      });
+      var giftObj = jsonObj.gift;
+      var htmlstr = '';
+      for (var index = 0; index < goodsArr.length; index++) {
+        var element = goodsArr[index];
+        var singlestr = '';
+        singlestr += '<tr>' +
+          '<td>' + element.TIME + '</td>' +
+          '<td>' + element.Name + '</td>' +
+          '<td>' + element.PRICE + '</td>' +
+          '<td>' + element.QUANTITY + '</td>' +
+          '<td>' + element.MONTHS_OF_VALIDITY + '</td></tr>';
+        //和下一条不一样  添加合计处理
+        if ((index == goodsArr.length - 1) || (element.TIME != goodsArr[index + 1].TIME)) {
+          var currentTime = element.TIME;
+          var giftArr = giftObj[currentTime] ? giftObj[currentTime] : [];
+          var gift = '';
+          for (var i = 0; i < giftArr.length; i++) {
+            var eleObj = giftArr[i];
+            gift += eleObj.Name + ' x ' + eleObj.CON;
+            if (i != giftArr.length - 1) {
+              gift += '、';
+            }
+          }
+          if (gift == '') {
+            gift = '—';
+          }
+          singlestr += '<tr>' + '<td>' + currentTime + '</td>' + '<td colspan="4" style="text-align:center;">' + gift + '</td></tr>';
+        }
+        htmlstr += singlestr;
+      }
+      $("#secondbody").html(htmlstr);
+    });
+  </script>
+
+</body>
+
+</html>
