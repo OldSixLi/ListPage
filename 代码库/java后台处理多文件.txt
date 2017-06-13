@@ -1,0 +1,1101 @@
+/**
+ * 
+ */
+package com.greatchn.csfwpt.web.controller.sell.order;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.greatchn.bean.Page;
+import com.greatchn.bean.PageData;
+import com.greatchn.bean.Result;
+import com.greatchn.csfwpt.bean.InvoiceRequstVo;
+import com.greatchn.csfwpt.bean.PrintVo;
+import com.greatchn.csfwpt.bean.SellGoodsAndGiftsVo;
+import com.greatchn.csfwpt.bean.SellGoodsItemVo;
+import com.greatchn.csfwpt.bean.UserInfo;
+import com.greatchn.csfwpt.db.po.CustomerAuthorization;
+import com.greatchn.csfwpt.db.po.CustomerAuthorizationCleantask;
+import com.greatchn.csfwpt.db.po.CustomerInfo;
+import com.greatchn.csfwpt.db.po.CustomerInfoKz;
+import com.greatchn.csfwpt.db.po.CustomerInfoWebUser;
+import com.greatchn.csfwpt.db.po.SellGift;
+import com.greatchn.csfwpt.db.po.SellGoods;
+import com.greatchn.csfwpt.db.po.SellOrder;
+import com.greatchn.csfwpt.db.po.SellOrderAgreement;
+import com.greatchn.csfwpt.db.po.SellOrderGift;
+import com.greatchn.csfwpt.db.po.SellOrderGoods;
+import com.greatchn.csfwpt.db.po.SellOrderInvoice;
+import com.greatchn.csfwpt.db.po.SellOrderPayCheck;
+import com.greatchn.csfwpt.db.po.SellPoint;
+import com.greatchn.csfwpt.db.po.SysUser;
+import com.greatchn.csfwpt.service.sell.order.SellOrderSrv;
+import com.greatchn.csfwpt.service.sys.UserSrv;
+import com.greatchn.csfwpt.web.controller.BaseController;
+import com.greatchn.csfwpt.web.controller.Constants;
+import com.greatchn.tools.ConstantUtil;
+import com.greatchn.tools.DESSpecAdapter;
+import com.greatchn.tools.HttpUtils;
+import com.greatchn.tools.ImageUtil;
+import com.greatchn.tools.WeixinUtil;
+import com.greatchn.tools.zxing.MyZingUtils;
+/**
+ * 销售控制层
+ * 
+ * @author ZLi 2016-11-24
+ * 
+ */
+@Controller
+@RequestMapping("sales")
+public class SaleController extends BaseController {
+	@Resource
+	SellOrderSrv sellOrderSrv;
+	/**
+	 * 站内信地址
+	 */
+	final String letterUrl = ConstantUtil.getValue("SEND_LETTER_URL");
+	@Resource
+	UserSrv userSrv;
+
+	// 商品详情
+	@Value("#{configProperties['sellGoodsName']}")
+	private String sellGoodsName;
+	// 协议相关配置文件
+	@Value("#{configProperties['UrlPrefix']}")
+	private String URL_PREFIX;
+	@Value("#{configProperties['saveFilePath']}")
+	private String SAVE_FILE_PATH;
+
+	/**
+	 * 主页面
+	 */
+	private static final String MAIN = "/order";
+	/**
+	 * 产品销售确认
+	 */
+	private static final String CHECK_ORDER = "/order/checkOrder";
+	/**
+	 * 付款
+	 */
+	private static final String PAY = "/order/pay";
+	/**
+	 * 付款成功
+	 */
+	private static final String PAY_SUCCESS = "/order/paySuccess";
+	/**
+	 * 根据统一社会信用代码或者国税纳税人识别号或者地税纳税人识别号查找顾客信息
+	 */
+	private static final String FINDNSR = "/order/get_customer";
+	/**
+	 * 通过商品goodsId查找商品的明细
+	 */
+	private static final String FIND_GOODS = "/order/get_sellGoods";
+	/**
+	 * 返回主页面
+	 */
+	private static final String REMAIN = "/order/returnMain";
+
+	/**
+	 * <p>
+	 * 主页面
+	 * </p>
+	 * 
+	 * @param md
+	 * @return
+	 */
+	@RequestMapping(MAIN)
+	public ModelAndView index(ModelAndView md, HttpSession session) {
+		md.setViewName("/sales/order/sell");
+		// 获得所有的商品
+		List<SellGoods> goods = sellOrderSrv.listAllGoods();
+		// 获得所有的附赠品
+		List<SellGift> gifts = sellOrderSrv.listAllGift("N","N");
+		// 获得所有的销售点位
+		List<SellPoint> points = sellOrderSrv.listAllPoints();
+		// 获得存放在session中的当前用户信息
+		UserInfo user = (UserInfo) session.getAttribute(Constants.SESSION_USER_INFO);
+		// 获得该用户在之前的操作中的最近的站点id
+		List<SellOrder> orders = sellOrderSrv.findOrderBySellsmanId(user.getUser().getId());
+		String point = "#";// 默认点位为请选择
+		// 当还没有销售过订单时
+		if (orders != null && orders.size() > 0) {
+			// 将最近一次的点位信息赋值到里面
+			point = orders.get(0).getPointId();
+		}
+		md.addObject("goods", goods);
+		md.addObject("gifts", gifts);
+		md.addObject("points", points);
+		md.addObject("point", point);
+		return md;
+	}
+
+	/**
+	 * <p>
+	 * 主页面
+	 * </p>
+	 * 
+	 * @param md
+	 * @return
+	 */
+	@RequestMapping(REMAIN)
+	public ModelAndView reindex(String orderId, Integer customerId, HttpSession session) {
+		ModelAndView md = new ModelAndView();
+		md.setViewName("/sales/order/sell");
+		// 获得所有的商品
+		List<SellGoods> listGoods = sellOrderSrv.listAllGoods();
+		// 获得未购买的附赠品
+		List<SellGift> listGifts = sellOrderSrv.findUnBuyGiftByOrderId(orderId);
+		// 获得已购买的商品
+		List<SellGoodsAndGiftsVo> goodsVo = sellOrderSrv.getSellGoodsVo(orderId);
+		// 获得已赠送的附赠品
+		List<SellGoodsAndGiftsVo> gifts = sellOrderSrv.getBuySellGifts(orderId);
+		// 获得所有的销售点位
+		List<SellPoint> points = sellOrderSrv.listAllPoints();
+
+		SellOrder order = sellOrderSrv.findOrderById(orderId);
+		CustomerInfo info = sellOrderSrv.getCustomerInfo(customerId);
+		// 获得session中选中的点位信息
+		md.addObject("point", session.getAttribute("POINT"));
+		md.addObject("buy_goods", goodsVo);
+		md.addObject("info", info);
+		md.addObject("order", order);
+		md.addObject("buy_gift", gifts);
+		md.addObject("goods", listGoods);
+		md.addObject("gifts", listGifts);
+		md.addObject("points", points);
+		md.addObject("reg", info.getRegTime().getTime());
+		return md;
+	}
+
+	/**
+	 * <p>
+	 * 根据统一社会信用代码或者国税纳税人识别号或者地税纳税人识别号查找顾客信息
+	 * </p>
+	 * 
+	 * @param shxydm
+	 * @return
+	 */
+	@RequestMapping(FINDNSR)
+	@ResponseBody
+	public Result<CustomerInfo> getCustomer(String shxydm, String gsNsrsbh, String dsNsrsbh) {
+		CustomerInfo customerInfo = sellOrderSrv.findCustomerInfoByShxydm(shxydm, gsNsrsbh, dsNsrsbh);
+		return Result.success(customerInfo);
+	}
+
+	/**
+	 * <p>
+	 * 通过商品goodsId查找商品的明细
+	 * </p>
+	 * 
+	 * @author Fli 2016-11-25
+	 * @param goodsId
+	 * @return
+	 */
+	@RequestMapping(FIND_GOODS)
+	@ResponseBody
+	public Result<SellGoods> getSellGoodsItemsBySellGoodsId(String goodsId) {
+		SellGoods goods = sellOrderSrv.getGoodsByGoodsId(goodsId);
+		return Result.success(goods);
+	}
+
+	/**
+	 * <p>
+	 * 产品销售
+	 * </p>
+	 * 
+	 * @return phGuo 2016-11-24
+	 * @throws Exception
+	 */
+	@RequestMapping(CHECK_ORDER)
+	public ModelAndView order(CustomerInfo info, String cRegTime, String Oamount, String orderId, String goods, String gifts, String point,String type ,HttpSession session) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		// 选择的点位信息缓存到session中
+		session.setAttribute("POINT", point);
+		// 第一步保存或者更新用户
+		saveOrUpdateCustomer(info, cRegTime);
+		// 第二步更新或者保存订单
+		UserInfo user = this.getLoginUser(session);
+		SellOrder order = saveOrUpdateOrder(info, user, orderId, Oamount, point);
+		// 第四步保存附赠品和商品的信息
+		List<SellOrderGoods> listGoods = gsonOrderGoods(order.getId(), goods);
+		List<SellOrderGift> listGifts = gsonOrderGifts(order.getId(), gifts);
+		if(info!=null){
+			CustomerInfo infos = sellOrderSrv.findInfoByShyxdm(info.getShxydm());
+			if(infos==null){
+				info.setRegTime(null);
+				info.setModifyTime(null);
+			}
+		}
+		if(info.getId()!=null&&!StringUtils.isEmpty(info.getPhone())){
+			CustomerInfo oldInfo = sellOrderSrv.getCustomerInfo(info.getId());
+			if(!oldInfo.getPhone().equals(info.getPhone())){
+				List<CustomerInfoWebUser> infos = sellOrderSrv.findUserInfos(info.getId());
+				sellOrderSrv.unbindCustomer(order, info, listGoods, listGifts, orderId);
+				for (CustomerInfoWebUser customerInfoWebUser : infos) {
+					Map<String, String> params = new HashMap<>();
+					//letter_id为时间戳+3个随机数
+					long t=System.currentTimeMillis();
+					String random =""+(int)((Math.random()*900)+100);
+					params.put("bizName", "userLetterBiz");
+					params.put("method", "saveUserLetter");
+					params.put("RECEIVER", customerInfoWebUser.getWebSiteUserId());
+					params.put("SENDER", "0000-00-000000");
+					params.put("TITLE", "通知:您的绑定企业信息有变更");
+					params.put("CONTENT", "您已经与："+info.getNsrmc()+"（社会信用代码："+info.getShxydm()+"）解除绑定");
+					params.put("STATE", "1");
+					params.put("LETTER_ID", t+random);
+					HttpUtils.OpenHttpByPost(letterUrl, params);
+				}
+			}
+		}
+		// 同一事物提交
+		sellOrderSrv.saveOrderAndGiftsAndGoods(order, info, listGoods, listGifts, orderId);
+
+		List<SellGoodsAndGiftsVo> listOGoods = saveOrderGoods(listGoods);
+		List<SellGoodsAndGiftsVo> listOGifts = saveOrderGifts(listGifts);
+		// 第五步查询元件信息
+		List<SellGoodsItemVo> items = sellOrderSrv.getAllGoodsItemsByOrderId(order.getId());
+		List<CustomerAuthorization> aus = sellOrderSrv.getCustomerAuthorizationByCustomerId(info.getId());
+		List<SellGoodsItemVo> itemsvo = WeixinUtil.getShowItem(aus, items);
+		// 格式化时间
+		gshsj(itemsvo);
+		// 第六步是否需要协议
+		boolean isAgree = sellOrderSrv.checkedAgreement(order.getId());
+		// 第七步是否重复订单
+		boolean isExist = checkOrderIsExist(order.getId());
+		mv.addObject("info", info);
+		mv.addObject("goods", listOGoods);
+		mv.addObject("gifts", listOGifts);
+		mv.addObject("items", itemsvo);
+		mv.addObject("isAgree", isAgree);
+		mv.addObject("isExist", isExist);
+		mv.addObject("order", order);
+		mv.setViewName("give".equals(type)?"/service/checkOrder":"/sales/order/checkOrder");
+		return mv;
+	}
+
+	/**
+	 * <p>
+	 * 付款
+	 * </p>
+	 * 
+	 * @return phGuo 2016-11-24
+	 */
+	@RequestMapping(PAY)
+	public ModelAndView pay(SellOrder order) {
+		/**
+		 * 付款需要修改的状态，是否需要需要打印协议，
+		 */
+		SellOrder oldOrder = sellOrderSrv.findOrderById(order.getId());
+		oldOrder.setFlagPay("N");
+		oldOrder.setFlagAgreement(order.getFlagAgreement());
+		oldOrder = sellOrderSrv.updateOrder(oldOrder);
+		CustomerInfo info = sellOrderSrv.getCustomerInfo(oldOrder.getCustomerId());
+		return new ModelAndView("/sales/order/pay").addObject("order", oldOrder).addObject("info", info).addObject("sellGoodsName", sellGoodsName);
+	}
+
+	/**
+	 * <p>
+	 * 付款成功
+	 * </p>
+	 * 
+	 * @return phGuo 2016-11-24
+	 * @throws Exception
+	 */
+	@RequestMapping(PAY_SUCCESS)
+	public ModelAndView paySuccess(SellOrder order, SellOrderPayCheck payCheck) throws Exception {
+		/**
+		 * 如果是微信支付order.getPayType()为2
+		 */
+		SellOrder oldOrder = sellOrderSrv.findOrderById(order.getId());
+		if (!order.getPayType().equals("2")) {// 微信支付
+			/**
+			 * 更新支付方式，支付标志
+			 */
+			oldOrder.setPayType(order.getPayType());
+			oldOrder.setFlagPay("Y");// 支付成功
+			oldOrder.setState("Y");// 订单完成
+			oldOrder.setFlagInvoice("1");// 发票未打印
+			/**
+			 * 更新服务
+			 */
+			List<CustomerAuthorizationCleantask> tasks = new ArrayList<>();
+			List<CustomerAuthorization> aus = WeixinUtil.getCustomerAus(oldOrder, sellOrderSrv, tasks);
+			oldOrder = sellOrderSrv.updateOrderAndService(oldOrder, aus, tasks);
+			if ("1".equals(order.getPayType())) {
+				payCheck.setId(order.getId());
+				payCheck = sellOrderSrv.savePayCheck(payCheck);
+			}
+			/**
+			 * 更新附赠品数量
+			 */
+			List<SellOrderGift> gifts = sellOrderSrv.findSellOrderGiftByOrderId(order.getId());
+			sellOrderSrv.updateGifts(gifts, true);
+		}
+
+		CustomerInfo info = sellOrderSrv.getCustomerInfo(oldOrder.getCustomerId());
+
+		return new ModelAndView("/sales/order/paySuccess").addObject("order", oldOrder).addObject("info", info);
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 请求参数
+	 * </p>
+	 * 
+	 * @author Fli 2016-11-30
+	 * @param orderId
+	 * @return
+	 */
+	@RequestMapping("/order/getParams")
+	@ResponseBody
+	public Result<InvoiceRequstVo> getFyxm(String orderId, CustomerInfoKz infoKz, HttpSession session) {
+		SellOrder order = sellOrderSrv.findOrderById(orderId);
+		String state = StringUtils.isNotEmpty(order.getFlagInvoice()) ? order.getFlagInvoice() : "1";
+		InvoiceRequstVo vo = new InvoiceRequstVo();
+		// 补充收款人
+		SysUser user = userSrv.getUser(order.getSalesman());
+		if (user != null) {
+			vo.setSkr(user.getName());
+		}
+		vo.setState(state);
+		if ("1".equals(state)) {// 开具发票
+			infoKz.setId(order.getCustomerId());
+			sellOrderSrv.saveOrUpdateInfoKz(infoKz);
+			List<Map<String, Object>> mapList = sellOrderSrv.findGoodsByOrderId(orderId);
+			if (mapList != null && mapList.size() > 0) {
+				UserInfo info = this.getLoginUser(session);
+				StringBuffer sb = new StringBuffer();
+				sb.append("<fyxm count=\"" + mapList.size() + "\"> ");
+				int xh = 1;
+				double hjse = 0.0d;
+				for (Map<String, Object> map : mapList) {
+					sb.append("<group xh=\"" + xh + "\">");
+					sb.append("<fphxz>0</fphxz>");
+					sb.append("<spmc>" + map.get("print_name") + "</spmc>");
+					sb.append("<spsm></spsm>");
+					sb.append("<ggxh></ggxh>");
+					sb.append("<dw></dw>");
+					sb.append("<spsl>" + map.get("quantity") + "</spsl>");
+					sb.append("<dj>" + String.format("%.2f", map.get("price")) + "</dj>");
+					sb.append("<je>" + String.format("%.2f", map.get("amount")) + "</je>");
+					sb.append("<sl>" + String.format("%.2f", map.get("sl")) + "</sl>");// 税率到时候要修改
+					sb.append("<se>" + String.format("%.2f", map.get("se")) + "</se>");
+					try {
+						Double se = (Double) map.get("se");
+						hjse += se;
+					} catch (Exception e) {
+
+					}
+					sb.append("<hsbz>1</hsbz>");
+					sb.append("<spbm>" + map.get("spbm") + "</spbm>");
+					sb.append("<zxbm></zxbm>");
+					sb.append("<yhzcbs>0</yhzcbs>");
+					sb.append("<lslbs></lslbs>");
+					sb.append("<zzstsgl></zzstsgl>");
+					sb.append("</group>");
+					xh += 1;
+				}
+				sb.append("</fyxm> ");
+				vo.setFyxm(sb.toString());
+				vo.setOrderId(orderId);
+				vo.setKpr(info.getUser().getName());
+				String ghdw = "<ghdwsbh>" + infoKz.getShxydm() + "</ghdwsbh><ghdwmc>" + infoKz.getNsrmc() + "</ghdwmc><ghdwdzdh>" + nullToString(infoKz.getAddress())
+						+ nullToString(infoKz.getMobilePhone()) + "</ghdwdzdh>" + "<ghdwyhzh>" + nullToString(infoKz.getBankName()) + nullToString(infoKz.getBankCard())
+						+ "</ghdwyhzh>";
+				vo.setGhdw(ghdw);
+				vo.setHjje(String.format("%.2f", order.getAmount()));
+				vo.setHjse(String.format("%.2f", hjse));
+				vo.setJshj(String.format("%.2f", order.getAmount()));
+				return Result.success(vo);
+			}
+		}
+		if ("2".equals(state)) {// 打印发票
+			SellOrderInvoice invoice = sellOrderSrv.findInvoiceByOrderId(orderId);
+			if (invoice != null) {
+				vo.setOrderId(orderId);
+				vo.setFpdm(invoice.getFpDm());
+				vo.setFphm(invoice.getFpHm());
+				/*vo.setInvoiceId(invoice.getId().toString());*/
+				return Result.success(vo);
+			}
+		}
+		if ("3".equals(state)) {// 打印发票
+			return Result.success(vo);
+		}
+		return Result.failed("查询不到");
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 获取订单发票的状态
+	 * </p>
+	 * 
+	 * @author Fli 2016-12-1
+	 * @return
+	 */
+	@RequestMapping("/order/getInvoiceState")
+	@ResponseBody
+	public Result<String> getInvoiceState(String orderId) {
+		SellOrder order = sellOrderSrv.findOrderById(orderId);
+
+		return Result.success(StringUtils.isNotEmpty(order.getFlagInvoice()) ? order.getFlagInvoice() : "1");
+	}
+	/**
+	 * 
+	 * <p>
+	 * 生成上传协议用的二维码
+	 * </p>
+	 * 
+	 * @author Fli 2016-12-1
+	 * @return
+	 * @throws IOException 
+	 */
+	@RequestMapping("/order/getEwm")
+	@ResponseBody
+	public void getEwm(String orderId,HttpServletResponse resp,HttpSession session) throws IOException {
+		UserInfo user = getLoginUser(session);
+		String url = ConstantUtil.getValue("AGREEMENT_URL");
+		if(url.endsWith("/")){
+			url=url+"csfwpt_console/restful/order/toup?orderId="+orderId+"&userId="+user.getUser().getId();
+		}else{
+			url=url+"/csfwpt_console/restful/order/toup?orderId="+orderId+"&userId="+user.getUser().getId();
+		}
+		MyZingUtils.getqcode(resp, url);
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 查验五分钟之内存在相同的订单,false 有重复 true 没有
+	 * </p>
+	 * 
+	 * @author Fli 2016-12-12
+	 * @param orderId
+	 * @return
+	 */
+	private boolean checkOrderIsExist(String orderId) {
+		/**
+		 * 时间五分之前
+		 */
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.YEAR, -1);
+		SellOrder order = sellOrderSrv.findOrderById(orderId);
+
+		Integer num = sellOrderSrv.findOrderBySSTG(new Timestamp(cal.getTimeInMillis()), order.getCustomerId(), orderId);
+		if (num > 0) {
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 保存或者更新顾客信息
+	 * </p>
+	 * 
+	 * @author Fli 2016-11-29
+	 * @param info
+	 * @param cRegTime
+	 * @throws ParseException
+	 * @throws NumberFormatException
+	 */
+	private void saveOrUpdateCustomer(CustomerInfo info, String cRegTime) {
+		info.setType("1");// 默认是1，企业
+		info.setVipLevel(1);
+		info.setRegTime(StringUtils.isEmpty(cRegTime) ? null : new Timestamp(Long.valueOf(cRegTime)));
+		if (StringUtils.isEmpty(info.getShxydm())) {// 添加随机的社会信息代码
+			info.setShxydm(sellOrderSrv.getRandomShxydm());
+		}
+		CustomerInfo infos = sellOrderSrv.findCustomerInfoByShxydm(info.getShxydm(), null, null);
+		if (infos != null) {// 社会统一信用代码唯一
+			info.setId(infos.getId());
+			info.setRegTime(infos.getRegTime());
+		} else {
+			info.setId(null);
+		}
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 更新或者新增订单
+	 * </p>
+	 * 
+	 * @author Fli 2016-11-29
+	 * @param info
+	 * @param user
+	 * @param orderId
+	 * @param Oamount
+	 */
+	private SellOrder saveOrUpdateOrder(CustomerInfo info, UserInfo user, String orderId, String Oamount, String point) {
+
+		SellOrder order = new SellOrder();
+		order.setCustomerId(info.getId());
+		order.setSalesman(user.getUser().getId());
+		order.setAmount(Double.valueOf(Oamount));
+		order.setState("N");// N未完成
+		order.setFlagPay("N");// N未支付
+		order.setTime(new Timestamp(System.currentTimeMillis()));
+		order.setPointId(point);
+		if (!StringUtils.isEmpty(orderId)) {// 代表订单存在
+			order.setId(orderId);
+		} else {
+			order.setId(sellOrderSrv.getOrderIdByNextSerial());
+		}
+		return order;
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 解前台传json
+	 * </p>
+	 * 
+	 * @author Fli 2016-12-12
+	 * @param orderId
+	 * @param goods
+	 * @return
+	 */
+	private List<SellOrderGoods> gsonOrderGoods(String orderId, String goods) {
+		Gson g = new Gson();
+		if (!StringUtils.isEmpty(goods) && goods.length() > 1) {
+			List<SellOrderGoods> listGoods = g.fromJson(goods, new TypeToken<List<SellOrderGoods>>() {
+			}.getType());
+			for (SellOrderGoods sellOrderGoods : listGoods) {
+				sellOrderGoods.setId(null);
+				sellOrderGoods.setOrderId(orderId);
+			}
+			return listGoods;
+		}
+		return null;
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 展示商品信息
+	 * </p>
+	 * 
+	 * @author Fli 2016-11-29
+	 * @param goods
+	 */
+	private List<SellGoodsAndGiftsVo> saveOrderGoods(List<SellOrderGoods> goods) {
+		List<SellGoodsAndGiftsVo> vos = new ArrayList<>();
+		if (goods != null && goods.size() > 0) {
+			for (SellOrderGoods sellOrderGoods : goods) {
+				SellGoodsAndGiftsVo vo = new SellGoodsAndGiftsVo();
+				vo.setOrderGoods(sellOrderGoods);
+				vo.setGoodsName(sellOrderSrv.getGoodsByGoodsId(sellOrderGoods.getGoodsId()).getName());
+				vos.add(vo);
+			}
+			return vos;
+		}
+		return null;
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 解析前台的json
+	 * </p>
+	 * 
+	 * @author Fli 2016-12-12
+	 * @param orderId
+	 * @param gifts
+	 * @return
+	 */
+	private List<SellOrderGift> gsonOrderGifts(String orderId, String gifts) {
+		Gson g = new Gson();
+		if (!StringUtils.isEmpty(gifts) && gifts.length() > 1) {// 因为前台如果是没有附赠品信息，传递到后台'}'
+			List<SellOrderGift> listGifts = g.fromJson(gifts, new TypeToken<List<SellOrderGift>>() {
+			}.getType());
+			for (SellOrderGift sellOrderGift : listGifts) {
+				sellOrderGift.setId(null);
+				sellOrderGift.setOrderId(orderId);
+			}
+			return listGifts;
+		}
+		return null;
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 保存附赠品信息
+	 * </p>
+	 * 
+	 * @author Fli 2016-11-29
+	 * @param orderId
+	 * @param goods
+	 * @param gifts
+	 */
+	private List<SellGoodsAndGiftsVo> saveOrderGifts(List<SellOrderGift> gifts) {
+		List<SellGoodsAndGiftsVo> vos = new ArrayList<>();
+		if (gifts != null && gifts.size() > 0) {
+			for (SellOrderGift gift : gifts) {
+				SellGoodsAndGiftsVo vo = new SellGoodsAndGiftsVo();
+				vo.setGift(gift);
+				vo.setGiftName(sellOrderSrv.getGiftByGiftId(gift.getGiftId()).getName());
+				vos.add(vo);
+			}
+			return vos;
+		}
+		return null;
+	}
+
+	@RequestMapping("/order/uploadPic")
+	@ResponseBody
+	public Result<String> image(@RequestParam("imageRes") MultipartFile myfile, HttpServletRequest request) throws Exception {
+		UUID olduuid = UUID.randomUUID();
+		UUID uuid = UUID.randomUUID();
+		String path;
+		String url_prefix;
+		if (URL_PREFIX.startsWith("/")) {
+			url_prefix = URL_PREFIX.substring(1);
+		} else {
+			url_prefix = URL_PREFIX;
+		}
+		path = url_prefix + new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		String name = myfile.getOriginalFilename();
+		String nameUp = name.toUpperCase();
+		String imgUrl = "";
+		String oldimgUrl = "";
+		if (nameUp.endsWith("JPG") || nameUp.endsWith("PNG") || nameUp.endsWith("JEPG")) {
+			String suffix = name.substring(name.lastIndexOf("."));
+			File file = new File(path.replace(url_prefix, SAVE_FILE_PATH), olduuid + suffix);
+			if (!file.exists()) {
+				file.mkdirs();
+			}
+			myfile.transferTo(file);
+			
+			imgUrl = SAVE_FILE_PATH + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "/" + uuid + suffix;
+			oldimgUrl =  SAVE_FILE_PATH + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "/" + olduuid + suffix;
+			imgUrl = ImageUtil.reduceImg(oldimgUrl, imgUrl);
+			if(!"".equals(imgUrl)){
+				imgUrl = imgUrl.replace(SAVE_FILE_PATH, URL_PREFIX);
+			}
+		} else {
+			return Result.failed(imgUrl);
+		}
+		return Result.success(imgUrl);
+	}
+
+	// 马少博  2017年6月9日15:16:00 添加  多文件上传
+	// ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆   
+	// ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+	// ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+	// ◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+	/*多文件上传方法 */
+	@RequestMapping("/order/multiUploadPic")
+	@ResponseBody
+	public Result<ArrayList<String>> image(@RequestParam("imageRes") List<MultipartFile> myfile, HttpServletRequest request) throws Exception {
+		 
+ 		UUID olduuid = UUID.randomUUID();
+		UUID uuid = UUID.randomUUID();
+		String path;
+		String url_prefix;
+		String imgarr = "";
+		ArrayList<String> imageList=new ArrayList<String>();
+		if (URL_PREFIX.startsWith("/")) {
+			url_prefix = URL_PREFIX.substring(1);
+		} else {
+			url_prefix = URL_PREFIX;
+		}		
+		path = url_prefix + new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		 	
+		Map<String, Object> messages = new HashMap<String, Object>();
+		String imgurl = ""; 
+		//创建一个通用的多部分解析器    
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+		multipartResolver.setDefaultEncoding("utf-8");
+		if(multipartResolver.isMultipart(request)){  
+			try{
+				//转换成多部分request      
+				MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)request;    
+				List<MultipartFile> files =  multiRequest.getFiles("imageRes");
+				int len = files.size();
+				if(len > 10){ return Result.failed("每次最多上传10张图片");
+				}  
+				
+				
+				int i=0;
+				Map<String, String> map = new HashMap<String, String>();
+				JSONArray ja = new JSONArray();
+				String imgs="";
+				for(MultipartFile multiparfile:files){
+					String clientName = multiparfile.getOriginalFilename();
+					if(!clientName.equals("")){
+						String fileName = multiparfile.getOriginalFilename();
+						int lastNum = fileName.lastIndexOf(".");
+						String suffix = fileName.substring(lastNum, fileName.length());
+						String  id=String.valueOf(System.currentTimeMillis());
+						File file = new File(path.replace(url_prefix, SAVE_FILE_PATH), olduuid+ id+ suffix);
+			
+						if (!file.exists()) {
+							file.mkdirs();
+						}
+						 multiparfile.transferTo(file); 
+						 String fileNewName =""; 
+						 fileNewName = SAVE_FILE_PATH + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "/" + uuid + suffix;
+					 	fileName= SAVE_FILE_PATH + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "/" +olduuid+ id + suffix;
+						 fileNewName = ImageUtil.reduceImg(fileName, fileNewName); 
+
+						 fileNewName = fileNewName.replace(SAVE_FILE_PATH, URL_PREFIX);
+							imageList.add(fileNewName);
+						}
+					} 
+							
+			}catch (JSONException e) {
+							 
+							e.printStackTrace();
+							}	
+					}
+		
+
+	 
+		return Result.success(imageList);
+	}
+
+
+	/**
+	 * 
+	 * <p>
+	 * 删除图片
+	 * </p>
+	 * 
+	 * @author Fli 2016-12-1
+	 * @param picurl
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/order/deletePic")
+	@ResponseBody
+	public Result<String> deletePic(String picurl) throws Exception {
+		File file = new File(picurl.replace(URL_PREFIX, SAVE_FILE_PATH));
+		if (file.exists()) {
+			file.delete();
+		}
+		return Result.success("success");
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 保存协议
+	 * </p>
+	 * 
+	 * @author Fli 2016-12-1
+	 * @param agree
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/order/saveAgree")
+	@ResponseBody
+	public Result<String> saveAgree(SellOrderAgreement agree, HttpSession session) {
+		UserInfo info = this.getLoginUser(session);
+		agree.setUpTime(new Timestamp(System.currentTimeMillis()));
+		agree.setUpUesr(info.getUser().getName());
+		agree.setFlag("Y");
+		sellOrderSrv.saveAndUpdateAgreement(agree);
+		return Result.success("success");
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 授权
+	 * </p>
+	 * 
+	 * @author Fli 2016-12-8
+	 * @param customerId
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping("/order/creatAu")
+	@ResponseBody
+	public Result<String> creatAu(Integer customerId) throws UnsupportedEncodingException {
+		Page page = new Page();
+		PageData pd = new PageData();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String now = sdf.format(new Date());
+		pd.put("customerId", customerId);
+		pd.put("months", now);
+		page.setPd(pd);
+		CustomerInfo info = sellOrderSrv.getCustomerInfo(customerId);
+		List<CustomerAuthorization> lists = sellOrderSrv.getAuthorizationByPage(page);
+		String itemIds = "";
+		int max = -1;
+		if (lists.size() > 0) {// 未过期的
+			for (CustomerAuthorization customerAuthorization : lists) {
+				int month = customerAuthorization.getTermOfValidity();
+				if (month != 0 && max != 0) {
+					if (month > max) {
+						max = month;
+					}
+				} else {
+					max = 0;
+				}
+				if ("".equals(itemIds)) {
+					itemIds = customerAuthorization.getServiceId();
+				} else {
+					itemIds = itemIds + "," + customerAuthorization.getServiceId();
+				}
+			}
+		}
+		String message = "1.0|!|" + info.getNsrmc() + "|!|" + info.getShxydm() + "|!|" + itemIds + "|!|" + max + "|!|";
+		return Result.success(info.getNsrmc() + "%%" + DESSpecAdapter.encrypt(message.getBytes("gb2312"), "greatchn_invoice"));
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 授权（传过来的统一社会信用代码）
+	 * </p>
+	 * 
+	 * @author phG 2016-12-9
+	 * @param customerId
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping("/order/creatAuByShyxdm")
+	@ResponseBody
+	public Result<String> creatAuByShyxdm(String shyxdm) throws UnsupportedEncodingException {
+		Page page = new Page();
+		PageData pd = new PageData();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String now = sdf.format(new Date());
+		CustomerInfo customerInfo = sellOrderSrv.findInfoByShyxdm(shyxdm);
+		if (customerInfo == null) {
+			return Result.failed("未找到相关数据，请查对后再次输入进行查找");
+		}
+		pd.put("customerId", customerInfo.getId());
+		pd.put("months", now);
+		page.setPd(pd);
+		CustomerInfo info = sellOrderSrv.getCustomerInfo(customerInfo.getId());
+		List<CustomerAuthorization> lists = sellOrderSrv.getAuthorizationByPage(page);
+		String itemIds = "";
+		int max = -1;
+		if (lists.size() > 0) {// 未过期的
+			for (CustomerAuthorization customerAuthorization : lists) {
+				int month = customerAuthorization.getTermOfValidity();
+				if (month != 0 && max != 0) {
+					if (month > max) {
+						max = month;
+					}
+				} else {
+					max = 0;
+				}
+				if ("".equals(itemIds)) {
+					itemIds = customerAuthorization.getServiceId();
+				} else {
+					itemIds = itemIds + "," + customerAuthorization.getServiceId();
+				}
+			}
+		}
+		String message = "1.0|!|" + info.getNsrmc() + "|!|" + info.getShxydm() + "|!|" + itemIds + "|!|" + max + "|!|";
+		return Result.success(info.getNsrmc() + "%%" + DESSpecAdapter.encrypt(message.getBytes("gb2312"), "greatchn_invoice"));
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * null转换为空字符串
+	 * </p>
+	 * 
+	 * @author Fli 2016-12-20
+	 * @param str
+	 * @return
+	 */
+	private String nullToString(String str) {
+		return StringUtils.isEmpty(str) ? "" : str;
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 填充打印协议的参数
+	 * </p>
+	 * 
+	 * @author Fli 2016-12-21
+	 * @param orderId
+	 * @return
+	 */
+	@RequestMapping("/order/getPrintPra")
+	@ResponseBody
+	public Result<PrintVo> getPrintPra(String ordId, String cusId) throws Exception {
+		List<Map<String, Object>> list = sellOrderSrv.getAgreeGoodByorderId(ordId);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Integer now = Integer.valueOf(sdf.format(new Date()));
+		Integer months = sellOrderSrv.getMinMoths(Integer.valueOf(cusId), ordId);
+		Integer begin = Math.max(now, months);
+		StringBuffer mon = new StringBuffer();
+		StringBuffer service = new StringBuffer();
+		if (list != null && list.size() > 0) {
+			String goodsId = "";
+			for (int i = 0; i < list.size(); i++) {
+				Map<String, Object> map = list.get(i);
+				Object id = map.get("id");
+				Object name = map.get("name");
+				Object month = map.get("months");
+				Object price = map.get("price");
+				Integer end = getMonths(begin, Integer.valueOf(month.toString()));
+				String qzr = "服务期限：自" + (begin + "").substring(0, 4) + "年" + (begin + "").substring(4, 6) + "月" + (begin + "").substring(6, 8) + "日起至" + (end + "").substring(0, 4)
+						+ "年" + (end + "").substring(4, 6) + "月" + (end + "").substring(6, 8) + "日止";
+				mon.append("<p class='text'>" + (i + 1) + "、" + name + ":" + price + "元。" + qzr + "</p>");
+				goodsId += id + ",";
+			}
+			List<Map<String, Object>> names = sellOrderSrv.getServiceName(goodsId.substring(0, goodsId.length() - 1));
+			for (int i = 0; i < names.size(); i++) {
+				Map<String, Object> map = names.get(i);
+				service.append("<p class='text'>" + (i + 1) + "、" + map.get("name") + "。</p>");
+			}
+		}
+		PrintVo print = new PrintVo();
+		print.setMonths(mon.toString());
+		print.setService(service.toString());
+		return Result.success(print);
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 获取订单支付状态
+	 * </p>
+	 * 
+	 * @author Fli 2016-12-1
+	 * @return
+	 */
+	@RequestMapping("/order/getFlagPay")
+	@ResponseBody
+	public Result<String> getFlagPay(String orderId) {
+		SellOrder order = sellOrderSrv.findOrderById(orderId);
+		return Result.success(StringUtils.isNotEmpty(order.getFlagPay()) ? order.getFlagPay() : "N");
+	}
+	
+	@RequestMapping("/order/changePage")
+	public ModelAndView changePage(String orderId) {
+		ModelAndView mv = new ModelAndView();
+		SellOrder order = sellOrderSrv.findOrderById(orderId);
+		CustomerInfo info = sellOrderSrv.getCustomerInfo(order.getCustomerId());
+		mv.addObject("order", order);
+		mv.addObject("info", info);
+		mv.setViewName("sales/order/paySuccess");
+		return mv;
+	}
+	/**
+	 * 
+	 *<p>
+	 *开票之后进入付款成功页面
+	 *</p>
+	 *@author Fli
+	 * 2017-2-20
+	 * @param orderId
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/order/toPaySuccessView")
+	public ModelAndView toPaySuccessView(HttpSession session){
+		String orderId = "";
+		if(session.getAttribute("orderId")!=null){
+			orderId = (String) session.getAttribute(Constants.SESSION_ORDERID);
+			session.removeAttribute(Constants.SESSION_ORDERID);
+		}
+		ModelAndView mv = new ModelAndView();
+		SellOrder oldOrder = sellOrderSrv.findOrderById(orderId);
+		CustomerInfo info=null;
+		if(oldOrder!=null){
+			info = sellOrderSrv.getCustomerInfo(oldOrder.getCustomerId());
+		}
+		mv.setViewName("/sales/order/paySuccess");
+		mv.addObject("order", oldOrder);
+		mv.addObject("info", info);
+		mv.addObject("flag", "Y");//开局成功之后判断标志
+		return mv;
+	}
+	/**
+	 * 
+	 * <p>
+	 * 时间格式
+	 * </p>
+	 * 
+	 * @author Fli 2017-1-4
+	 * @param begin
+	 * @param month
+	 * @return
+	 * @throws Exception
+	 */
+	private Integer getMonths(Integer begin, Integer month) throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Calendar now = Calendar.getInstance();// 当前时间
+		Calendar old = Calendar.getInstance();
+		if (begin != null && begin > 0) {
+			old.setTimeInMillis(sdf.parse(begin + "").getTime());
+			old.add(Calendar.MONTH, month);
+			now.add(Calendar.MONTH, month);
+			int iOld = Integer.valueOf(sdf.format(old.getTime()));
+			int iNow = Integer.valueOf(sdf.format(now.getTime()));
+			return Math.max(iOld, iNow);
+		} else if (begin == null && month > 0) {
+			now.add(Calendar.MONTH, month);
+			int iNow = Integer.valueOf(sdf.format(now.getTime()));
+			return iNow;
+		}
+		return -1;
+	}
+
+	/**
+	 * 
+	 * <p>
+	 * 格式化时间
+	 * </p>
+	 * 
+	 * @author Fli 2016-12-22
+	 */
+	private void gshsj(List<SellGoodsItemVo> itemsvo) {
+		if (itemsvo != null && itemsvo.size() > 0) {
+			for (SellGoodsItemVo vo : itemsvo) {
+				if (vo.getMonths() > 0) {
+					vo.setShowMonths(vo.getMonths() + "");
+				}
+			}
+		}
+	}
+}
