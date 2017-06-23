@@ -179,6 +179,7 @@ app.controller('infoCtrl', function($scope, $location, urlService, httpService) 
 // 　　　　　　　　　　◆◆◆　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 app.controller('uploadCtrl', function($scope, $location, urlService, httpService) {
 
+  //在此处添加的代码，是在控制器加载完之后进行的控制
   //angularjs加载完成后事件，有其他的方法可以在此处进行添加
   angular.element(document).ready(
     function() {
