@@ -99,7 +99,6 @@ app.controller('secondCtrl', function($scope) {
 //info页面 控制器
 app.controller('infoCtrl', function($scope, $location, urlService, httpService) {
 
-
   $(document).ready(function() {
     //利用JS改变DOM value值,然后同步到Angularjs的作用域中(仅为试行办法,不推荐在Angularjs中使用)
     $("#changeNumBtn").on("click", function() {
@@ -159,4 +158,95 @@ app.controller('infoCtrl', function($scope, $location, urlService, httpService) 
       }
     );
   }
+});
+
+
+// 　　　　　　　　　　　　　　　　　　　◆◆◆　　　　　　　　　　　　　　　　　　　　　　　　　◆◆◆　
+// 　　　　　　　　　　　　　　　　　　　◆◆◆　　　　　　　　　　　　　　　　　　　　　　　　　◆◆◆　
+// 　　　　　　　　　　　　　　　　　　　◆◆◆　　　　　　　　　　　　　　　　　　　　　　　　　◆◆◆　
+// 　◆◆◆　　　◆◆◆◆◆◆◆◆◆◆　　◆◆◆　　　◆◆◆◆◆　　　◆◆◆◆◆◆◆　　　◆◆◆◆◆◆◆　
+// 　◆◆◆　　　◆◆◆◆◆◆◆　◆◆◆　◆◆◆　　◆◆◆　◆◆◆　◆◆◆　　◆◆◆　　◆◆◆　◆◆◆◆　
+// 　◆◆◆　　　◆◆◆◆◆◆　　　◆◆◆◆◆◆　◆◆◆　　　◆◆◆　　　　　　◆◆◆◆◆◆　　　◆◆◆　
+// 　◆◆◆　　　◆◆◆◆◆◆　　　◆◆◆◆◆◆　◆◆◆　　　◆◆◆　　　　　　◆◆◆◆◆◆　　　◆◆◆　
+// 　◆◆◆　　　◆◆◆◆◆◆　　　◆◆◆◆◆◆　◆◆◆　　　◆◆◆　　◆◆◆◆◆◆◆◆◆◆　　　◆◆◆　
+// 　◆◆◆　　　◆◆◆◆◆◆　　　◆◆◆◆◆◆　◆◆◆　　　◆◆◆◆◆◆◆　　◆◆◆◆◆◆　　　◆◆◆　
+// 　◆◆◆　　　◆◆◆◆◆◆　　　◆◆◆◆◆◆　◆◆◆　　　◆◆◆◆◆◆　　　◆◆◆◆◆◆　　　◆◆◆　
+// 　　◆◆◆　◆◆◆◆◆◆◆◆　◆◆◆　◆◆◆　　◆◆◆　◆◆◆　◆◆◆　　◆◆◆◆　◆◆◆　◆◆◆◆　
+// 　　◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆　　◆◆◆　　　◆◆◆◆◆　　　◆◆◆◆◆◆◆◆　◆◆◆◆◆◆◆◆　
+// 　　　　　　　　　　◆◆◆　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+// 　　　　　　　　　　◆◆◆　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+// 　　　　　　　　　　◆◆◆　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+// 　　　　　　　　　　◆◆◆　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+app.controller('uploadCtrl', function($scope, $location, urlService, httpService) {
+
+  //angularjs加载完成后事件，有其他的方法可以在此处进行添加
+  angular.element(document).ready(
+    function() {
+
+      var domainUrl = "http://om6fr85l4.bkt.clouddn.com/";
+      //获取七牛uptoken　
+      uploader = Qiniu.uploader({
+        runtimes: 'html5,flash,html4',
+        browse_button: 'pickfiles', //上传按钮的ID
+        container: 'btn-uploader', //上传按钮的上级元素ID
+        drop_element: 'btn-uploader',
+        max_file_size: '100mb', //最大文件限制　
+        dragdrop: false,
+        chunk_size: '4mb', //分块大小  
+        save_key: true,
+        uptoken_func: function() { // 在需要获取uptoken时，该方法会被调用　
+          var token = "";
+          $.ajax({
+            type: "get",
+            url: "/token", //←←←←←←←修改请求token的地址←←←←←←←
+            async: false,
+            dataType: "json",
+            success: function(data) {
+              token = data.uptoken; //←←←←←←←修改字段名称←←←←←←←
+            }
+          });
+          return token;
+        },
+        unique_names: false,
+        domain: domainUrl, //自己的七牛云存储空间域名
+        multi_selection: false, //是否允许同时选择多文件 
+        filters: {
+          mime_types: [{
+            title: "Image files",
+            extensions: "jpg,jpeg,gif,png"
+          }]
+        },
+        auto_start: true,
+        init: {
+          'FilesAdded': function(up, files) {},
+          'BeforeUpload': function(up, file) {},
+          'UploadProgress': function(up, file) {
+            console.log(up);
+            console.log(file);
+          },
+          'UploadComplete': function() {},
+          'FileUploaded': function(up, file, info) {　
+            var json = JSON.parse(info);
+            var imgSrc = domainUrl + json.key + "?imageView2/1/q/100|imageslim";
+            tool.confirm(
+              "确认上传以下图片吗？",
+              '<img src=' + imgSrc + '>',
+              function() {
+                $("#img").attr("src", imgSrc);
+                $("[name='iconUrl']").val(imgSrc);
+              },
+              function() {});　
+          },
+          'Error': function(up, err, errTip) {
+            alert(errTip);
+          },
+          'Key': function(up, file) {
+            return file.name;
+          }
+        }
+      });
+
+    }
+
+  );
 });
