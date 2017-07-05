@@ -6,6 +6,11 @@
     <title>管理页面</title>
     <!-- Bootstrap引用 -->
     <link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    .tooltip{
+      font-size: 13px;
+    }
+    </style>
   </head><body>
     <!-- 脚本 -->
     <!-- <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script> -->
@@ -14,6 +19,8 @@
     <div class="section">
       <div class="container">
         <div class="row">
+
+          <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Tooltip on left">Tooltip on left</button>
           <div class="col-md-12">
             <table class="table table-hover table-striped">
               <thead>
@@ -28,7 +35,7 @@
                 <tr>
                   <td>1021567</td>
                   <td>智慧财税平台</td>
-                  <td>我是产品描述</td>
+                  <td > 我是产品描述</span></td>
                   <td class="text-center">
                     <a class="btn btn-link">修改</a>
                   </td>
@@ -63,6 +70,10 @@
         </div>
       </div>
     </div>
-  
+  <script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });  
+</script>
 
 </body></html>

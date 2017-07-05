@@ -15,14 +15,14 @@ uploader = Qiniu.uploader({
   dragdrop: false,
   chunk_size: '4mb', //分块大小  
   save_key: true,
-  uptoken_func: function () { // 在需要获取uptoken时，该方法会被调用　
+  uptoken_func: function() { // 在需要获取uptoken时，该方法会被调用　
     var token = "";
     $.ajax({
       type: "get",
       url: "/token", //←←←←←←←修改请求token的地址←←←←←←←
       async: false,
       dataType: "json",
-      success: function (data) {
+      success: function(data) {
         token = data.uptoken; //←←←←←←←修改字段名称←←←←←←←
       }
     });
@@ -40,22 +40,22 @@ uploader = Qiniu.uploader({
   },
   auto_start: true,
   init: {
-    'FilesAdded': function (up, files) {
+    'FilesAdded': function(up, files) {
       //do something
     },
-    'BeforeUpload': function (up, file) {
+    'BeforeUpload': function(up, file) {
       //do something
     },
-    'UploadProgress': function (up, file) {
+    'UploadProgress': function(up, file) {
       //可以在这里控制上传进度的显示
       console.log(up);
       console.log(file);
       //可参考七牛的例子
     },
-    'UploadComplete': function () {
+    'UploadComplete': function() {
       //do something
     },
-    'FileUploaded': function (up, file, info) {　
+    'FileUploaded': function(up, file, info) {　
       var json = JSON.parse(info);
       alert("上传成功");
       //图片压缩处理:限制图片长宽均为200px ,且图片质量为原来75%;←←←←←←←图片质量自定义
@@ -64,10 +64,10 @@ uploader = Qiniu.uploader({
       $("#img").attr("src", imgSrc);
       $("[name='iconUrl']").val(imgSrc);
     },
-    'Error': function (up, err, errTip) {
+    'Error': function(up, err, errTip) {
       alert(errTip);
     },
-    'Key': function (up, file) {
+    'Key': function(up, file) {
       return file.name;
     }
   }
