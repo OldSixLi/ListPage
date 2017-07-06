@@ -1,0 +1,85 @@
+<!-- 马少博  创建于 2017年7月4日15:47:53 -->
+<!DOCTYPE html>
+<html lang='en'>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title> 手机注册</title>
+    <link href='https://weui.io/weui.css' rel='stylesheet'>
+    <link href='../../../static/css/weixin.css' rel='stylesheet'>
+    <style>
+      .weui-dialog__ft:after {
+        border-top: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page ">
+      <div class="row">
+        <!-- 消除外边距 TODO 文字背景没有添加-->
+        <div class="col-md-12 text-center" style="padding-bottom: 10px;border-bottom: 1px solid #ddd;margin:5px 10px;    position: relative;">
+          <span class="text-center">验证手机号</span>
+          <span class="btn btn-primary span-info" style="">转到邮箱验证</span>
+        </div>
+      </div>
+
+      <div class="page__bd">
+
+        <div class="" style="margin:10px;">
+          <div class="inputBlock input-right" style="">
+            <button type="button" class="btn-span">手机号</button>
+            <input type="text" placeholder="请输入您的手机号">
+          </div>
+          <div class="inputBlock input-left" style="">
+            <input type="text" placeholder="请输入验证码">
+            <button type="button" class="btn-span">获取验证码</button>
+          </div>
+          <div class="inputBlock input-right" style="">
+            <button type="button" class="btn-span">登陆密码</button>
+            <input type="text" placeholder="此密码为浩天云服务网站登录密码">
+          </div>
+        </div>
+
+        <div class="page__bd col-md-12 bottom-block">
+          <div class="hor-block" style="width: 25%;">
+            <button type="button" class="btn btn-skip border-right">跳过</button>
+          </div>
+          <div class="hor-block" style="width: 75%;">
+            <button type="button" class="btn big-confrim-btn" id="showIOSDialog2">确认并提交</button></div>
+        </div>
+        <div id="dialogs">
+          <div class="js_dialog" id="iosDialog2" style="display: none;">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog">
+              <div class="weui-dialog__bd" style="font-size: 18px;color: #333;">恭喜您，绑定成功！</div>
+              <div class="weui-dialog__ft" style="padding: 10px;">
+                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary btn big-confrim-btn" style="padding:5px;line-height: 150%;">确定</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--
+        <a href="javascript:;" class="weui-btn weui-btn_default" id="showIOSDialog1">iOS Dialog样式一</a>-->
+      </div>
+    </div>
+    <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>
+    <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+    <script>
+      $(function() {
+        var $iosDialog2 = $('#iosDialog2');
+
+        $('#dialogs').on('click', '.weui-dialog__btn', function() {
+          $(this).parents('.js_dialog').fadeOut(200);
+        });
+
+        $('#showIOSDialog2').on('click', function() {
+          $iosDialog2.fadeIn(200);
+        });
+      });
+    </script>
+  </body>
+
+</html>
