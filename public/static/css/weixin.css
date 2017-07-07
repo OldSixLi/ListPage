@@ -215,14 +215,48 @@
      line-height: 30px;
  }
  /*小喇叭提示区域*/
- .laba-block{
-     position: absolute;bottom: 20px;width:70%;left:50%;margin-left:-40%;text-align: left;line-height:40px;height: 40px;background-color: #fff; box-shadow: 4px 4px 7px 2px rgba(0,0,0,0.2) ;padding: 0 0 0 50px;
+ 
+ .laba-block {
+     position: absolute;
+     bottom: 20px;
+     width: 70%;
+     left: 50%;
+     margin-left: -40%;
+     text-align: left;
+     line-height: 40px;
+     height: 40px;
+     background-color: #fff;
+     box-shadow: 4px 4px 7px 2px rgba(0, 0, 0, 0.2);
+     padding: 0 0 0 50px;
  }
-
- .laba-block>img{
-     width:70px;height:65px;position: absolute;top:-17px;left:-25px;display: inline-block;
+ 
+ .laba-block>img {
+     width: 70px;
+     height: 65px;
+     position: absolute;
+     top: -17px;
+     left: -25px;
+     display: inline-block;
  }
-
+ 
  .laba-block>span {
-      font-size: 15px;
+     font-size: 15px;
+ }
+ 
+ .span-well {
+     position: relative;
+     text-align: right;
+     display: none;
+ }
+ 
+ .parent-cells {
+     border-top: 1px solid #e5e5e5;
+ }
+ 
+ .parent-cells.active .weui-cell_access .weui-cell__ft:after {
+     transform: rotate(135deg);
+ }
+ 
+ .parent-cells.active .span-well {
+     display: block;
  }
