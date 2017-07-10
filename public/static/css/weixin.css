@@ -153,44 +153,6 @@
      padding: 5px 10px;
      box-sizing: border-box;
  }
- 
- .top-orange {
-     width: 90%;
-     height: 30px;
-     line-height: 30px;
-     border-bottom: 1px solid #aaa;
-     text-align: center;
-     color: #aaa;
-     font-size: 0.8em;
-     margin: auto;
- }
- /*蓝图标顶部小条*/
- 
- .top-blue {
-     width: 100%;
-     height: 30px;
-     line-height: 30px;
-     border-bottom: 1px solid #aaa;
-     text-align: center;
-     color: #aaa;
-     font-size: 0.8em;
- }
- 
- .top-inner {
-     line-height: 30px;
-     width: auto;
-     height: auto;
- }
- 
- .top-text {
-     color: black;
- }
- 
- .top-icon {
-     height: 1.2em;
-     margin-right: 1px;
-     margin-bottom: -3px;
- }
  /*span样式*/
  
  .span-info {
@@ -248,6 +210,75 @@
      padding: 8px;
      font-size: 18px;
  }
+ /*顶部返回条*/
+ 
+ .back-head {
+     top: 0;
+     background-color: #5281e3;
+     width: 100%;
+     height: 50px;
+     text-align: left;
+     padding-left: 15px;
+     color: #f2f2f2;
+     line-height: 50px;
+     position: fixed;
+     z-index: 9999;
+ }
+ 
+ .back-head-left {
+     float: left;
+     width: 15px;
+     height: 25px;
+     margin-top: 15px;
+     margin-right: 10px;
+     background-image: url('../../../static/images/weixin/index/left-icon.png');
+     background-repeat: no-repeat;
+ }
+ /*蓝图标顶部小条*/
+ 
+ .top-blue {
+     width: 100%;
+     height: 30px;
+     line-height: 30px;
+     border-bottom: 1px solid #aaa;
+     text-align: center;
+     color: #aaa;
+     font-size: 0.8em;
+ }
+ 
+ .top-inner {
+     line-height: 30px;
+     width: auto;
+     height: auto;
+ }
+ 
+ .top-text {
+     color: black;
+ }
+ 
+ .top-icon {
+     height: 1.2em;
+     margin-right: 1px;
+     margin-bottom: -3px;
+ }
+ /*橙图标顶部小条*/
+ 
+ .top-orange {
+     width: 90%;
+     height: 30px;
+     line-height: 30px;
+     border-bottom: 1px solid #aaa;
+     text-align: center;
+     color: #aaa;
+     font-size: 0.8em;
+     margin: auto;
+ }
+ /*地址管理cell*/
+ 
+ .address-cells {
+     margin-top: 0;
+     border-top: none;
+ }
  /*修改list中 右侧文字的大小*/
  
  .weui-cell__ft>span {
@@ -288,6 +319,7 @@
      text-align: right;
      display: none;
  }
+ /*父元素list*/
  
  .parent-cells {
      border-top: 1px solid #e5e5e5;

@@ -6,14 +6,57 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>收货地址管理</title>
-    <script type="text/javascript" src="../../static/frames/jquery/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="../../static/common/js/csfwpt.js"></script>
-    <link type="text/css" rel="stylesheet" href="../../static/css/weixin/weui.css" />
-    <link type="text/css" rel="stylesheet" href="../../static/css/weixin/weixin.css" />
+    <!--<script type="text/javascript" src="../../static/frames/jquery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../../static/common/js/csfwpt.js"></script>-->
+    <link href='https://weui.io/weui.css' rel="stylesheet" type="text/css">
+    <link href="../../../static/css/weixin.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
       body {
         color: #333;
         padding-bottom: 70px;
+      }
+      
+      .btn-icon {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background-image: url('../../../static/images/weixin/safe/next.png');
+        /*规定要使用的背景图像。*/
+        background-size: 100% 100%;
+        /*背景图片的尺寸*/
+      }
+      
+      .btn-address {
+        background-image: url('../../../static/images/weixin/address/add.png');
+      }
+      /*删除编辑图标相关样式*/
+      
+      .edit-del-btn {
+        color: #000;
+        padding: 5px;
+        border-radius: 5px;
+        background-color: #ddd
+      }
+      
+      .edit-del-icon {
+        width: 15px;
+        margin-top: 2px;
+        position: relative;
+        bottom: -2px;
+      }
+      /*地址文字样式*/
+      
+      .address-content {
+        color: #7d7d7d;
+        font-size: 13px;
+        line-height: 25px;
+      }
+      
+      .btn-address {}
+      /*这个样式为特殊处理 不能应用到全局样式中*/
+      
+      .weui-cell:before {
+        border-top: 2px dashed #e5e5e5;
       }
     </style>
 
@@ -35,8 +78,9 @@
               ——&nbsp;
               <img class="top-icon" src="../../../static/images/weixin/index/history.png" />
               <span class="top-text">历史地址</span> &nbsp;——
+              <span style="position: absolute;right: 0;">（最多可设置五处）</span>
             </div>
-            <!--                 	<span style="float:right;">(最多可设置5处)</span> -->
+            <!--<span style="float:right;">(最多可设置5处)</span>-->
           </div>
 
           <!--                 <div class="top-orange"> -->
@@ -48,43 +92,212 @@
           <!--                 	</div> -->
           <!--                 </div> -->
 
-          <div class='weui-cells address-cells' style='font-size:14px;'>
-            <div class='weui-cell' onclick='backToBalance(data[i].id);'>
-              <div class='weui-cell__bd'>
-                <p><span>联系人</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>13333333333</span></p>
-                <p>地址地址地址地址地址地址地址地址址地址地址地址地址地址</p>
-              </div>
+          <div class="no-address">
+            <!--没有地址时显示此区域-->
+            <div class="col-md-12 text-center" style="padding-bottom: 60px;">
+              <img src='../../../static/images/weixin/address/none.png' class='img-responsive img-thumbnail' alt='用户头像' style="width: 50%;height:auto;padding:1px;border:none;margin-bottom:50px;margin-top:40px;"><br>
+              <!--<label for="" class="control-label" style="">恭喜您，已使用微信注册成功</label>-->
             </div>
-            <div class='weui-cell' style='height:30px;'>
-              <div class='weui-cell__bd'>
-                <div class='weui-cells_checkbox'>
-                  <label class='weui-cell weui-check__label' for='data[i].id'>	
+            <div class="hor-block" style="width: 100%;text-align: center;">
+              <button type="button" class="btn big-confrim-btn" id="showIOSDialog2" style="width: 80%;"> 
+                <span style="line-height: 35px;"><span class="btn-icon btn-address" style="margin-bottom: -8px;
+                  margin-right: 10px;"></span>确认并提交</span>
+                </button>
+
+              <p style="text-align: center;font-size: 13px;position: fixed;bottom:15px;width: 100%;"><span style="color: red;font-weight: bold;">注：</span>此地址为收货地址，请您仔细确认</p>
+            </div>
+
+            <div class='weui-cells address-cells' style='font-size:14px;display: none;'>
+
+              <!--地址示例-->
+              <div class='weui-cell' onclick='backToBalance(data[i].id);'>
+                <div class='weui-cell__bd address-content'>
+                  <p><span>联系人</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>13333333333</span></p>
+                  <p>河北省天津市农业区凯德拉斯黄金一</p>
+                </div>
+              </div>
+              <div class='weui-cell' style='height:30px;'>
+                <div class='weui-cell__bd'>
+                  <div class='weui-cells_checkbox'>
+                    <label class='weui-cell weui-check__label' for='ssd' style="padding-left: 0;">	
+					                <div class='weui-cell__hd addressCheck'>
+					                    <input type='radio' class='weui-check' onchange='changeDefaultAddress(this);'
+					                     name='morenAddress' id='ssd'>
+					                    <i class='weui-icon-checked'></i>
+					                </div>
+					                <div class='weui-cell__bd'>
+					                    <p>设为默认地址</p>
+					                </div>
+					            </label>
+                  </div>
+                </div>
+                <div class='edit-del-block'>
+                  <a href='javascript:toUpdateAddress(data[i].id)' class="edit-del-btn">
+                    <img src='../../../static/images/weixin/address/edit-icon.png' class='edit-del-icon' style=''>
+                    <span>编辑</span>
+                  </a>&nbsp;&nbsp;
+                  <a href='javascript:toDeleteAddress(data[i].id)' class='edit-del-btn'>
+                    <img src='../../../static/images/weixin/address/del.png' class='edit-del-icon'> <span>删除</span>
+                  </a>
+                </div>
+              </div>
+
+
+
+              <div class='weui-cell' onclick='backToBalance(data[i].id);'>
+                <div class='weui-cell__bd address-content'>
+                  <p><span>联系人</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>13333333333</span></p>
+                  <p>河北省天津市农业区凯德拉斯黄金一</p>
+                </div>
+              </div>
+              <div class='weui-cell' style='height:30px;'>
+                <div class='weui-cell__bd'>
+                  <div class='weui-cells_checkbox'>
+                    <label class='weui-cell weui-check__label' for='wsxc' style="padding-left: 0;">	
+					                <div class='weui-cell__hd addressCheck'>
+					                    <input type='radio' class='weui-check' onchange='changeDefaultAddress(this);'
+					                     name='morenAddress' id='wsxc'>
+					                    <i class='weui-icon-checked'></i>
+					                </div>
+					                <div class='weui-cell__bd'>
+					                    <p>设为默认地址</p>
+					                </div>
+					            </label>
+                  </div>
+                </div>
+                <div class='edit-del-block'>
+                  <a href='javascript:toUpdateAddress(data[i].id)' class="edit-del-btn">
+                    <img src='../../../static/images/weixin/address/edit-icon.png' class='edit-del-icon' style=''>
+                    <span>编辑</span>
+                  </a>&nbsp;&nbsp;
+                  <a href='javascript:toDeleteAddress(data[i].id)' class='edit-del-btn'>
+                    <img src='../../../static/images/weixin/address/del.png' class='edit-del-icon'> <span>删除</span>
+                  </a>
+                </div>
+              </div>
+
+
+
+              <div class='weui-cell' onclick='backToBalance(data[i].id);'>
+                <div class='weui-cell__bd address-content'>
+                  <p><span>联系人</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>13333333333</span></p>
+                  <p>河北省天津市农业区凯德拉斯黄金一</p>
+                </div>
+              </div>
+              <div class='weui-cell' style='height:30px;'>
+                <div class='weui-cell__bd'>
+                  <div class='weui-cells_checkbox'>
+                    <label class='weui-cell weui-check__label' for='polki' style="padding-left: 0;">	
+					                <div class='weui-cell__hd addressCheck'>
+					                    <input type='radio' class='weui-check' onchange='changeDefaultAddress(this);'
+					                     name='morenAddress' id='polki'>
+					                    <i class='weui-icon-checked'></i>
+					                </div>
+					                <div class='weui-cell__bd'>
+					                    <p>设为默认地址</p>
+					                </div>
+					            </label>
+                  </div>
+                </div>
+                <div class='edit-del-block'>
+                  <a href='javascript:toUpdateAddress(data[i].id)' class="edit-del-btn">
+                    <img src='../../../static/images/weixin/address/edit-icon.png' class='edit-del-icon' style=''>
+                    <span>编辑</span>
+                  </a>&nbsp;&nbsp;
+                  <a href='javascript:toDeleteAddress(data[i].id)' class='edit-del-btn'>
+                    <img src='../../../static/images/weixin/address/del.png' class='edit-del-icon'> <span>删除</span>
+                  </a>
+                </div>
+              </div>
+
+
+
+              <div class='weui-cell' onclick='backToBalance(data[i].id);'>
+                <div class='weui-cell__bd address-content'>
+                  <p><span>联系人</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>13333333333</span></p>
+                  <p>河北省天津市农业区凯德拉斯黄金一</p>
+                </div>
+              </div>
+              <div class='weui-cell' style='height:30px;'>
+                <div class='weui-cell__bd'>
+                  <div class='weui-cells_checkbox'>
+                    <label class='weui-cell weui-check__label' for='data[i].id' style="padding-left: 0;">	
 					                <div class='weui-cell__hd addressCheck'>
 					                    <input type='radio' class='weui-check' onchange='changeDefaultAddress(this);'
 					                     name='morenAddress' id='data[i].id'>
 					                    <i class='weui-icon-checked'></i>
 					                </div>
 					                <div class='weui-cell__bd'>
-					                    <p>默认地址</p>
+					                    <p>设为默认地址</p>
 					                </div>
 					            </label>
+                  </div>
+                </div>
+                <div class='edit-del-block'>
+                  <a href='javascript:toUpdateAddress(data[i].id)' class="edit-del-btn">
+                    <img src='../../../static/images/weixin/address/edit-icon.png' class='edit-del-icon' style=''>
+                    <span>编辑</span>
+                  </a>&nbsp;&nbsp;
+                  <a href='javascript:toDeleteAddress(data[i].id)' class='edit-del-btn'>
+                    <img src='../../../static/images/weixin/address/del.png' class='edit-del-icon'> <span>删除</span>
+                  </a>
                 </div>
               </div>
-              <div class='weui-cell__ft'>
-                <a href='javascript:toUpdateAddress(data[i].id)' style='color:#999'>
-                  <img src='../../static/common/images/weixin/icon_edit.png' style='width:25px;'>编辑
-                </a>&nbsp;&nbsp;
-                <a href='javascript:toDeleteAddress(data[i].id)' style='color:#999'>
-                  <img src='../../static/common/images/weixin/icon_delet.png' style='width:25px;'>删除
-                </a>
+
+
+
+              <div class='weui-cell' onclick='backToBalance(data[i].id);'>
+                <div class='weui-cell__bd address-content'>
+                  <p><span>联系人</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>13333333333</span></p>
+                  <p>河北省天津市农业区凯德拉斯黄金一</p>
+                </div>
               </div>
+              <div class='weui-cell' style='height:30px;'>
+                <div class='weui-cell__bd'>
+                  <div class='weui-cells_checkbox'>
+                    <label class='weui-cell weui-check__label' for='a1' style="padding-left: 0;">	
+					                <div class='weui-cell__hd addressCheck'>
+					                    <input type='radio' class='weui-check' onchange='changeDefaultAddress(this);'
+					                     name='morenAddress' id='a1'>
+					                    <i class='weui-icon-checked'></i>
+					                </div>
+					                <div class='weui-cell__bd'>
+					                    <p>设为默认地址</p>
+					                </div>
+					            </label>
+                  </div>
+                </div>
+                <div class='edit-del-block'>
+                  <a href='javascript:toUpdateAddress(data[i].id)' class="edit-del-btn">
+                    <img src='../../../static/images/weixin/address/edit-icon.png' class='edit-del-icon' style=''>
+                    <span>编辑</span>
+                  </a>&nbsp;&nbsp;
+                  <a href='javascript:toDeleteAddress(data[i].id)' class='edit-del-btn'>
+                    <img src='../../../static/images/weixin/address/del.png' class='edit-del-icon'> <span>删除</span>
+                  </a>
+                </div>
+              </div>
+
+
+              <div class="page__bd col-md-12 bottom-block address-bottom-block" style="    z-index: 100000;background-color: #fff;position: fixed;">
+                <div class="hor-block" style="width: 25%;">
+                  <button type="button" class="btn btn-skip border-right">跳过</button>
+                </div>
+                <div class="hor-block" style="width: 75%;">
+                  <button type="button" class="btn big-confrim-btn" id="showIOSDialog2">确认并提交</button></div>
+              </div>
+
+
+
+
+
             </div>
+
           </div>
 
-        </div>
 
+        </div>
       </div>
-    </div>
   </body>
 
   <script type="text/javascript">
