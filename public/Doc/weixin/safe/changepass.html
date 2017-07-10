@@ -1,0 +1,83 @@
+<!-- 马少博  创建于 2017年7月4日15:47:53 -->
+<!DOCTYPE html>
+<html lang='en'>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title> 手机注册</title>
+    <link href='https://weui.io/weui.css' rel='stylesheet'>
+    <link href='../../../static/css/weixin.css' rel='stylesheet'>
+    <style>
+      .weui-dialog__ft:after {
+        border-top: none;
+      }
+      
+      .btn-icon {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background-image: url('../../../static/images/weixin/safe/next.png');
+        /*规定要使用的背景图像。*/
+        background-size: 100% 100%;
+        /*背景图片的尺寸*/
+      }
+      
+      #showIOSDialog2 {}
+    </style>
+  </head>
+
+  <body>
+    <div class="page ">
+      <div class="row">
+        <!-- 消除外边距 TODO 文字背景没有添加-->
+        <!--<div class="col-md-12 text-center" style="padding-bottom: 10px;border-bottom: 1px solid #ddd;margin:5px 10px;    position: relative;">
+          <span class="text-center">验证手机号</span>
+          <span class="btn btn-primary span-info" style="">转到邮箱验证</span>
+        </div>-->
+
+        <div class="top-orange">
+          <div class="top-inner">
+            ——&nbsp;
+            <img class="top-icon" src="../../../static/images/weixin/index/add.png" />
+            <span class="top-text">修改密码</span> &nbsp;——
+          </div>
+        </div>
+      </div>
+
+
+      <div class="page__bd">
+
+        <div class="text-center" style="margin:10px;border-top:none;border-bottom: 1px dashed  #ccc;padding-bottom: 20px;padding-top: 40px;">
+          <label for="" class="control-label">修改密码需要验证，请选择验证方式</label>
+        </div>
+        <div style="" class="text-center">
+          <button type="button" class="btn btn-confirm">邮箱验证</button>
+          <button type="button" class="btn btn-confirm">手机号验证</button>
+        </div>
+      </div>
+    </div>
+    <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>
+    <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+    <script src='../../../static/js/common.js'></script>
+    <script>
+      //   $(function() {
+      //     var $iosDialog2 = $('#iosDialog2');
+
+      //     $('#dialogs').on('click', '.weui-dialog__btn', function() {
+      //       $(this).parents('.js_dialog').fadeOut(200);
+      //     });
+
+      //     $('#showIOSDialog2').on('click', function() {
+      //       $iosDialog2.fadeIn(200);
+      //     });
+      //   });
+
+      function showAlert(wordStr) {
+
+      }
+    </script>
+  </body>
+
+</html>

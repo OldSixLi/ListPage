@@ -1,5 +1,7 @@
  body {
-     font-family: "MicrosoftYaHei"
+     font-family: "MicrosoftYaHei";
+     margin: 0;
+     padding: 0;
  }
  
  .img-responsive,
@@ -151,12 +153,50 @@
      padding: 5px 10px;
      box-sizing: border-box;
  }
+ 
+ .top-orange {
+     width: 90%;
+     height: 30px;
+     line-height: 30px;
+     border-bottom: 1px solid #aaa;
+     text-align: center;
+     color: #aaa;
+     font-size: 0.8em;
+     margin: auto;
+ }
+ /*蓝图标顶部小条*/
+ 
+ .top-blue {
+     width: 100%;
+     height: 30px;
+     line-height: 30px;
+     border-bottom: 1px solid #aaa;
+     text-align: center;
+     color: #aaa;
+     font-size: 0.8em;
+ }
+ 
+ .top-inner {
+     line-height: 30px;
+     width: auto;
+     height: auto;
+ }
+ 
+ .top-text {
+     color: black;
+ }
+ 
+ .top-icon {
+     height: 1.2em;
+     margin-right: 1px;
+     margin-bottom: -3px;
+ }
  /*span样式*/
  
  .span-info {
      position: absolute;
      top: 0;
-     right: 0;
+     right: 10px;
      background-color: #5281e3;
      padding: 3px 5px;
      color: #f2f2f2;

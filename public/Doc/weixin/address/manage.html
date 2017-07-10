@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>收货地址管理</title>
+    <script type="text/javascript" src="../../static/frames/jquery/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../../static/common/js/csfwpt.js"></script>
+    <link type="text/css" rel="stylesheet" href="../../static/css/weixin/weui.css" />
+    <link type="text/css" rel="stylesheet" href="../../static/css/weixin/weixin.css" />
+    <style type="text/css">
+      body {
+        color: #333;
+        padding-bottom: 70px;
+      }
+    </style>
+
+  </head>
+
+  <body ontouchstart="">
+    <div class="container" id="container">
+      <div class="page">
+
+        <div class="page__bd">
+
+          <div class="back-head">
+            <div class="back-head-left"></div>
+            地址管理
+          </div>
+
+          <div class="top-blue" style="margin-top:50px;">
+            <div class="top-inner">
+              ——&nbsp;
+              <img class="top-icon" src="../../../static/images/weixin/index/history.png" />
+              <span class="top-text">历史地址</span> &nbsp;——
+            </div>
+            <!--                 	<span style="float:right;">(最多可设置5处)</span> -->
+          </div>
+
+          <!--                 <div class="top-orange"> -->
+          <!--                 	<div class="top-inner"> -->
+          <!-- 	                	——&nbsp; -->
+          <!-- 	                	<img class="top-icon" src="../../../static/images/weixin/index/add.png"/> -->
+          <!-- 	                	<span class="top-text">新增地址</span> -->
+          <!-- 	                	&nbsp;—— -->
+          <!--                 	</div> -->
+          <!--                 </div> -->
+
+          <div class='weui-cells address-cells' style='font-size:14px;'>
+            <div class='weui-cell' onclick='backToBalance(data[i].id);'>
+              <div class='weui-cell__bd'>
+                <p><span>联系人</span>&nbsp;&nbsp;&nbsp;&nbsp;<span>13333333333</span></p>
+                <p>地址地址地址地址地址地址地址地址址地址地址地址地址地址</p>
+              </div>
+            </div>
+            <div class='weui-cell' style='height:30px;'>
+              <div class='weui-cell__bd'>
+                <div class='weui-cells_checkbox'>
+                  <label class='weui-cell weui-check__label' for='data[i].id'>	
+					                <div class='weui-cell__hd addressCheck'>
+					                    <input type='radio' class='weui-check' onchange='changeDefaultAddress(this);'
+					                     name='morenAddress' id='data[i].id'>
+					                    <i class='weui-icon-checked'></i>
+					                </div>
+					                <div class='weui-cell__bd'>
+					                    <p>默认地址</p>
+					                </div>
+					            </label>
+                </div>
+              </div>
+              <div class='weui-cell__ft'>
+                <a href='javascript:toUpdateAddress(data[i].id)' style='color:#999'>
+                  <img src='../../static/common/images/weixin/icon_edit.png' style='width:25px;'>编辑
+                </a>&nbsp;&nbsp;
+                <a href='javascript:toDeleteAddress(data[i].id)' style='color:#999'>
+                  <img src='../../static/common/images/weixin/icon_delet.png' style='width:25px;'>删除
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </body>
+
+  <script type="text/javascript">
+  </script>
+
+</html>
