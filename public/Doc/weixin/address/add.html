@@ -1,0 +1,137 @@
+<!-- 马少博  创建于 2017年7月4日15:47:53 -->
+<!DOCTYPE html>
+<html lang='en'>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title> 添加收货地址</title>
+    <link href='../../../static/css/weui.css' rel='stylesheet'>
+    <link href='../../../static/css/weixin.css' rel='stylesheet'>
+    <style>
+      .weui-dialog__ft:after {
+        border-top: none;
+      }
+      
+      .btn-icon {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background-image: url('../../../static/images/weixin/safe/next.png');
+        /*规定要使用的背景图像。*/
+        background-size: 100% 100%;
+        /*背景图片的尺寸*/
+      }
+      
+      .addressDetail select {
+        color: #7d7d7d;
+      }
+      
+      #showIOSDialog2 {}
+    </style>
+  </head>
+
+  <body>
+    <div class="page ">
+      <div class="row">
+        <!-- 消除外边距 TODO 文字背景没有添加-->
+        <!--<div class="col-md-12 text-center" style="padding-bottom: 10px;border-bottom: 1px solid #ddd;margin:5px 10px;    position: relative;">
+          <span class="text-center">验证邮箱</span>
+          <span class="btn btn-primary span-info" style="">转到手机验证</span>
+        </div>-->
+        <div class="top-orange">
+          <div class="top-inner">
+            ——&nbsp;
+            <img class="top-icon" src="../../../static/images/weixin/index/add.png" />
+            <span class="top-text">新增地址</span> &nbsp;——
+          </div>
+          <!--<span class="btn btn-primary span-info" style="">转到手机验证</span>-->
+
+        </div>
+      </div>
+
+      <div class="page__bd">
+        <!--单项输入框-->
+        <div class="" style="margin:10px;">
+          <div class="inputBlock input-right" style="">
+            <button type="button" class="btn-span">真实姓名</button>
+            <input type="text" placeholder="请输入您的姓名">
+          </div>
+          <div class="inputBlock input-right" style="">
+            <button type="button" class="btn-span">联系方式</button>
+            <input type="text" placeholder="请输入您的手机号">
+          </div>
+          <div class="inputBlock input-right" style="">
+            <button type="button" class="btn-span">收货地址</button>
+            <input type="text" placeholder="">
+          </div>
+        </div>
+        <!--详细地址选择部分-->
+        <div class="weui-cells addressDetail" style="border:1px solid #999;margin:10px;border-radius: 5px;font-size: 14px;color: #555;">
+          <div class="weui-cell weui-cell_select weui-cell_select-after" style="padding-left: 30px;">
+            <div class="weui-cell__hd">
+              <label for="" class="weui-label">请选择省</label>
+            </div>
+            <div class="weui-cell__bd">
+              <select class="weui-select" name="select2" style="direction: rtl;">
+                        <option value="1">中国</option>
+                        <option value="2">美国</option>
+                        <option value="3">英国</option>
+                    </select>
+            </div>
+          </div>
+          <div class="weui-cell weui-cell_select weui-cell_select-after" style="padding-left: 30px;">
+            <div class="weui-cell__hd">
+              <label for="" class="weui-label">请选择市</label>
+            </div>
+            <div class="weui-cell__bd">
+              <select class="weui-select" name="select2" style="direction: rtl;">
+                        <option value="1">中国</option>
+                        <option value="2">美国</option>
+                        <option value="3">英国</option>
+                    </select>
+            </div>
+          </div>
+          <div class="weui-cell weui-cell_select weui-cell_select-after" style="padding-left: 30px;">
+            <div class="weui-cell__hd">
+              <label for="" class="weui-label">请选择区</label>
+            </div>
+            <div class="weui-cell__bd">
+              <select class="weui-select" name="select2" style="direction: rtl;">
+                        <option value="1">中国</option>
+                        <option value="2">美国</option>
+                        <option value="3">英国</option>
+                    </select>
+            </div>
+          </div>
+
+          <!--详细地址-->
+          <div class="weui-cell" style="padding-left: 30px;">
+            <div class="weui-cell__hd"><label class="weui-label">详细地址</label></div>
+            <div class="weui-cell__bd">
+              <input class="weui-input" type="text" placeholder="请输入详细地址" style="direction: rtl;">
+            </div>
+          </div>
+        </div>
+        <!--底部按钮-->
+        <div class="page__bd col-md-12 bottom-block">
+          <div class="hor-block" style="width: 25%;">
+            <button type="button" class="btn btn-skip border-right">跳过</button>
+          </div>
+          <div class="hor-block" style="width: 75%;">
+            <button type="button" class="btn big-confrim-btn" id="showIOSDialog2">确认并提交</button></div>
+        </div>
+      </div>
+    </div>
+    <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>
+    <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+    <script src='../../../static/js/common.js'></script>
+    <script>
+      $(document).ready(function() {
+
+      });
+    </script>
+  </body>
+
+</html>

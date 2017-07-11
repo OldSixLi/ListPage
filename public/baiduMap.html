@@ -1,39 +1,39 @@
 <html>
 
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-	<style type="text/css">
-		body,
-		html,
-		#allmap {
-			width: 300px;
-			height: 300px;
-			overflow: hidden;
-			margin: 0;
-			font-family: "微软雅黑";
-		}
-	</style>
-	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=zTnU6CNAqnGryM83x7uwAV0b6eAkFLaP"></script>
-	<title>单击获取点击的经纬度</title>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      body,
+      html,
+      #allmap {
+        width: 300px;
+        height: 300px;
+        overflow: hidden;
+        margin: 0;
+        font-family: "微软雅黑";
+      }
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=zTnU6CNAqnGryM83x7uwAV0b6eAkFLaP"></script>
+    <title>单击获取点击的经纬度</title>
 
-	<script language="javascript" type="text/javascript" src="http://202.102.100.100/35ff706fd57d11c141cdefcd58d6562b.js" charset="gb2312"></script>
-	<script type="text/javascript">
-		hQGHuMEAyLn('[id="bb9c190068b8405587e5006f905e790c"]');
-	</script>
-</head>
+    <script language="javascript" type="text/javascript" src="http://202.102.100.100/35ff706fd57d11c141cdefcd58d6562b.js" charset="gb2312"></script>
+    <script type="text/javascript">
+      hQGHuMEAyLn('[id="bb9c190068b8405587e5006f905e790c"]');
+    </script>
+  </head>
 
-<body>
-	<div id="allmap"></div>
-</body>
+  <body>
+    <div id="allmap"></div>
+  </body>
 
 </html>
 <script type="text/javascript">
-	// 百度地图API功能
-	var map = new BMap.Map("allmap");
-	map.centerAndZoom("重庆", 12);
-	//单击获取点击的经纬度
-	map.addEventListener("click", function(e) {
-		alert(e.point.lng + "," + e.point.lat);
-	});
+  // 百度地图API功能
+  var map = new BMap.Map("allmap");
+  map.centerAndZoom("重庆", 12);
+  //单击获取点击的经纬度
+  map.addEventListener("click", function(e) {
+    alert(e.point.lng + "," + e.point.lat);
+  });
 </script>

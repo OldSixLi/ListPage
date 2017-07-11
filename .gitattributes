@@ -1,4 +1,4 @@
-Vue.directive('${1:name}', {
+Vue.directive('${1:name1}', {
  bind: function (el) {
   console.log('bind')
  },
