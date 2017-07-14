@@ -31,6 +31,8 @@ function showConfirm(wordStr, confirmCallback, cancelCallback, confrimStr, cance
   wordStr = wordStr || "提示！";
   cancelStr = cancelStr || "关闭";
   confrimStr = confrimStr || "确认";
+  confirmCallback = confirmCallback ? confirmCallback : function() {};
+  cancelCallback = cancelCallback ? cancelCallback : function() {};
   var str = '<div id="ConfirmDialogs">' +
     '          <div class="js_dialog" id="iosDialog2" style="display: block;">' +
     '            <div class="weui-mask"></div>' +
@@ -73,12 +75,14 @@ function showConfirm(wordStr, confirmCallback, cancelCallback, confrimStr, cance
  * @param {any} confrimStr 确认按钮文字
  */
 function showAlert(wordStr, confirmCallback, confrimStr) {
+  wordStr = wordStr || "提示！";
   confrimStr = confrimStr || "确定";
+  confirmCallback = confirmCallback ? confirmCallback : function() {};
   var str = ' <div id="AlertDialogs">' +
     '          <div class="js_dialog" id="iosDialog2" style="display: block;">' +
     '            <div class="weui-mask"></div>' +
     '            <div class="weui-dialog">' +
-    '              <div class="weui-dialog__bd" style="font-size: 18px;color: #333;">恭喜您，绑定成功！</div>' +
+    '              <div class="weui-dialog__bd" style="font-size: 18px;color: #333;">' + wordStr + '</div>' +
     '              <div class="weui-dialog__ft" style="padding: 10px;">' +
     '                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary btn big-confrim-btn" style="padding:5px;line-height: 150%;">' + confrimStr + '</a>' +
     '              </div>' +
