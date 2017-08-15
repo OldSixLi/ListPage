@@ -1,0 +1,258 @@
+<!-- 马少博  创建于 2017年8月7日13:47:00 -->
+<!DOCTYPE html>
+<html lang='en'>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/public/images/my.ico' />
+    <title> 标题</title>
+    <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>
+    <link href="../../Style/select2.min.css" rel="stylesheet" type="text/css">
+    <style>
+      body {
+        font-family: "MicroSoft YaHei";
+      }
+      /*修改select2控件默认样式*/
+      
+      .select2-container--default .select2-selection--multiple {
+        border: 1px solid #ccc;
+      }
+      
+      .select2-container--default .select2-selection--single {
+        border: 1px solid #ccc;
+      }
+      
+      .select2-container--default.select2-container--focus .select2-selection--multiple {
+        border-color: #66afe9;
+        outline: 0;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+      }
+      
+      .select2-container--default.select2-container--focus .select2-selection--single {
+        border-color: #66afe9;
+        outline: 0;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+      }
+      
+      #preview {
+        background-color: #fdfcfc;
+      }
+      
+      #preview img {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+      }
+      
+      textarea {
+        resize: none;
+      }
+      
+      .alert {
+        margin-right: 10px;
+        padding: 3px;
+        padding-right: 20px;
+        margin-top: 15px;
+        margin-bottom: 0;
+      }
+      
+      #keywordBlock {
+        word-wrap: break-word;
+        word-break: break-all;
+      }
+      
+      .title-keyword {
+        padding: 3px;
+        background-color: #d9edf7;
+      }
+      
+      .alert-dismissible {
+        position: relative;
+        display: inline-block;
+      }
+      
+      .alert-dismissible .close {
+        position: absolute;
+        right: 1px;
+        top: 1px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div style="width:300px;float:left;">
+      <a href="#">文章详情</a><br>
+      <a href="manage.html">文章列表</a><br>
+      <a href="searchManage.html">搜索列表</a><br>
+      <a href="detail.html">文章详情</a>
+    </div>
+
+    <div class="container-fluid" style="margin-left:350px;margin-bottom:100px;" id="ArticleContent">
+      <h1 class="text-center">录入文章</h1>
+      <!-- 标题： -->
+      <div class="form-group">
+        <label for="">标题：</label>
+        <input type="text" id="title" class="form-control" v-model="title" placeholder="请输入知识点标题">
+      </div>
+      <!-- 关键字： -->
+      <div class="form-group">
+        <label for="">关键字：</label>
+        <div class="row">
+          <!-- 消除外边距 -->
+          <div class="col-md-10"><input type="text" class="form-control" placeholder="请输入关键字进行保存" v-model="newKeyword"></div>
+          <div class="col-md-2"><button type="button" class="btn btn-primary btn-block" id="addKeyWord" @click="addKeyWords()">
+            <span class="glyphicon glyphicon-plus"></span>  &nbsp;添加关键字</button></div>
+          <!-- 关键字模块 -->
+          <div class="col-md-12" id="keyWordsBlock">
+            <div class="alert alert-info alert-dismissible" role="alert" v-for="x in keyWords">
+              <button type="button" class="close" @click="deleteKeyWord(x.id)"><span aria-hidden="true">×</span></button>
+              <span class="title-keyword">{{x.word}}</span></div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- 知识点权限： -->
+      <div class="form-group">
+        <label for=""> 知识点权限：</label>
+        <input type="radio" name="role" value="Y" v-model="isOpen">公开&nbsp;&nbsp;
+        <input type="radio" name="role" value="N" v-model="isOpen">公司内部&nbsp;&nbsp;
+        <input type="input" name="" id="departmentIds" class="form-control" v-show="isOpen=='N'" readonly="true" placeholder="请选择有权查看此文章的部门">
+      </div>
+      <!-- 内容区域 -->
+      <div class="row">
+        <!-- markdown输入框 -->
+        <div class="col-md-6" id="textareaBlock">
+          <!-- 文章摘要 -->
+          <div class="form-group">
+            <label>文章摘要：</label>
+            <textarea id="text-abstract" class="form-control" style="height:200px" v-model="abstract" placeholder="请在此输入文章摘要"></textarea>
+          </div>
+          <!-- 文章内容 -->
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-12"><label>文章内容：</label>
+                <button type="button" class="btn btn-primary btn-sm pull-right" style="margin-top: -10px;" @click="addImg">
+                    <span class="glyphicon glyphicon-picture" ></span>&nbsp;上传图片</button></div>
+            </div>
+            <textarea id="text-content" class="form-control" cols="60" placeholder="请在此输入文章内容" style="height:500px;" v-model="content"></textarea>
+          </div>
+          <!-- 参考文献 -->
+          <div class="form-group">
+            <label>参考文献：</label>
+            <textarea id="text-from" class="form-control" style="height:200px" v-model="from" placeholder="请在此输入参考文献"></textarea>
+          </div>
+        </div>
+        <!-- 效果框 -->
+        <div class="col-md-6">
+          <label>文章预览</label>
+          <div id="preview" class="well" style="overflow-y: scroll;" v-html="previewHtml"> </div>
+        </div>
+      </div>
+      <!-- 提交审核 -->
+      <div class="form-group">
+        <label for=""> 提交审核：</label>
+        <input type="radio" name="isToCheck" value="N" v-model="isToCheck">否&nbsp;&nbsp;
+        <input type="radio" name="isToCheck" value="Y" v-model="isToCheck">是&nbsp;&nbsp;
+        <div class="row" v-show="isToCheck=='Y'">
+          <!--  -->
+          <div class="col-md-12">
+            <select id="select" multiple="multiple" class="form-control" style="width:100%;">
+              <option value="1">花粥</option><option value="2">陈粒</option><option value="3">王建芳</option>
+        </select>
+          </div>
+        </div>
+      </div>
+      <!-- 按钮区域 -->
+      <div class="form-group text-right">
+        <button type="button" class="btn btn-primary" style="width:10%;margin-left:20px;" @click="saveArticle()">
+          <span class="glyphicon glyphicon-saved"></span>&nbsp;&nbsp;保存</button>
+        <button type="button" class="btn btn-default" style="width:10%;margin-left:20px;">
+          <span class="glyphicon glyphicon-share-alt"></span>&nbsp;&nbsp;取消</button>
+
+      </div>
+    </div>
+
+
+    <!-- 脚本 -->
+    <!-- <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script> -->
+    <script src='https://cdn.bootcss.com/vue/2.3.3/vue.js'></script>
+    <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>
+    <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+    <script src="../../Script/markdown.min.js"></script>
+    <script src="../../Script/select2.js"></script>
+    <script src="articleAdd.js"></script>
+
+  </body>
+
+</html>
+
+
+
+<!-- 示例 -->
+
+<!-- #代码的基础代码与使用
+1.  Bird
+1.  McHale
+1.  Parish  
+
+*老六*
+
+#老六
+##李老六
+###李老六
+大声道是的撒大大萨达按时
+
+
+
+![Alt text](F:\PersonCodes\NodeAngular项目\public\images\zhihu_Down\21904576\19702978--4--f63c6db_r.jpg  "我是图片的标题")
+![Alt text](https://pic2.zhimg.com/v2-14a0c6d398177564e1a7d3ebc0c015d5_r.png  "我是图片的标题")
+
+    <style>
+      body {
+        font-family: "MicroSoft YaHei";
+      }
+    </style>
+
+
+
+    <div class="container-fluid">
+      <h1 class="text-center">录入文章</h1>
+      <div class="row"> 
+        <div class="col-md-6">
+          <textarea id="text-input" class="form-control" oninput="this.editor.update()" cols="60" placeholder="请介绍自己..." style="min-height: 600px;"></textarea></div>
+        <div class="col-md-6">
+          <div id="preview" class="panel panel-default" style="min-height: 600px;"></div>
+        </div>
+      </div>
+    </div>
+
+
+```
+let 你好 = "swift你好，我叫唐衣可俊"
+println(你好)
+```
+>引用状态
+[空行]
+###标题状态
+[空行]
+------
+[空行]
+- 列表状态
+- 列表状态
+
+    mounted: function() {
+     var self = this;
+     var _this = this;
+     _this.$slots.default.forEach(function(child) {
+       var obj = {};
+       for (var p in child.componentOptions.propsData) {
+         obj[p] = child.componentOptions.propsData[p]
+       }
+       _this.rule.push(obj);
+      }
+    )} -->

@@ -1,3 +1,4 @@
+
  var params = " "; //全局变量
  var app = angular.module('myApp', []);
  app.controller('customersCtrl', function($scope, $http) {
