@@ -8,6 +8,45 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title> 标题</title>
     <link href='./../../Style/bootstrap.css' rel='stylesheet'>
+    <style>
+      .click-title {
+        margin-top: 0;
+        margin-bottom: 0;
+        font-size: 16px;
+        color: inherit;
+      }
+      
+      .img-body-block {
+        padding: 15px 0;
+      }
+      
+      .img-single-block {
+        padding-left: 7px;
+        padding-right: 7px;
+        height: 80px;
+        margin-bottom: 10px;
+      }
+      
+      .img-single-block img {
+        height: 100%;
+        width: 100%;
+        display: inline-block;
+        max-width: 100%;
+        padding: 4px;
+        line-height: 1.42857143;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        -webkit-transition: all .2s ease-in-out;
+        -o-transition: all .2s ease-in-out;
+        transition: all .2s ease-in-out;
+        
+      }
+      
+      body {
+        font-family: "MicroSoft YaHei";
+      }
+    </style>
   </head>
 
   <body>
@@ -33,40 +72,69 @@
               <!--列表展示-->
               <div class="col-md-8" style="min-height: 500px;overflow-y: scroll">
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                  <!-- ****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************** -->
 
-
-                  <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="title20171018">
-                      <h4 class="panel-title">
-                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#date20171018" aria-expanded="true" aria-controls="date20171018">
-                              2017-10-18
-                            </a>
-                      </h4>
+                  <div class="panel panel-default" data-date="2017-10-18">
+                    <div class="panel-heading" role="tab" id="title-2017-10-18">
+                      <a role="button" class="click-title" data-toggle="collapse" data-parent="#accordion" href="#date-2017-10-18" aria-expanded="true" aria-controls="date-2017-10-18">
+                        2017-10-18
+                      </a>
                     </div>
-                    <div id="date20171018" class="panel-collapse collapse" role="tabpanel" aria-labelledby="title20171018">
-                      <div class="panel-body">
-                        <div class="row">
-                          <div class="col-md-2"><img src="./../../images/keai.jpg" alt="" srcset="" class="img-thumbnail"></div>
-                          <div class="col-md-2"><img src="./../../images/keai.jpg" alt="" srcset="" class="img-thumbnail"></div>
-                          <div class="col-md-2"><img src="./../../images/keai.jpg" alt="" srcset="" class="img-thumbnail"></div>
-                          <div class="col-md-2"><img src="./../../images/keai.jpg" alt="" srcset="" class="img-thumbnail"></div>
-                          <div class="col-md-2"><img src="./../../images/keai.jpg" alt="" srcset="" class="img-thumbnail"></div>
-                          <div class="col-md-2"><img src="./../../images/keai.jpg" alt="" srcset="" class="img-thumbnail"></div>
-                        </div>
+                    <div id="date-2017-10-18" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="title-2017-10-18">
+                      <div class="panel-body img-body-block">
+                          <div class="col-md-2 img-single-block">
+                            <img src="./../../images/23.jpg" alt="121212">
+                          </div>
+                              <div class="col-md-2 img-single-block">
+                              <img src="./../../images/23.jpg" alt="121212">
+                              </div>
+                              <div class="col-md-2 img-single-block">
+                              <img src="./../../images/23.jpg" alt="121212">
+                              </div>
+                              <div class="col-md-2 img-single-block">
+                              <img src="./../../images/23.jpg" alt="121212">
+                              </div>
+                              <div class="col-md-2 img-single-block">
+                                <img src="./../../images/23.jpg" alt="121212">
+                              </div>                          <div class="col-md-2 img-single-block">
+                                  <img src="./../../images/23.jpg" alt="121212">
+                                  </div>
+                                  <div class="col-md-2 img-single-block">
+                                  <img src="./../../images/23.jpg" alt="121212">
+                                  </div>
+                                  <div class="col-md-2 img-single-block">
+                                  <img src="./../../images/23.jpg" alt="121212">
+                                  </div>
+                                  <div class="col-md-2 img-single-block">
+                                  <img src="./../../images/23.jpg" alt="121212">
+                                  </div>
+                                  <div class="col-md-2 img-single-block">
+                                  <img src="./../../images/23.jpg" alt="121212">
+                                  </div>
                       </div>
                     </div>
-                  </div> 
+                  </div>
+
+
+
                 </div>
               </div>
               <!-- 图片详情 -->
               <div class="col-md-4">
                 <h3 class="text-center">图片详情</h3>
-                <img src='./../../images/1.jpg' class='img-responsive img-thumbnail' alt='自定义' id="preview">
+
+
+                <div style="margin-top:10px;">
+                  <label style="display: block; line-height: 24px;" for="rcDescript">图像描述：</label>
+                  <div id="descript" class="textbox" style="overflow: auto;height: 200px;border:1px solid #ddd;border-radius:5px;"></div>
+                  <input id="id" type="hidden" name="id">
+                </div>
+                <!-- <img src='./../../images/1.jpg' class='img-responsive img-thumbnail' alt='自定义' id="preview"> -->
                 <p class="info">
-                  <b>图片信息:</b>
+                  <b>图片信息：</b>
                 </p>
                 <p class="remark">
-                  <b>　　备注:</b>
+                  <b>　　备注：</b>
                   <!-- <input type="text" name="" id="" class="form-control"> -->
                 </p>
                 <div class="row">
@@ -98,9 +166,25 @@
                 </div>
               </div>
               <div class="col-md-4">
-                <button type="button" class="btn btn-primary btn-block">
+                <!-- <button type="button" class="btn btn-primary btn-block">
                   <span class="glyphicon glyphicon-plus"></span>
-                  上传图片</button>
+                  上传图片</button> -->
+
+
+                <form id="uploadFileForm" style="display: block; width: 100%; margin: 0 auto; position: relative; overflow: hidden;" enctype="multipart/form-data" method="post">
+                  <div style="">
+                    <!-- <label style="display: block; line-height: 24px;" for="file">上传图像：</label> -->
+                    <div id="fileBlock" style=" position: relative; overflow: hidden;">
+                      <div></div>
+                      <a id="addBtn" class="easyui-linkbutton l-btn l-btn-small glyphicon glyphicon-plus btn btn-primary btn-block" style="" data-options="iconCls:'icon-add'" href="#" group=""> <span class="l-btn-left l-btn-icon-left" style="margin-top: 0;">
+                          <span class="l-btn-text" style="font-size:14px;">请选择图像文件</span>
+                        <span class="l-btn-icon icon-add"> </span> </span>
+                      </a> <input type="file" id="upfile" name="upfile" onchange="tool.getUploadResult(this,'${validate}','${saveInfo}','${floor }','${watermark}');" style="position: absolute; top: 0; right: 0; height: 999px; width: 999px; z-index: 990;" accept="image/gif,image/jpeg,image/png,image/jpg,image/bmp">
+                    </div>
+                  </div>
+
+                </form>
+
               </div>
             </div>
           </div>
@@ -121,6 +205,74 @@
         backdrop: false, //隐藏背景
         keyboard: false
       });
+      $(document).ready(function() {
+        var arrays = getAll('2016-01-27', '2017-10-02');
+        collapseDom(arrays);
+        $('#accordion').on('hidde.bs.collapse', function(e) {
+          $(e.target).empty();
+        });
+        $('#accordion').on('show.bs.collapse', function(e) {
+          console.log("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓展开↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓");
+          console.log(e);
+          alert($(e.target).attr('data-date'));
+          //进行ajax操作
+
+        });
+      });
+      //  ************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
+      function collapseDom(arr) {
+        var htmlStr = '';
+        for (var index = 0; index < arr.length; index++) {
+          var element = arr[index];
+          var singleDomStr =
+            '<div class="panel panel-default" data-date="' + element + '">' +
+            '  <!-- 头 -->' +
+            '  <div class="panel-heading" role="tab" id="title-' + element + '">' +
+            '    <a role="button" class="click-title" data-toggle="collapse" data-parent="#accordion" href="#date-' + element + '" aria-expanded="true" aria-controls="date-' + element + '">' +
+            element +
+            '    </a>' +
+            '  </div>' +
+            '  <!-- 身体 -->' +
+            '  <div id="date-' + element + '" class="panel-collapse collapse" role="tabpanel" aria-labelledby="title-' + element + '" data-date="' + element + '">' +
+            '    <div class="panel-body img-body-block"> <h4 class="text-center">暂无结果</h4> </div>' +
+            '  </div>' +
+            '</div>';
+          htmlStr += singleDomStr;
+        }
+        $("#accordion").append(htmlStr);
+      }
+
+      /**
+       * 循环获取日期(倒序)
+       * @returns
+       */
+      Date.prototype.format = function() {
+        var s = '';
+        var mouth = (this.getMonth() + 1) >= 10 ? (this.getMonth() + 1) : ('0' + (this.getMonth() + 1));
+        var day = this.getDate() >= 10 ? this.getDate() : ('0' + this.getDate());
+        s += this.getFullYear() + '-'; // 获取年份。  
+        s += mouth + "-"; // 获取月份。  
+        s += day; // 获取日。  
+        return (s); // 返回日期。  
+      };
+
+      function getAll(begin, end) {
+        var arr = [];
+        var ab = begin.split("-");
+        var ae = end.split("-");
+        var db = new Date();
+        db.setUTCFullYear(ab[0], ab[1] - 1, ab[2]);
+        var de = new Date();
+        de.setUTCFullYear(ae[0], ae[1] - 1, ae[2]);
+        var unixDb = db.getTime();
+        var unixDe = de.getTime();
+        for (var k = unixDe; k >= unixDb;) {
+          // console.log((new Date(parseInt(k))).format());
+          arr.push((new Date(parseInt(k))).format());
+          k = k - 24 * 60 * 60 * 1000;
+        }
+        return arr;
+      }
     </script>
   </body>
 
