@@ -1,0 +1,61 @@
+<!-- 马少博  创建于 2017年9月21日09:54:06 -->
+<!DOCTYPE html>
+<html lang='en'>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/public/images/my.ico' />
+    <title> 标题</title>
+    <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='https://cdn.rawgit.com/select2/select2/c4544077/dist/css/select2.min.css' rel='stylesheet'>
+
+  </head>
+
+  <body>
+    <div class="row">
+      <!-- 消除外边距 -->
+      <h1>你们的人们</h1>
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <select class="form-control" id="selectWords">
+            <option  value="1">orange</option>
+            <option  value="2">white</option>
+            <option  value="3">purple</option>
+          </select>
+        </div>
+
+        <div class="col-md-2">
+
+          <button type="button" class="btn btn-primary" id="add">添加</button>
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>
+    <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+    <script src='https://cdn.rawgit.com/select2/select2/c4544077/dist/js/select2.min.js'></script>
+    <script>
+      $(document).ready(function() {
+        var $select = $("#selectWords").select2({
+          tags: true
+        });
+
+
+        $("#add").click(function() {
+          alert($("#selectWords").val());
+        });
+
+        $select.on("select2:select", function(e) {
+          //   console.log("select2:select", e);
+
+        });
+      });
+    </script>
+  </body>
+
+</html>

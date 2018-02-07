@@ -1,0 +1,280 @@
+<!-- mashaobo  创建于 2017年11月29日15:51:15 -->
+<!DOCTYPE html>
+<html lang='en'>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title> 标题</title>
+    <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>
+    <style>
+      td {
+        word-break: keep-all;
+        word-wrap: normal;
+        box-sizing: border-box;
+      }
+      
+      #tableDiv {
+        width: 100%;
+        height: auto;
+        position: relative;
+        overflow-x: auto;
+        overflow-y: hidden;
+        margin: 0 auto;
+      }
+      
+      #outerDiv {
+        width: 100%;
+        position: relative;
+        margin: 0 auto;
+        overflow: hidden;
+      }
+      
+      .column-fixed-block {
+        height: auto;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background-color: #fff;
+        overflow-x: hidden;
+        border-right: 1px solid #ddd;
+        z-index: 10;
+      }
+      
+      .block-shadow {
+        box-shadow: 0 0 10px rgba(0, 0, 0, .12);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 使用:在固定列的表头添加  class="column-fixed" 样式类,表格数据填充完毕后,调用changeToFixTable() 方法-->
+    <!-- 说明:具体项目中应用时,table宽度必须设定,固定列必须前置且连续。outerDiv与tableDiv的width应保持相同-->
+    <div id="outerDiv">
+      <div id="tableDiv">
+        <table style="width:5200px;margin-bottom:0;" class="table table-bordered">
+          <tr>
+            <td class="column-fixed">神州浩天</span>
+            </td>
+            <td class="column-fixed">浩天1号</span>
+            </td>
+            <td class="column-fixed">浩天2号</span>
+            </td>
+            <td>浩天3号</span>
+            </td>
+            <td>浩天4号</span>
+            </td>
+            <td>浩天5号</span>
+            </td>
+            <td>浩天6号</span>
+            </td>
+            <td>浩天7号</span>
+            </td>
+            <td>浩天8号</span>
+            </td>
+            <td>浩天9号</span>
+            </td>
+            <td>浩天10号</span>
+            </td>
+            <td>浩天11号</span>
+            </td>
+          </tr>
+          <tr>
+            <td><span>周一</span></td>
+            <td><span>45</span></td>
+            <td><span>56%</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周二</span></td>
+            <td><span>36</span></td>
+            <td><span>78%</span></td>
+            <td><span>216</span></td>
+            <td><span>97</span></td>
+            <td><span>12</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周三</span></td>
+            <td><span>37</span></td>
+            <td><span>91%</span></td>
+            <td><span>404</span></td>
+            <td><span>17</span></td>
+            <td><span>34</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周四</span></td>
+            <td><span>37</span></td>
+            <td><span>91%</span></td>
+            <td><span>404</span></td>
+            <td><span>17</span></td>
+            <td><span>34</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周五</span></td>
+            <td><span>37</span></td>
+            <td><span>91%</span></td>
+            <td><span>404</span></td>
+            <td><span>17</span></td>
+            <td><span>34</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周六</span></td>
+            <td><span>37</span></td>
+            <td><span>91%</span></td>
+            <td><span>404</span></td>
+            <td><span>17</span></td>
+            <td><span>34</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周日</span></td>
+            <td><span>37</span></td>
+            <td><span>91%</span></td>
+            <td><span>404</span></td>
+            <td><span>17</span></td>
+            <td><span>34</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周四</span></td>
+            <td><span>37</span></td>
+            <td><span>91%</span></td>
+            <td><span>404</span></td>
+            <td><span>17</span></td>
+            <td><span>34</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周五</span></td>
+            <td><span>37</span></td>
+            <td><span>91%</span></td>
+            <td><span>404</span></td>
+            <td><span>17</span></td>
+            <td><span>34</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周六</span></td>
+            <td><span>37</span></td>
+            <td><span>91%</span></td>
+            <td><span>404</span></td>
+            <td><span>17</span></td>
+            <td><span>34</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周日</span></td>
+            <td><span>37</span></td>
+            <td><span>91%</span></td>
+            <td><span>404</span></td>
+            <td><span>17</span></td>
+            <td><span>34</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div id="newDiv"></div>
+    <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>
+    <script>
+      $(document).ready(function() {
+        //如果是AJAX方式获取内容,数据填充完毕后调用此方法
+        changeToFixTable();
+      });
+
+      function changeToFixTable() {
+        var trs = $("#tableDiv table tr");
+        var arr = [];
+        var totalWidth = 0;
+        trs.each(function(i) {
+          var _self = $(this);
+          $(this).find('.column-fixed').each(function() {
+            ($.inArray($(this).index(), arr) < 0) || arr.push($(this).index());
+          });
+          _self.find('td.column-fixed').each(function() {
+            totalWidth += $(this).outerWidth();
+          });
+        });
+        $("#outerDiv .column-fixed-block").length == 0 && $("<div class='column-fixed-block'></div>").prependTo($("#outerDiv")); //悬浮DIV
+        var $div = $("#outerDiv .column-fixed-block");
+        var $newtable = $("#tableDiv").find('table').clone(); //复制表格
+        //设置宽度
+        $div.html($newtable).css('width', (totalWidth + 1) + 'px');
+        var trim_Version = navigator.appVersion.split(";")[1].replace(/[ ]/g, "");
+        if (navigator.appName == "Microsoft Internet Explorer" && trim_Version == "MSIE7.0") {
+          $("#tableDiv").css('padding-bottom', '17px');
+          $(".column-fixed-block").css('border-right', 'none');
+        } else {
+          $("#tableDiv").scroll(function() {
+            var left = $("#tableDiv").scrollLeft();
+            $("#outerDiv").find('.column-fixed-block').addClass(left != 0 ? 'block-shadow' : '').removeClass(left == 0 ? 'block-shadow' : '');
+          })
+        }
+      }
+    </script>
+  </body>
+
+</html>

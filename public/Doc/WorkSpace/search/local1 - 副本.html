@@ -1,0 +1,327 @@
+<!-- 马少博  创建于 2017年11月29日11:51:15 -->
+<!DOCTYPE html>
+<html lang='en'>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/public/images/my.ico' />
+    <title> 标题</title>
+    <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>
+    <style>
+      td {
+        /* box-sizing: border-box; */
+      }
+      
+      td {
+        padding: 1px;
+      }
+      
+      #vueBlock {
+        overflow-x: scroll;
+      }
+      
+      #tableDiv {
+        position: relative;
+        width: 500px;
+        overflow-x: auto;
+        /* border: 1px solid #ddd; */
+        margin: 0 auto;
+        height: auto;
+        padding-bottom: 15px;
+      }
+      
+      #outerDiv {
+        position: relative;
+        width: 500px;
+        margin: 0 auto;
+        /* border: 1px solid #ddd; */
+      }
+      
+      .high-color {
+        background-color: #ddd;
+        padding: 0;
+        /* padding: 0; */
+        position: relative;
+        top: 0;
+        box-shadow: 2px 0 2px rgba(38, 28, 28, 0.2);
+      }
+      
+      .fixed-block {
+        background-color: #fff;
+        position: absolute;
+        left: 0;
+        top: 0;
+        overflow-x: hidden;
+        /* border-right: 1px solid #ddd; */
+        height: auto;
+        z-index: 15;
+        color: red;
+      }
+      
+      .right-border {
+        border-right: 1px solid #ddd;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!--如果冻结列不好使，给tableDiv也设置一个position:relative;-->
+    <div id="outerDiv">
+      <div id="tableDiv" style="">
+        <table style="width:800px;margin-bottom
+      :0;" class="table table-bordered">
+          <tr>
+            <td class="fixed" style="width:150px;
+          height:50px;">神州浩天</span>
+            </td>
+            <td class="fixed">浩天1号</span>
+            </td>
+            <td>浩天2号</span>
+            </td>
+            <td>浩天3号</span>
+            </td>
+            <td>浩天4号</span>
+            </td>
+            <td>浩天5号</span>
+            </td>
+            <td>浩天6号</span>
+            </td>
+            <td>浩天7号</span>
+            </td>
+            <td>浩天8号</span>
+            </td>
+            <td>浩天9号</span>
+            </td>
+            <td>浩天10号</span>
+            </td>
+            <td>浩天11号</span>
+            </td>
+          </tr>
+          <tr>
+            <td><span>周一</span></td>
+            <td><span>45</span></td>
+            <td><span>56%</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周二</span></td>
+            <td><span>36</span></td>
+            <td><span>78%</span></td>
+            <td><span>216</span></td>
+            <td><span>97</span></td>
+            <td><span>12</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周三</span></td>
+            <td><span>37</span></td>
+            <td><span>91%</span></td>
+            <td><span>404</span></td>
+            <td><span>17</span></td>
+            <td><span>34</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周四</span></td>
+            <td><span>37</span></td>
+            <td><span>91%</span></td>
+            <td><span>404</span></td>
+            <td><span>17</span></td>
+            <td><span>34</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周五</span></td>
+            <td><span>37</span></td>
+            <td><span>91%</span></td>
+            <td><span>404</span></td>
+            <td><span>17</span></td>
+            <td><span>34</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周六</span></td>
+            <td><span>37</span></td>
+            <td><span>91%</span></td>
+            <td><span>404</span></td>
+            <td><span>17</span></td>
+            <td><span>34</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周日</span></td>
+            <td><span>37</span></td>
+            <td><span>91%</span></td>
+            <td><span>404</span></td>
+            <td><span>17</span></td>
+            <td><span>34</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周四</span></td>
+            <td><span>37</span></td>
+            <td><span>91%</span></td>
+            <td><span>404</span></td>
+            <td><span>17</span></td>
+            <td><span>34</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周五</span></td>
+            <td><span>37</span></td>
+            <td><span>91%</span></td>
+            <td><span>404</span></td>
+            <td><span>17</span></td>
+            <td><span>34</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周六</span></td>
+            <td><span>37</span></td>
+            <td><span>91%</span></td>
+            <td><span>404</span></td>
+            <td><span>17</span></td>
+            <td><span>34</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+          <tr>
+            <td><span>周日</span></td>
+            <td><span>37</span></td>
+            <td><span>91%</span></td>
+            <td><span>404</span></td>
+            <td><span>17</span></td>
+            <td><span>34</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+            <td><span>450</span></td>
+            <td><span>12</span></td>
+            <td><span>90</span></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div id="newDiv"></div>
+    <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>
+    <script>
+      var trs = $("#tableDiv table tr");
+      var arr = [];
+      var totalWidth = 0;
+      // console.log(left);
+      trs.each(function(i) {
+        var _self = $(this);
+        $(this).find('.fixed').each(function() {
+          if ($.inArray($(this).index(), arr) < 0) {
+            arr.push($(this).index());
+          }
+        });
+        _self.find('td.fixed').each(function() {
+          console.log($(this).outerWidth());
+          totalWidth += $(this).outerWidth();
+        });
+      });
+
+      var $div = $("<div class='fixed-block'></div>");
+      $div.css({
+        'width': totalWidth + 'px'
+      });
+
+      var $newtable = $("#tableDiv").find('table').clone();
+      $div.html($newtable);
+      $("#newDiv").html($div);
+      $("#outerDiv").prepend($div);
+
+      $("#tableDiv").scroll(function() {
+        var left = $("#tableDiv").scrollLeft();
+        // trs.each(function(i) {
+        //   var _self = $(this);
+        //   for (var index = 0; index < arr.length; index++) {
+        //     var element = arr[index];
+        //     _self.children().eq(element).css({
+        //       "left": left
+        //     }).addClass(left != 0 ? 'high-color' : '').removeClass(left == 0 ? 'high-color' : '');
+        //   }
+        // });
+        $("#outerDiv").find('.fixed-block').addClass(left != 0 ? 'right-border' : '').removeClass(left == 0 ? 'right-border' : '');
+      });
+
+
+      // var $newtable = $("#tableDiv").find('table').clone();
+      // $newtable.find('tr').each(function() {
+      //   $(this).find('td').each(function() {
+      //     // console.log("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓");
+      //     // console.log($(this));
+      //     // console.log("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑");
+      //     var w = $(this)[0].offsetWidth;
+      //     var h = $(this)[0].offsetHeight;
+      //     console.log(w);
+      //     $(this).attr('data-w', w);
+      //     $(this).attr('data-h', h);
+
+      //   })
+
+      //   $(this).find('td').not('.fixed').css({
+      //     'opacity': '0'
+      //   });
+      //   $(this).parentsUntil('table').css('width', 'auto');
+      // })
+      // $newtable.appendTo($("#newDiv"));
+    </script>
+  </body>
+
+</html>

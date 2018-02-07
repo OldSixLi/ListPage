@@ -1,0 +1,178 @@
+<!-- 马少博  创建于 2017年9月15日11:08:30 -->
+<!DOCTYPE html>
+<html lang='en'>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='shortcut icon' href='https://raw.githubusercontent.com/OldSixLi/ListPage/master/public/images/my.ico' />
+    <title> 标题</title>
+    <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>
+    <style>
+      .local-down,
+      .baidu-down {
+        width: 140px;
+        text-align: center;
+        display: block;
+        cursor: pointer;
+        background-image: url('./../bendi-1.png');
+        background-size: 25px 25px;
+        background-position-x: 5px;
+        background-position-y: 2px;
+        padding-left: 30px;
+        background-repeat: no-repeat;
+        height: 30px;
+        line-height: 30px;
+        margin-bottom: 5px;
+        font-size: 16px;
+        border: 1px solid #FF7700;
+        color: #FF7700;
+        text-decoration: none;
+      }
+      
+      .local-down:hover {
+        color: #fff;
+        background-color: #FF7700;
+        text-decoration: none;
+        background-image: url('./../bendi-2.png');
+      }
+      
+      .baidu-down {
+        color: #108CEE;
+        border: 1px solid #108CEE;
+        text-decoration: none;
+        background-image: url('./../baidu-1.png');
+      }
+      
+      .baidu-down:hover {
+        color: #fff;
+        background-color: #108CEE;
+        text-decoration: none;
+        background-image: url('./../baidu-2.png');
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="name" style="margin:100px 0 10px 100px;">{{zifu}}
+
+      <h1>{{objs.a}}</h1>
+
+      <!-- <a class="second-top-btn"   role="button" data-toggle="popover" data-placement="top" data-content="<a onclick='javacript:setDownQuery('$zhcspt.get("url")','$zhcspt.get("resourceId")');' class='local-down'>本地下载</a><a class='baidu-down'>百度云下载</a>" data-html="true">立即下载</a> -->
+
+       
+      <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-placement="top" data-content="<a style='' class='local-down'>本地下载</a><a class='baidu-down'>百度云下载</a>" data-html="true">可消失的弹出框</a>
+
+      <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-placement="top" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?">可消失的弹出框2</a>
+      <a href="javacript:;" onclick="tests(event)">点击啊</a>
+    </div>
+    <!-- https://rawgit.com/ -->
+    <!-- http://www.bootcdn.cn/ -->
+    <!--贴你github上的文件地址，就能自动变成CDN地址 -->
+    <!-- 脚本 -->
+    <!-- <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script> -->
+    <script src='https://cdn.bootcss.com/vue/2.3.3/vue.js'></script>
+    <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>
+    <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+    <script>
+      function tests(event){
+        console.log(event); 
+      }
+      $(function() {
+        $("[data-toggle='popover']").popover();
+      });
+      var vueBlock = new Vue({
+        el: "#name ",
+        //数据部分 
+        data: {
+          objs: {
+            a: 1,
+            b: 2
+          }
+        },
+        //方法
+        methods: {},
+        //过滤器
+        filters: {},
+        //实时计算
+        computed: {
+          zifu: function() {
+            // 存储
+            var c = this.objs.a + this.objs.b;
+            //存储进里边
+            // localStorage.setItem("LocalArticleList", JSON.stringify(c));
+            return "c";
+          }
+        },
+        //加载后立即执行的方法(created 这个钩子在实例被创建之后被调用)
+        created: function() {}
+      });
+
+      var index = 0;
+      setInterval(function() {
+        index++;
+        vueBlock.objs.a = 1;
+      }, 1000);
+
+      var example = {
+        id: "223ssadsad33",
+        name: "我们身边的很多人都需要我们的事情和什么什么的"
+      };
+      //   (example);
+      //   addOrUpdateStorage(example);
+
+      function getLocalStorage() {
+        return JSON.parse(localStorage.getItem("LocalArticleList")) ? JSON.parse(localStorage.getItem("LocalArticleList")) : [];
+      }
+
+      function getLocalStorageById(kid, aid) {
+        var json = getLocalStorage();
+        var str;
+        if (json.length > 0) {
+          for (var index = 0; index < json.length; index++) {
+            //判断是否相等
+            if (json[index].AROBJ.editObj.point_id == kid && json[index].AROBJ.editObj.art_id == aid) {
+              str = JSON.stringify(json(index));
+            }
+          }
+        }
+        return str ? JSON.parse(str) : null;
+      }
+
+      //添加或更新
+      function addOrUpdateStorage(aobj) {
+        var json = getLocalStorage();
+        if (json.length > 0) {
+          for (var index = 0; index < json.length; index++) {
+            if (json[index].id == aobj.id) {
+              json.splice(index, 1);
+            }
+          }
+        }
+        //进行添加操作
+        json.push(aobj);
+        localStorage.setItem("LocalArticleList", JSON.stringify(json));
+        console.log("保存成功")
+      }
+
+      //根据ID删除当前的
+      function deleteStorage(aobj) {
+        var json = getLocalStorage();
+        if (json.length > 0) {
+          for (var index = 0; index < json.length; index++) {
+            if (json[index].id == aobj.id) {
+              json.splice(index, 1);
+            }
+          }
+        }
+        localStorage.setItem("LocalArticleList", JSON.stringify(json));
+      }
+
+      console.log("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓");
+      console.log(JSON.stringify(vueBlock.$data));
+      console.log("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑");
+    </script>
+  </body>
+
+</html>
