@@ -1,0 +1,213 @@
+<!-- 马少博  创建于 2018年3月19日10:30:42 -->
+<!DOCTYPE html>
+<html lang='en'>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=320,initial-scale=1'>
+    <title> 标题</title>
+    <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>
+    <style>
+      body {
+        font-family: "MicroSoft YaHei";
+      }
+      
+      .input-lg {
+        height: 40px;
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <h2 class="text-center">报名信息</h2>
+        <div class="col-md-10 col-sm-10 col-md-offset-1">
+          <div class="form-group">
+            <label for="userName">姓名</label>
+            <input type="text" class="form-control input-lg" placeholder="请输入您的姓名" id="userName">
+          </div>
+          <div class="form-group">
+            <label for="companyName">公司名称</label>
+            <input type="text" class="form-control input-lg" placeholder="请输入公司名称" id="companyName">
+          </div>
+          <div class="form-group">
+            <label for="userCode">纳税人识别号</label>
+            <input type="text" class="form-control input-lg" placeholder="纳税人识别号" id="userCode">
+          </div>
+          <div class="form-group">
+            <label for="phoneNum">手机号</label>
+            <input type="number" class="form-control input-lg" maxlength="11" placeholder="请输入手机号" id="phoneNum">
+          </div>
+          <div class="form-group">
+            <label for="checkNum" style="">验证码</label>
+            <p>
+              <input type="number" class="form-control input-lg" placeholder="请输入验证码" style="width: 50%;margin-right:10%;float: left;display: inline-block;" id="checkNum">
+              <button type="button" class="btn btn-primary btn-lg" style="width: 40%;height:40px;display: inline-block;" id="getPasswordNumber">获取验证码</button>
+            </p>
+          </div>
+
+          <div class="form-group text-center" style="">
+            <button type="button" class="btn btn-primary btn-lg" style="width:100%;min-width: 150px;" id="saveBtn">立即报名</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- 脚本 -->
+    <!-- <script src='http://cdn.bootcss.com/angular.js/1.4.1/angular.js'></script> -->
+    <!-- <script src='https://cdn.bootcss.com/vue/2.3.3/vue.js'></script> -->
+    <script src='http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js'></script>
+    <!-- <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script> -->
+    <script>
+      $(document).ready(function() {
+
+        //保存按钮操作
+        $("#saveBtn").click(function(e) {
+          e.preventDefault();
+          var userName = $.trim($("#userName").val());
+          var companyName = $.trim($("#companyName").val());
+          var userCode = $.trim($("#userCode").val());
+          var phoneNum = $.trim($("#phoneNum").val());
+          var checkNum = $.trim($("#checkNum").val());
+          var _error = [];
+          if (!userName) {
+            _error.push("请输入您的姓名!");
+          }
+          if (!companyName) {
+            _error.push("请输入您的公司名称!");
+          }
+
+          if (!userCode) {
+            _error.push("请输入您的纳税人识别号!");
+          } else {
+            if (userCode.length < 15 || userCode.length > 20 || !(/^[0-9a-zA-Z]*$/g.test(str))) {
+              _error.push("请输入正确格式的纳税人识别号!");
+            }
+          }
+          if (!phoneNum) {
+            _error.push("请输入您的手机号!");
+          } else if (!checkPhone(phoneNum)) {
+            _error.push("请输入正确格式的手机号!");
+          }
+
+          if (!checkNum) {
+            _error.push("请输入验证码!");
+          }
+          if (_error.length > 0) {
+            //有错误  do something
+            alert("提示", _error.join("<br />"));
+            return false;
+          }
+
+          //TODO 进行验证码校验
+          $.ajax({
+            type: "POST",
+            url: "url",
+            data: {
+              phone: phoneNum,
+              num: checkNum
+            },
+            dataType: "json",
+            success: function(data, textStatus, jqXHR) {
+              if (data != null && data != "") {
+                if (data.success) {
+                  //校验完以后进行提交
+
+                } else {
+                  tool.alert("提示", "验证码错误,请修改");
+                }
+              }
+            },
+            error: function(response) {
+              tool.alert("提示", "请求服务失败,请重试!");
+            }
+          });
+
+        });
+        //请求验证码操作
+        $("#getPasswordNumber").click(function(e) {
+          var _self = this;
+          this.countdown = 60;
+          this.settime = function(obj) {
+            if (_self.countdown == 0) {
+              obj.removeAttribute("disabled");
+              $(obj).removeClass("disabled");
+              obj.innerHTML = "获取验证码";
+              _self.countdown = 60;
+              return;
+            } else {
+              obj.setAttribute("disabled", true);
+              $(obj).addClass("disabled");
+              obj.innerHTML = "重新发送(" + _self.countdown + "s)";
+              _self.countdown--;
+            }
+            setTimeout(function() {
+              _self.settime(obj)
+            }, 1000)
+          }
+          e.preventDefault();
+          var phone = $.trim($("#phoneNum").val());
+          //给电话发送验证码
+          sendCode(phone);
+          //禁用60S
+          _self.settime($("#getPasswordNumber").get(0));
+        });
+
+
+
+      });
+
+      /**
+       * 手机号校验
+       * 
+       * @param {any} str 字符串
+       * @returns 是否有效 T/F
+       */
+      function checkPhone(str) {
+        if (!(/^[1][3,4,5,7,8][0-9]{9}$/.test(str))) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+
+      /**
+       * 授权号查询
+       * 
+       * @returns 
+       */
+      function checkAuthorization(num) {
+        console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+        console.log("授权号查询...");
+        console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+      }
+      /**
+       * 给电话发送验证码
+       * 
+       * @returns 
+       */
+      function sendCode(num) {
+        console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+        console.log("已发送");
+        console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+      }
+      /**
+       * 校验手机号与验证码是否匹配
+       * 
+       * @returns 
+       */
+      function isMatchCode(params) {
+        // AJAX啥的
+      }
+      //TODO LIST
+      // 1.点击提交提交按钮需要禁用处理
+      // 2.15-20位授权号  可包含字母
+      // 3.各项信息不得为空
+      // 4.提交后显示信息为报名已受理
+    </script>
+  </body>
+
+</html>
