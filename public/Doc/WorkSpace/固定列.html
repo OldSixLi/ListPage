@@ -53,7 +53,7 @@
     <!-- 说明:具体项目中应用时,table宽度必须设定,固定列必须前置且连续。outerDiv与tableDiv的width应保持相同-->
     <div id="outerDiv">
       <div id="tableDiv">
-        <table style="width:5200px;margin-bottom:0;" class="table table-bordered">
+        <table style="margin-bottom:0;" class="table table-bordered">
           <tr>
             <td class="column-fixed">神州浩天</span>
             </td>
@@ -81,7 +81,7 @@
             </td>
           </tr>
           <tr>
-            <td><span>周一</span></td>
+            <td><span>周一周一周一周一周一周一</span></td>
             <td><span>45</span></td>
             <td><span>56%</span></td>
             <td><span>450</span></td>
@@ -91,7 +91,7 @@
             <td><span>12</span></td>
             <td><span>90</span></td>
             <td><span>450</span></td>
-            <td><span>12</span></td>
+            <td><span>周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一周一</span></td>
             <td><span>90</span></td>
           </tr>
           <tr>
@@ -246,30 +246,38 @@
       });
 
       function changeToFixTable() {
-        var trs = $("#tableDiv table tr");
-        var arr = [];
-        var totalWidth = 0;
-        trs.each(function(i) {
-          var _self = $(this);
-          $(this).find('.column-fixed').each(function() {
+        //获取行
+        let trs = $("#tableDiv table tr");
+        let arr = [];
+        let totalWidth = 0;
+        trs.each((i, ele) => {
+          let $this = $(ele);
+          $this.find('.column-fixed').each(function() {
             ($.inArray($(this).index(), arr) < 0) || arr.push($(this).index());
           });
-          _self.find('td.column-fixed').each(function() {
-            totalWidth += $(this).outerWidth();
+
+          $this.find('td.column-fixed').each((index, td) => {
+            totalWidth += $(td).outerWidth();
           });
         });
+
+        console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+        console.log(totalWidth);
+        console.log("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+
         $("#outerDiv .column-fixed-block").length == 0 && $("<div class='column-fixed-block'></div>").prependTo($("#outerDiv")); //悬浮DIV
-        var $div = $("#outerDiv .column-fixed-block");
-        var $newtable = $("#tableDiv").find('table').clone(); //复制表格
+        let $div = $("#outerDiv .column-fixed-block");
+        let $newtable = $("#tableDiv").find('table').clone(); //复制表格
         //设置宽度
         $div.html($newtable).css('width', (totalWidth + 1) + 'px');
-        var trim_Version = navigator.appVersion.split(";")[1].replace(/[ ]/g, "");
+        //获取浏览器
+        let trim_Version = navigator.appVersion.split(";")[1].replace(/[ ]/g, "");
         if (navigator.appName == "Microsoft Internet Explorer" && trim_Version == "MSIE7.0") {
           $("#tableDiv").css('padding-bottom', '17px');
           $(".column-fixed-block").css('border-right', 'none');
         } else {
           $("#tableDiv").scroll(function() {
-            var left = $("#tableDiv").scrollLeft();
+            let left = $("#tableDiv").scrollLeft();
             $("#outerDiv").find('.column-fixed-block').addClass(left != 0 ? 'block-shadow' : '').removeClass(left == 0 ? 'block-shadow' : '');
           })
         }

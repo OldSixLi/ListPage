@@ -1,0 +1,428 @@
+<!-- 马少博  创建于 2018年5月22日10:11:46 -->
+<!DOCTYPE html>
+<html lang='en'>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>问卷调查</title>
+    <link href='http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css' rel='stylesheet'>
+    <style>
+      body {
+        font-family: "MicroSoft YaHei";
+      }
+      
+      #questionTitle {
+        line-height: 1.5;
+        width: 50%;
+        margin: 0 auto;
+        min-width: 600px;
+      }
+      
+      .a {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+      }
+      
+      .body {
+        height: 3000px;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        /* background-image: url(../images/quan-back.png); */
+        background-size: 1600px;
+        background-repeat: no-repeat;
+      }
+      
+      .contents {
+        color: #fff;
+        height: 200px;
+        padding-top: 30px;
+        background-color: #0561d6;
+      }
+      /*
+      :::::'##::: ##::'#######::'########:'########:
+      ::::: ###:: ##:'##.... ##:... ##..:: ##.....::
+      ::::: ####: ##: ##:::: ##:::: ##:::: ##:::::::
+      ::::: ## ## ##: ##:::: ##:::: ##:::: ######:::
+      ::::: ##. ####: ##:::: ##:::: ##:::: ##...::::
+      '###: ##:. ###: ##:::: ##:::: ##:::: ##:::::::
+       ###: ##::. ##:. #######::::: ##:::: ########:
+      ...::..::::..:::.......::::::..:::::........::
+      */
+      /* 问卷调查说明 */
+      
+      .q-note {
+        position: relative;
+        width: 900px;
+        min-height: 400px;
+        margin: 40px auto;
+        border: 2px solid #08254D;
+        border-radius: 20px;
+      }
+      /* 问题详情 */
+      
+      .q-detail {
+        position: relative;
+        width: 900px;
+        min-height: 400px;
+        margin: 0 auto;
+      }
+      /* 开始答题按钮 */
+      
+      .btn-begin {
+        /* margin-top: 40px; */
+        outline: none;
+        width: 300px;
+        border: 2px solid #08254D;
+        height: 60px;
+        font-size: 24px;
+        color: #fff;
+        border-radius: 12px;
+        background-color: #116ff0;
+      }
+      
+      .btn:hover {
+        color: #fff;
+        background-color: #3d8fff;
+      }
+      
+      .btn:focus {
+        color: #fff;
+        outline: none;
+        background-color: #3d8fff;
+        border-color: #08254D;
+      }
+      
+      .btn:active {
+        outline: none;
+        color: #fff;
+        background-color: #3d8fff;
+        border-color: #08254D;
+      }
+      
+      .btn:focus:hover {
+        outline: none;
+      }
+      /* 头部说明标签 */
+      
+      .q-note-title {
+        color: #fff;
+        display: block;
+        font-size: 24px;
+        width: 160px;
+        text-align: center;
+        line-height: 48px;
+        background-image: url(../images/quan/web-note.png);
+        position: absolute;
+        left: 50%;
+        top: 0;
+        margin-left: -80px;
+        margin-top: -24px;
+      }
+      /* 问题显示区域 */
+      
+      .q-note-block {
+        width: 780px;
+        margin: 0 auto;
+        margin-top: 60px;
+        color: #1a1a1a;
+        font-size: 18px;
+      }
+      
+      .btn-list-block {
+        width: 440px;
+        height: 60px;
+        margin: 0 auto;
+      }
+      
+      .btn-list-block>button {
+        outline: none;
+        width: 200px;
+        border: 2px solid #08254D;
+        height: 60px;
+        font-size: 24px;
+        color: #fff;
+        border-radius: 12px;
+        background-color: #116ff0;
+      }
+      
+      .btn-left {
+        float: left;
+      }
+      
+      .btn-right {
+        float: right;
+      }
+      
+      .q-wenti {
+        font-weight: bold;
+        font-size: 0;
+      }
+      
+      .q-wenti>span {
+        font-size: 18px;
+      }
+      
+      .q-ans-block {
+        width: 740px;
+        margin: 0 auto;
+        font-size: 16px;
+      }
+      
+      .q-ans-input {}
+      
+      .choice-list {
+        margin-left: 0;
+        padding-left: 0;
+      }
+      
+      .q-wenti-index {
+        display: inline-block;
+        min-width: 20px;
+        text-align: right;
+      }
+      
+      .choice-list>li {
+        list-style: none;
+        font-size: 16px;
+        margin-top: 6px;
+      }
+      
+      .choice-list>li label {
+        cursor: pointer;
+        font-weight: normal;
+        margin-bottom: 0;
+      }
+      
+      .choice-list input {
+        cursor: pointer;
+      }
+      
+      .q-ans-input>textarea {
+        border-color: #c4c0cc;
+        padding: 12px 24px;
+        font-size: 16px;
+      }
+      
+      .last-words {
+        font-size: 14px;
+        color: #666666;
+        margin-top: 6px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="body">
+      <div class="contents">
+        <h1 class="text-center" id="questionTitle">关于神州浩天的服务说明是今天</h1>
+      </div>
+      <!--
+      '##::: ##::'#######::'########:'########:
+       ###:: ##:'##.... ##:... ##..:: ##.....::
+       ####: ##: ##:::: ##:::: ##:::: ##:::::::
+       ## ## ##: ##:::: ##:::: ##:::: ######:::
+       ##. ####: ##:::: ##:::: ##:::: ##...::::
+       ##:. ###: ##:::: ##:::: ##:::: ##:::::::
+       ##::. ##:. #######::::: ##:::: ########:
+      ..::::..:::.......::::::..:::::........::
+      -->
+      <!-- 问题说明 -->
+      <div class="q-note">
+        <span class="q-note-title">说明</span>
+        <div class="q-note-block">
+          <ul>
+            <li>开始答题</li>
+            <li>开始答题</li>
+            <li>开始答题</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button type="button" class="btn btn-begin">开始答题</button>
+      </div>
+      <!--
+      '########::'########:'########::::'###::::'####:'##:::::::
+       ##.... ##: ##.....::... ##..::::'## ##:::. ##:: ##:::::::
+       ##:::: ##: ##:::::::::: ##:::::'##:. ##::: ##:: ##:::::::
+       ##:::: ##: ######:::::: ##::::'##:::. ##:: ##:: ##:::::::
+       ##:::: ##: ##...::::::: ##:::: #########:: ##:: ##:::::::
+       ##:::: ##: ##:::::::::: ##:::: ##.... ##:: ##:: ##:::::::
+       ########:: ########:::: ##:::: ##:::: ##:'####: ########:
+      ........:::........:::::..:::::..:::::..::....::........::
+      -->
+      <!-- 单个问题详情 -->
+      <div class="q-note" data-index="" data-id="">
+        <!-- 序号部分 -->
+        <span class="q-note-title">
+              <span class="question-index">1</span>&nbsp;/&nbsp;<span class="question-total">12</span>
+        </span>
+        <!-- 问题部分 -->
+        <div class="q-note-block">
+          <p class="q-wenti">
+            <span class="question-index q-wenti-index">20.</span>
+            <span class="q-body">您平常使用的软件是什么?</span>
+            <span class="q-type q-body">（多选）</span>
+          </p>
+        </div>
+        <!-- 答案部分 -->
+        <!-- 隐藏域存放用户选择的值 -->
+        <input type="hidden" name="" class="hidden-ans" data-hidden-ans="1" value="">
+        <div class="q-ans-block">
+          <!-- 选择部分 1是单选  2是多选-->
+          <ul class="choice-list" data-choice-type="2">
+            <li>
+              <input type="checkbox" name="data-che" id="ans-id-1" value="1">
+              <label for="ans-id-1">智慧财税代理版</label>
+            </li>
+            <li>
+              <input type="checkbox" name="data-che" id="ans-id-2" value="2">
+              <label for="ans-id-2">智慧财税代理版</label>
+            </li>
+            <li>
+              <input type="checkbox" name="data-che" id="ans-id-3" value="3">
+              <label for="ans-id-3">智慧财税代理版</label>
+            </li>
+            <li>
+              <input type="checkbox" name="data-che" id="ans-id-4" value="4">
+              <label for="ans-id-4">智慧财税代理版</label>
+            </li>
+          </ul>
+          <!-- 自定义输入部分 -->
+          <div class="q-ans-input">
+            <textarea name="" id="" cols="30" rows="5" class="form-control" placeholder="请在此输入您的答案" maxlength="1000"></textarea>
+            <p class="text-right last-words">字数:<span class="word-length">0</span>/1000</p>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="q-note" data-index="" data-id="">
+        <span class="q-note-title">
+                <span class="question-index">1</span>&nbsp;/&nbsp;<span class="question-total">12</span>
+        </span>
+        <div class="q-note-block">
+          <p class="q-wenti">
+            <span class="question-index q-wenti-index">20.</span>
+            <span class="q-body">您平常使用的软件是什么?</span>
+            <span class="q-type q-body">（单选）</span>
+          </p>
+        </div>
+
+        <div class="q-ans-block">
+          <input type="hidden" name="" class="hidden-ans" data-hidden-ans="1" value="">
+          <ul class="choice-list" data-choice-type="1">
+            <li>
+              <input type="radio" name="ans-id" id="ans-ids-1" value="1">
+              <label for="ans-ids-1">智慧财税代理版</label>
+            </li>
+            <li>
+              <input type="radio" name="ans-id" id="ans-ids-2" value="2">
+              <label for="ans-ids-2">智慧财税代理版</label>
+            </li>
+            <li>
+              <input type="radio" name="ans-id" id="ans-ids-3" value="3">
+              <label for="ans-ids-3">智慧财税代理版</label>
+            </li>
+            <li>
+              <input type="radio" name="ans-id" id="ans-ids-4" value="4">
+              <label for="ans-ids-4">智慧财税代理版</label>
+            </li>
+          </ul>
+          <div class="q-ans-input">
+            <textarea name="" id="" cols="30" rows="5" class="form-control" placeholder="请在此输入您的答案" maxlength="1000"></textarea>
+            <p class="text-right last-words">字数:<span class="word-length">0</span>/1000</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-list-block">
+        <!-- <button type="button" class="btn btn-left">返回</button> -->
+        <button type="button" class="btn btn-left">上一题</button>
+        <button type="button" class="btn btn-right">下一题</button>
+
+      </div>
+    </div>
+    <!--
+    :'######:::'######::'########::'####:'########::'########:
+    '##... ##:'##... ##: ##.... ##:. ##:: ##.... ##:... ##..::
+     ##:::..:: ##:::..:: ##:::: ##:: ##:: ##:::: ##:::: ##::::
+    . ######:: ##::::::: ########::: ##:: ########::::: ##::::
+    :..... ##: ##::::::: ##.. ##:::: ##:: ##.....:::::: ##::::
+    '##::: ##: ##::: ##: ##::. ##::: ##:: ##::::::::::: ##::::
+    . ######::. ######:: ##:::. ##:'####: ##::::::::::: ##::::
+    :......::::......:::..:::::..::....::..::::::::::::..:::::
+    -->
+    <!-- 脚本 -->
+    <!-- <script src='../Script/jquery-1.9.1.js'></script> -->
+    <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+
+    <script src='http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js'></script>
+    <script>
+      $(document).ready(function() {
+        titleHandle();
+        lastWordsHandle();
+        singleQuestionHandle();
+      });
+
+      /**
+       * 单个问题的答案选择事件 
+       */
+      function singleQuestionHandle() {
+        $('body').on('change', '.q-note', function() {
+          var choiceType = $(this).find('.choice-list').attr('data-choice-type');
+          var $hiddenAns = $(this).find('.hidden-ans');
+          if (choiceType == '1') {
+            var val = $(this).find('input:radio:checked').val();
+            $hiddenAns.val(val)
+          } else if (choiceType == '2') {
+            var item = [];
+            $(this).find('input:checkbox').each(function() {
+              if ($(this).is(":checked")) {
+                item.push($(this).val());
+              }
+            });
+            $hiddenAns.val(item)
+          }
+        });
+      }
+
+      /**
+       * 输入答案时的剩余字数
+       */
+      function lastWordsHandle() {
+        $('body').on('input propertychange', '.q-ans-input>textarea', function() {
+          var len = $(this).val().length;
+          $(this).next().find('.word-length').text(len);
+        });
+      }
+
+      /**
+       *  关于标题的处理(字体及折行)
+       *  长度超出12折行 并且上边字数少 下边字数多
+       */
+      function titleHandle() {
+        var title = $("#questionTitle").text().trim();
+        if (title.length > 12) {
+          $("#questionTitle").css('font-size', '42px');
+          if (title.length % 2 == 0) {
+            title = title.substr(0, (title.length - 4) / 2) + "<br/>" + title.substr((title.length - 4) / 2);
+          } else {
+            title = title.substr(0, (title.length - 3) / 2) + "<br/>" + title.substr((title.length - 3) / 2);
+          }
+          $("#questionTitle").html(title);
+        } else {
+          $("#questionTitle").css('font-size', '56px');
+        }
+      }
+    </script>
+
+  </body>
+
+</html>
