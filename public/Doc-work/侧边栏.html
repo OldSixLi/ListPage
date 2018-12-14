@@ -1,0 +1,313 @@
+﻿<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Examples</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <link href="./../Style/bootstrap.css" rel="stylesheet" />
+    <script src="./../Script/jquery-1.9.1.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: "Microsoft YaHei";
+      }
+      
+      body {
+        height: 100%;
+      }
+      
+      .slideout {
+        -webkit-animation: cssAnimation 0.3s 1 ease-in forwards;
+        -moz-animation: cssAnimation 0.3s 1 ease-in forwards;
+        -ms-animation: cssAnimation 0.3s 1 ease-in forwards;
+        -o-animation: cssAnimation 0.3s 1 ease-in forwards;
+        animation: cssAnimation 0.3s 1 ease-in forwards;
+      }
+      
+      .slidein {
+        -webkit-animation: slide 0.3s 1 ease-in forwards;
+        -moz-animation: slide 0.3s 1 ease-in forwards;
+        -o-animation: slide 0.3s 1 ease-in forwards;
+        -ms-animation: slide 0.3s 1 ease-in forwards;
+        animation: slide 0.3s 1 ease-in forwards;
+      }
+      
+      @keyframes slide {
+        from {
+          /* -ms-transform: translate(-260px);
+          -o-transform: translate(-260px);
+          -moz-transform: translate(-260px);
+          -webkit-transform: translate(-260px);
+          transform: translate(-260px); */
+          width: 40px;
+        }
+        to {
+          /* -ms-transform: translate(0);
+          -o-transform: translate(0);
+          -moz-transform: translate(0);
+          -webkit-transform: translate(0);
+          transform: translate(0); */
+          width: 240px;
+        }
+      }
+      
+      .content-small {
+        -webkit-animation: cont 0.3s 1 ease-in forwards;
+        -moz-animation: cont 0.3s 1 ease-in forwards;
+        -o-animation: cont 0.3s 1 ease-in forwards;
+        animation: cont 0.3s 1 ease-in forwards;
+      }
+      
+      @-webkit-keyframes cont {
+        from {
+          margin-left: 5px;
+        }
+        to {
+          margin-left: 255px;
+        }
+      }
+      
+      @-o-keyframes cont {
+        from {
+          margin-left: 5px;
+        }
+        to {
+          margin-left: 255px;
+        }
+      }
+      
+      @-moz-keyframes cont {
+        from {
+          margin-left: 5px;
+        }
+        to {
+          margin-left: 255px;
+        }
+      }
+      
+      @keyframes cont {
+        from {
+          margin-left: 5px;
+        }
+        to {
+          margin-left: 255px;
+        }
+      }
+      /*动画区域begin*/
+      
+      @-webkit-keyframes cssAnimation {
+        from {
+          left: 0;
+        }
+        to {
+          /* left: -260px; */
+        }
+      }
+      
+      @-moz-keyframes cssAnimation {
+        from {
+          left: 0;
+        }
+        to {
+          /* left: -260px; */
+        }
+      }
+      
+      @-o-keyframes cssAnimation {
+        from {
+          left: 0;
+        }
+        to {
+          /* left: -260px; */
+        }
+      }
+      
+      @keyframes cssAnimation {
+        from {
+          left: 0;
+        }
+        to {
+          /* left: -260px; */
+        }
+      }
+      /*
+        @-webkit-keyframes slide {
+            from {  -webkit-transform:   translate(-260px); }
+            to {  -webkit-transform:   translate(0); }
+        }
+        @-o-keyframes slide {
+            from {  }
+            to {  }
+        }
+        @-moz-keyframes slide {
+            from {   transform:   translate(-260px); }
+            to {    transform:   translate(0); }
+        }
+        @keyframes slide {
+            from {
+                        -ms-transform:   translate(-260px);
+                        -o-transform:   translate(-260px);
+                        transform:   translate(-260px); }
+            to {  -ms-transform:   translate(0);
+                        -o-transform:   translate(0);
+                        transform:   translate(0); }
+        }
+         */
+      
+      .content-large {
+        -webkit-animation: contin 0.3s 1 ease-in forwards;
+        -moz-animation: contin 0.3s 1 ease-in forwards;
+        -o-animation: contin 0.3s 1 ease-in forwards;
+        -ms-animation: contin 0.3s 1 ease-in forwards;
+        animation: contin 0.3s 1 ease-in forwards;
+      }
+      
+      @-webkit-keyframes contin {
+        from {
+          margin-left: 255px;
+        }
+        to {
+          margin-left: 5px;
+        }
+      }
+      
+      @-moz-keyframes contin {
+        from {
+          margin-left: 255px;
+        }
+        to {
+          margin-left: 5px;
+        }
+      }
+      
+      @-o-keyframes contin {
+        from {
+          margin-left: 255px;
+        }
+        to {
+          margin-left: 5px;
+        }
+      }
+      
+      @keyframes contin {
+        from {
+          margin-left: 255px;
+        }
+        to {
+          margin-left: 5px;
+        }
+      }
+      /*动画区域end*/
+      
+      .slide {
+        position: fixed;
+        left: 0;
+        top: 0;
+        /*min-height: 1000px;*/
+        height: 100%;
+        width: 250px;
+        background-color: rgb(138, 177, 149);
+        text-align: center;
+      }
+      
+      .cont {
+        display: block;
+        position: relative;
+        margin-left: 255px;
+        margin-left: 5px;
+        background: rgb(231, 76, 60);
+      }
+      
+      .ml {
+        margin-left: 5px;
+      }
+      
+      .wrap {
+        width: 100%;
+        background: rgb(231, 76, 60);
+        min-height: 1000px;
+        font-size: 0;
+      }
+      
+      .turnon {
+        min-height: 200px;
+        background: rgb(217, 72, 57);
+      }
+      
+      span.turn {
+        font-weight: 900;
+        font-size: 30px;
+        cursor: pointer;
+      }
+      
+      .div1 {
+        display: inline-block;
+        width: 33.33%;
+        background-color: #ddd;
+        min-height: 300px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        border: 1px solid black;
+        padding: 10px;
+        -moz-background-clip: content-box;
+        -webkit-background-clip: content-box;
+        -ms-background-clip: content-box;
+        background-clip: content-box;
+        background-color: #e55b5b;
+      }
+      
+      hr {
+        width: 100%;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      .ullist>li {
+        display: block;
+        height: 45px;
+        border-bottom: 1px solid #DDD;
+        cursor: pointer;
+        font-size: 16px;
+        line-height: 45px;
+      }
+    </style>
+    <script>
+      $(document).ready(function() {
+
+        $(".turn").click(function() {
+          $(".slide").toggleClass('slideout slidein');
+          $(".cont").toggleClass('content-small content-large');
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div class="slide slidein ">
+      <div class="slidetitle">
+        <h1>动画显示</h1>
+      </div>
+      <hr />
+      <ul class="ullist">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+      </ul>
+    </div>
+    <div class="cont content-small ">
+      <div class="turnon"><span class="turn">三</span></div>
+      <div class="wrap ">
+        <!--<div class="div1"></div>
+            <div class="div1"></div>
+            <div class="div1"></div>-->
+      </div>
+    </div>
+  </body>
+
+</html>
